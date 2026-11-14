@@ -46,4 +46,4 @@ Both the manuscript and the reduction check need the packages listed in the manu
 
 ## Status
 
-Not yet published. The repository URL is pending the decision of the authors.
+Public repository: https://github.com/th1enq/exact-edge-cover-temporal-walks

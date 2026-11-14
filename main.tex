@@ -96,7 +96,7 @@
 
 \affil[1]{\orgdiv{Faculty of Information Technology}, \orgname{VNU University of Engineering and Technology}, \orgaddress{\city{Hanoi}, \country{Vietnam}}}
 
-\abstract{Given an undirected temporal graph and the number of walks that start at each vertex, exact edge cover asks whether the edges can be partitioned into temporal walks with prescribed or free end vertices. For non-strict walks, whose time labels never decrease, Deligkas et al.\ claimed polynomial solvability at AAAI 2025 through a reduction to a static graph; a five-vertex counterexample shows that this reduction, as built in its Figure~3, misses a condition. We give a complete polynomial-time algorithm. An orientation is realizable if and only if a counting condition holds and every snapshot component contains a walk, and only components with even degrees and even walk counters can violate the second condition. Counting walks in pairs, we prove that the state set of such a component remains M-convex after its dead state is removed, which yields an M-convex submodular flow formulation and an augmenting path algorithm that returns the walks or an infeasibility certificate. For strict walks, whose time labels strictly increase, we prove NP-completeness even with prescribed end vertices and six time labels, which settles a case left open by Deligkas et al. Experiments on instances with up to $387{,}467$ edges support the correctness and practicality of the algorithm.}
+\abstract{Given an undirected temporal graph and the number of walks that start at each vertex, exact edge cover asks whether the edges can be partitioned into temporal walks with prescribed or free end vertices. For non-strict walks, whose time labels never decrease, Deligkas et al.\ claimed polynomial solvability at AAAI 2025 through a reduction to a static graph; a five-vertex counterexample shows that this reduction, as built in its Figure~3, misses a condition. We give a complete proof of polynomial solvability by a different route, based on M-convex submodular flow. An orientation is realizable if and only if a counting condition holds and every snapshot component contains a walk, and only components with even degrees and even walk counters can violate the second condition. Counting walks in pairs, we prove that the state set of such a component remains M-convex after its dead state is removed, which yields an M-convex submodular flow formulation and an augmenting path algorithm that returns the walks or an infeasibility certificate. For strict walks, whose time labels strictly increase, we prove NP-completeness even with prescribed end vertices and six time labels, which settles a case left open by Deligkas et al. Experiments on instances with up to $387{,}467$ edges are consistent with the correctness of the implementation and show its performance on the tested benchmarks.}
 
 \keywords{Temporal graph, Exact edge cover, Temporal walk, M-convex set, Submodular flow, NP-completeness}
 
@@ -109,7 +109,7 @@
 
 Temporal graphs model time-dependent connections in contact, communication and transportation networks~\cite{kempe2002,holme2012,casteigts2012,michail2016}. Covering network edges by routes is central to the Chinese postman problem and arc routing~\cite{edmonds1973,corberan2015}, while assigning scheduled trips to vehicles adds temporal constraints~\cite{dantzig1954,bunte2009,kliewer2006}. Exact edge cover by temporal walks asks whether time-labeled edges can be partitioned into time-respecting walks with a prescribed number of walks starting at each vertex.
 
-Deligkas et al.~\cite{deligkas2025} introduced the exact edge cover problem in temporal graphs at the AAAI Conference on Artificial Intelligence (AAAI 2025). We study the undirected case with prescribed start vertices and either prescribed or free end vertices. The direction of each traversal is part of the solution. We consider both \emph{non-strict} walks, whose time labels are non-decreasing, and \emph{strict} walks, whose time labels are strictly increasing. The non-strict model permits consecutive edges to share a time label when events are recorded at a finite time resolution. This distinction can change the complexity of temporal graph problems~\cite{casteigts2024}. Deligkas et al.\ proved NP-completeness for walks without prescribed start vertices, which corresponds to minimizing the number of walks rather than to our problems with prescribed start counts, and left open the general case of strict walks with prescribed terminals~\cite{deligkas2025}.
+Deligkas et al.~\cite{deligkas2025} introduced the exact edge cover problem in temporal graphs (arXiv 2024; AAAI 2025). We study the undirected case with prescribed start vertices and either prescribed or free end vertices. The direction of each traversal is part of the solution. We consider both \emph{non-strict} walks, whose time labels are non-decreasing, and \emph{strict} walks, whose time labels are strictly increasing. The non-strict model permits consecutive edges to share a time label when events are recorded at a finite time resolution. This distinction can change the complexity of temporal graph problems~\cite{casteigts2024}. Deligkas et al.\ proved NP-completeness for walks without prescribed start vertices, which corresponds to minimizing the number of walks rather than to our problems with prescribed start counts, and left open the general case of strict walks with prescribed terminals~\cite{deligkas2025}.
 
 The static reduction used by Deligkas et al.\ to argue polynomial solvability for non-strict walks misses a necessary condition: every connected component containing an edge in a \emph{snapshot}, the subgraph formed by edges with the same time label, must contain a walk immediately before that time. Our counterexample is temporally infeasible, yet its static graph admits an exact edge cover. Section~\ref{sec:counterexample} gives the construction.
 
@@ -117,11 +117,11 @@ The static reduction used by Deligkas et al.\ to argue polynomial solvability fo
 \begin{enumerate}
 \item \emph{Characterization.} An orientation of the edges is realizable by walks if and only if a counting condition holds and every snapshot component contains a walk (Theorem~\ref{thm:char}). Only even components can violate the second condition (Lemma~\ref{lem:noneven}), so instances without them are decided by one maximum flow (Corollary~\ref{cor:flow}).
 \item \emph{M-convexity of even components.} Counting walks in pairs, we prove that the state set of an even component remains M-convex after its dead state is removed (Lemma~\ref{lem:gamma}(b)). This is the key new structural result.
-\item \emph{Polynomial algorithm for non-strict walks.} The problem is an M-convex submodular flow problem (Theorem~\ref{thm:reduction}). Our augmenting path algorithm returns the walks or an infeasibility certificate (Theorem~\ref{thm:correct}) in polynomial time (Theorem~\ref{thm:time}) and extends to end vertices restricted to a given set (Theorem~\ref{thm:endset}).
+\item \emph{Complete proof for non-strict walks.} Deligkas et al.\ claimed polynomial solvability; their static reduction does not capture the walk-existence condition (Section~\ref{sec:counterexample}), so we give an independent proof: the problem is an M-convex submodular flow problem (Theorem~\ref{thm:reduction}). Our augmenting path algorithm returns the walks or an infeasibility certificate (Theorem~\ref{thm:correct}) in polynomial time (Theorem~\ref{thm:time}) and extends to end vertices restricted to a given set (Theorem~\ref{thm:endset}).
 \item \emph{NP-completeness for strict walks.} The strict problem is NP-complete even with prescribed end vertices and six time labels (Theorem~\ref{thm:strict}), which resolves the case left open in~\cite{deligkas2025}.
 \item \emph{The static reduction.} We give the five-vertex counterexample (Proposition~\ref{prop:aaai}) and show exactly which orientation constraints the static graph represents (Lemma~\ref{lem:aaai}).
 \end{enumerate}
-Computational experiments (Section~\ref{sec:eval}) support the correctness and practicality of the algorithm on synthetic instances, contact data and transit timetables with up to $387{,}467$ edges.
+Computational experiments (Section~\ref{sec:eval}) are consistent with the correctness of the implementation and show its performance on synthetic instances, contact data and transit timetables with up to $387{,}467$ edges.
 
 Section~\ref{sec:prelim} defines the problems and reviews related work. Sections~\ref{sec:char} and~\ref{sec:counterexample} establish the orientation characterization and analyze the static reduction. Sections~\ref{sec:mconvex} and~\ref{sec:method} develop the M-convex formulation and the algorithm. Section~\ref{sec:strict} proves NP-completeness for strict walks, Section~\ref{sec:eval} reports the experiments, and Section~\ref{sec:conclusion} concludes.
 
@@ -159,7 +159,7 @@ Deligkas et al.~\cite{deligkas2025} study exact edge cover by temporal paths, tr
 
 Their non-strict polynomial result, Theorem~6.3, mentions only start terminals, whereas its proof sketch and Figure~3 also use end terminals. The extended version~\cite{deligkas2024arxiv} states the result for prescribed start and end terminals. Section~\ref{sec:counterexample} analyzes the construction under these terminal readings.
 
-Our model permits parallel edges within a snapshot and empty walks, unlike the model of~\cite{deligkas2025}. These differences are not needed for the counterexample, which is a simple graph, or for the hardness result with prescribed end vertices, whose construction uses neither parallel edges within a snapshot nor empty walks.
+The counterexample of Section~\ref{sec:counterexample} is a simple graph, and the hardness construction of Section~\ref{sec:strict} has no parallel edges within a snapshot.
 
 \paragraph{Temporal networks and covering problems.}
 Time-copy representations are standard in temporal graphs~\cite{kostakos2009} and temporal flow problems~\cite{akrida2019}. Our chain and port networks add constraints governing the orientation and coverage of snapshot edges. Related temporal covering problems ask for a single walk through every static edge~\cite{marino2023}, exploration of all edges~\cite{bumpus2023}, or path covers of the vertices of a temporal directed acyclic graph (DAG)~\cite{chakraborty2024}.
@@ -229,7 +229,7 @@ Condition~(i) requires the walk counter after the $j$-th occurrence of $v$, name
 
 We impose these bounds as capacities in a \emph{chain network} with a source and a sink $r$. For every occurrence $(v,j)$ there is a node $s_{v,j}$, and these nodes form a chain $s_{v,1}\to\dots\to s_{v,q_v}\to r$. The arc that leaves $s_{v,j}$ has capacity $C_{v,j}=\floor{(a_v+G_{v,j})/2}$ in \FREE{} and $C_{v,j}=\min(\floor{(a_v+G_{v,j})/2},h_v)$ in \FIX{}. For every edge $e=\{u,v\}$ with time label $t$ there is a node that receives one unit from the source and has two arcs of capacity $1$ to the occurrence nodes of $u$ and $v$ at time $t$.
 
-The unit of $e$ goes to the endpoint chosen as its tail, so the flow on the arc that leaves $s_{v,j}$ equals $B_{v,j}$. The network has $O(m)$ nodes and arcs, and a flow of value $m$ corresponds exactly to an orientation that satisfies~(i).
+The unit of $e$ goes to the endpoint chosen as its tail, so the flow on the arc that leaves $s_{v,j}$ equals $B_{v,j}$. The network has $O(m)$ nodes and arcs, and, for \FREE{}, a flow of value $m$ corresponds exactly to an orientation that satisfies~(i).
 
 Figure~\ref{fig:chain} shows the network on a small example.
 
@@ -245,8 +245,8 @@ Figure~\ref{fig:chain} shows the network on a small example.
   \node[edg] (e) at (2.6,1.8) {$e$};
   \node[edg] (f) at (2.6,-1.8) {$f$};
   \node[occ] (su1) at (5.4,2.6) {$s_{u,1}$};
-  \node[occ] (sv1) at (5.4,0.6) {$s_{v,1}$};
-  \node[occ] (sv2) at (5.4,-0.6) {$s_{v,2}$};
+  \node[occ] (sv1) at (5.4,1.0) {$s_{v,1}$};
+  \node[occ] (sv2) at (5.4,-1.0) {$s_{v,2}$};
   \node[occ] (sw1) at (5.4,-2.6) {$s_{w,1}$};
   \node[occ] (r) at (8.6,0) {$r$};
   \draw[flow] (src) -- node[lbl,pos=0.45,yshift=4pt] {$1$} (e);
@@ -255,8 +255,8 @@ Figure~\ref{fig:chain} shows the network on a small example.
   \draw[flow] (e) -- node[lbl,pos=0.5] {$1$} (sv1);
   \draw[flow] (f) -- node[lbl,pos=0.5] {$1$} (sv2);
   \draw[flow] (f) -- node[lbl,pos=0.5,below=1pt] {$1$} (sw1);
-  \draw[chain] (sv1) -- node[lbl,pos=0.5,above=0pt] {$C_{v,1}$} (sv2);
-  \draw[chain] (sv2) -- node[lbl,pos=0.4,below=1pt] {$C_{v,2}$} (r);
+  \draw[chain] (sv1) -- node[lbl,pos=0.5,right=3pt] {$C_{v,1}$} (sv2);
+  \draw[chain] (sv2) -- node[lbl,pos=0.45,above=2pt] {$C_{v,2}$} (r);
   \draw[chain] (su1) -- node[lbl,pos=0.5,above=0pt] {$C_{u,1}$} (r);
   \draw[chain] (sw1) -- node[lbl,pos=0.5,below=0pt] {$C_{w,1}$} (r);
 \end{tikzpicture}
@@ -581,7 +581,7 @@ Let $i$ be a port of $v$ and $j$ a port of $w$ in the same component $K$. The ex
 \begin{algorithm}[t]
 \caption{Augmenting path algorithm for \FIX{} and \FREE{}}\label{alg:pf}
 \begin{algorithmic}[1]
-\State Check the counting conditions ($\sum a=\sum z$ and $h_v\in\N$ for \FIX{}, $k\ge\sum_vp_{\mathrm{end}}(v)$ for \FREE{}).
+\State Check the counting conditions ($\sum a=\sum z$ and $h_v\in\N$ for \FIX{}, $k\ge\sum_vp_{\mathrm{end}}(v)$ for \FREE{}). \textbf{if} a check fails \textbf{then return} \NO{}.
 \State Solve a maximum flow in the chain network. \textbf{if} its value is less than $m$ \textbf{then return} \NO{} with the minimum cut.
 \State Take the orientation of the maximum flow and the induced $\xi$ and $x$. For every dead even component $K$, pick $v\in K$, set $x=(-\e_v,\e_v)$ at $(\IN(K,v),\OUT(K,v))$, so that $d=+1$ at $\IN(K,v)$ and $d=-1$ at $\OUT(K,v)$.
 \While{some port has $d>0$}
@@ -688,17 +688,17 @@ Compared with Theorem~\ref{thm:char}, condition~(i) is replaced by the stronger 
 
 \subsection{The reduction}
 
-We reduce from the satisfiability problem for formulas in conjunctive normal form in which every clause has two or three literals on distinct variables and every literal occurs at most twice. This problem is NP-complete. We give a self-contained reduction from 3-SAT, the Boolean satisfiability problem with three literals on distinct variables per clause. A closely related restriction is studied by Tovey~\cite{tovey1984}. In a formula with three literals on distinct variables per clause, replace the $r\ge2$ occurrences of a variable $x$ by new variables $x_1,\dots,x_r$ and add the clauses $(\lnot x_1\lor x_2),\dots,(\lnot x_{r-1}\lor x_r),(\lnot x_r\lor x_1)$, which force $x_1,\dots,x_r$ to be equal. Each literal of a new variable then occurs at most twice: $x_j$ and $\lnot x_j$ each occur once in the added clauses and at most once in the original clauses.
+We reduce from 3-SAT, the Boolean satisfiability problem with three literals on distinct variables per clause. The first step of the reduction makes every literal occur at most twice; the resulting restriction of satisfiability is closely related to one studied by Tovey~\cite{tovey1984}. In a formula with three literals on distinct variables per clause, replace the $r\ge2$ occurrences of a variable $x$ by new variables $x_1,\dots,x_r$ and add the clauses $(\lnot x_1\lor x_2),\dots,(\lnot x_{r-1}\lor x_r),(\lnot x_r\lor x_1)$, which force $x_1,\dots,x_r$ to be equal. Each literal of a new variable then occurs at most twice: $x_j$ and $\lnot x_j$ each occur once in the added clauses and at most once in the original clauses.
 
-Let $\varphi$ be such a formula with variables $x_1,\dots,x_n$ and clauses $C_1,\dots,C_m$. Let $s_j\in\{2,3\}$ be the number of literals of $C_j$ and let $d(\ell)\le2$ be the number of clauses that contain the literal $\ell$. Since $\sum_js_j=\sum_\ell d(\ell)\le4n$ and $s_j\ge2$, we have $m\le2n$. The temporal graph $G_\varphi$ has one vertex for each of the $2n$ literals, one vertex for each clause, a \emph{hub} $h$, and vertices of degree one called \emph{leaves}. Its edges are the following (Fig.~\ref{fig:strict}).
+Let $\varphi$ be such a formula with variables $x_1,\dots,x_n$ and clauses $C_1,\dots,C_m$. Let $s_j\in\{2,3\}$ be the number of literals of $C_j$ and let $d(\ell)\le2$ be the number of clauses that contain the literal $\ell$. Since $\sum_js_j=\sum_\ell d(\ell)\le4n_\varphi$ and $s_j\ge2$, we have $m_\varphi\le2n_\varphi$. The temporal graph $G_\varphi$ has one vertex for each of the $2n_\varphi$ literals, one vertex for each clause, a \emph{hub} $h$, and vertices of degree one called \emph{leaves}. Its edges are the following (Fig.~\ref{fig:strict}).
 \begin{itemize}
-\item \emph{Time $1$.} One \emph{start leaf} is joined to every literal vertex, $s_j-1$ start leaves are joined to $C_j$, and $4n$ start leaves are joined to $h$.
+\item \emph{Time $1$.} One \emph{start leaf} is joined to every literal vertex, $s_j-1$ start leaves are joined to $C_j$, and $4n_\varphi$ start leaves are joined to $h$.
 \item \emph{Time $2$.} The edge $\{x_i,\lnot x_i\}$ for every variable $x_i$.
 \item \emph{Time $3$.} The edge $\{C_j,\ell\}$ for every clause $C_j$ and every literal $\ell$ of $C_j$.
 \item \emph{Times $4$ and $5$.} One edge $\{\ell,h\}$ at time $4$ and one at time $5$, for every literal vertex $\ell$.
-\item \emph{Time $6$.} $d(\ell)$ \emph{end leaves} are joined to every literal vertex $\ell$, one end leaf is joined to every $C_j$, and $6n-2m$ end leaves are joined to $h$.
+\item \emph{Time $6$.} $d(\ell)$ \emph{end leaves} are joined to every literal vertex $\ell$, one end leaf is joined to every $C_j$, and $6n_\varphi-2m_\varphi$ end leaves are joined to $h$.
 \end{itemize}
-We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ otherwise. There are $6n+\sum_js_j-m$ start leaves and as many end leaves. The graph $G_\varphi$ has no parallel edges within a snapshot, and its size is linear in the size of $\varphi$. Figure~\ref{fig:strict} shows its edges at a variable and a clause. The edges from $C_j$ to its other literals and the end leaves of $\lnot x_i$ are omitted there. Edge labels are time labels, and a number next to a leaf gives its multiplicity.
+We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ otherwise. There are $6n_\varphi+\sum_js_j-m_\varphi$ start leaves and as many end leaves. The graph $G_\varphi$ has no parallel edges within a snapshot, and its size is linear in the size of $\varphi$. Figure~\ref{fig:strict} shows its edges at a variable and a clause. The edges from $C_j$ to its other literals and the end leaves of $\lnot x_i$ are omitted there. Edge labels are time labels, and a number next to a leaf gives its multiplicity.
 
 \begin{figure}[t]
 \centering
@@ -732,10 +732,10 @@ We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ o
   \draw[ed] (c) -- node[lab] {6} (ec);
   \node[leaf] (sh) at (4.7,-0.6) {};
   \draw[ed] (sh) -- node[lab] {1} (h);
-  \node[note,anchor=west] at (4.85,-0.6) {$4n$};
+  \node[note,anchor=west] at (4.85,-0.6) {$4n_\varphi$};
   \node[eleaf] (eh) at (4.7,-1.6) {};
   \draw[ed] (h) -- node[lab] {6} (eh);
-  \node[note,anchor=west] at (4.85,-1.6) {$6n-2m$};
+  \node[note,anchor=west] at (4.85,-1.6) {$6n_\varphi-2m_\varphi$};
   \node[leaf] at (6.9,1.6) {};
   \node[note,anchor=west] at (7.05,1.6) {start leaf ($a=1$)};
   \node[eleaf] at (6.9,1.1) {};
@@ -750,37 +750,37 @@ We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ o
 \end{theorem}
 
 \begin{proof}
-Both problems are in NP, because an orientation is a certificate that is checked in polynomial time by Lemma~\ref{lem:strict}. We show that $\varphi$ is satisfiable if and only if $G_\varphi$ with the vectors $a$ and $z$ above is a feasible instance of \SFIX{}.
+Both problems are in NP. An orientation is a certificate that is checked in polynomial time by Lemma~\ref{lem:strict}; when empty walks are not allowed, the certificate also lists the walks, of which there are at most $m_\varphi$, because every non-empty walk uses an edge. We show that $\varphi$ is satisfiable if and only if $G_\varphi$ with the vectors $a$ and $z$ above is a feasible instance of \SFIX{}.
 
-\emph{A solution yields a satisfying assignment.} Take the orientation of a solution. Before time $1$ only the start leaves hold walks, so the condition $\out_1(v)\le c_1(v)$ of Lemma~\ref{lem:strict} forces every edge at time $1$ to be directed away from its leaf. Before time $2$ every literal vertex therefore holds one walk, $C_j$ holds $s_j-1$ walks and $h$ holds $4n$ walks. The edge $\{x_i,\lnot x_i\}$ at time $2$ moves one walk, so before time $3$ one of the two vertices $x_i$ and $\lnot x_i$ holds two walks and the other holds none. Call a literal \emph{true} if its vertex holds two walks. Exactly one of $x_i$ and $\lnot x_i$ is true, so this is a truth assignment. At time $3$ the vertex $C_j$ has $s_j$ edges but holds only $s_j-1$ walks. By Lemma~\ref{lem:strict} at least one of these edges is directed from a literal vertex $\ell$ to $C_j$, and $\ell$ holds a walk before time $3$. Hence $\ell$ is true and $C_j$ is satisfied.
+\emph{A solution yields a satisfying assignment.} Take the orientation of a solution. Before time $1$ only the start leaves hold walks, so the condition $\out_1(v)\le c_1(v)$ of Lemma~\ref{lem:strict} forces every edge at time $1$ to be directed away from its leaf. Before time $2$ every literal vertex therefore holds one walk, $C_j$ holds $s_j-1$ walks and $h$ holds $4n_\varphi$ walks. The edge $\{x_i,\lnot x_i\}$ at time $2$ moves one walk, so before time $3$ one of the two vertices $x_i$ and $\lnot x_i$ holds two walks and the other holds none. Call a literal \emph{true} if its vertex holds two walks. Exactly one of $x_i$ and $\lnot x_i$ is true, so this is a truth assignment. At time $3$ the vertex $C_j$ has $s_j$ edges but holds only $s_j-1$ walks. By Lemma~\ref{lem:strict} at least one of these edges is directed from a literal vertex $\ell$ to $C_j$, and $\ell$ holds a walk before time $3$. Hence $\ell$ is true and $C_j$ is satisfied.
 
-\emph{A satisfying assignment yields a solution.} We give an orientation and verify Lemma~\ref{lem:strict}. Direct the edges at time $1$ away from the leaves and the edge $\{x_i,\lnot x_i\}$ from the false literal to the true literal. For every clause $C_j$ choose one true literal $\ell_j$ of $C_j$, direct $\{C_j,\ell_j\}$ from $\ell_j$ to $C_j$, and direct the other $s_j-1$ edges of $C_j$ away from $C_j$. The vertex $C_j$ uses its $s_j-1$ walks. A true literal $\ell$ is chosen by $\tau_\ell\le d(\ell)\le2$ clauses and holds two walks, and a false literal has no outgoing edge. After time $3$ the vertex $C_j$ holds one walk, a false literal $\ell$ holds $d(\ell)$ walks, a true literal $\ell$ holds $d(\ell)+2-2\tau_\ell$ walks, and $h$ holds $4n$ walks. The edges at times $4$ and $5$ bring every literal vertex $\ell$ to exactly $d(\ell)$ walks.
+\emph{A satisfying assignment yields a solution.} We give an orientation and verify Lemma~\ref{lem:strict}. Direct the edges at time $1$ away from the leaves and the edge $\{x_i,\lnot x_i\}$ from the false literal to the true literal. For every clause $C_j$ choose one true literal $\ell_j$ of $C_j$, direct $\{C_j,\ell_j\}$ from $\ell_j$ to $C_j$, and direct the other $s_j-1$ edges of $C_j$ away from $C_j$. The vertex $C_j$ uses its $s_j-1$ walks. Let $\theta_\ell$ be the number of clauses that choose a true literal $\ell$, so $\theta_\ell\le d(\ell)\le2$, and a true literal holds two walks, while a false literal has no outgoing edge. After time $3$ the vertex $C_j$ holds one walk, a false literal $\ell$ holds $d(\ell)$ walks, a true literal $\ell$ holds $d(\ell)+2-2\theta_\ell$ walks, and $h$ holds $4n_\varphi$ walks. The edges at times $4$ and $5$ bring every literal vertex $\ell$ to exactly $d(\ell)$ walks.
 \begin{itemize}
-\item If $\ell$ is true and $\tau_\ell=0$, direct both edges from $\ell$ to $h$. The vertex $\ell$ holds $d(\ell)+2\ge2$ walks before time $4$.
-\item If $\ell$ is false, or true with $\tau_\ell=1$, direct the edge at time $4$ from $h$ to $\ell$ and the edge at time $5$ from $\ell$ to $h$. The vertex $\ell$ holds at least one walk before time $5$.
-\item If $\ell$ is true and $\tau_\ell=2$, direct both edges from $h$ to $\ell$.
+\item If $\ell$ is true and $\theta_\ell=0$, direct both edges from $\ell$ to $h$. The vertex $\ell$ holds $d(\ell)+2\ge2$ walks before time $4$.
+\item If $\ell$ is false, or true with $\theta_\ell=1$, direct the edge at time $4$ from $h$ to $\ell$ and the edge at time $5$ from $\ell$ to $h$. The vertex $\ell$ holds at least one walk before time $5$.
+\item If $\ell$ is true and $\theta_\ell=2$, direct both edges from $h$ to $\ell$.
 \end{itemize}
-At each of the times $4$ and $5$ at most $2n$ edges leave $h$, and $h$ holds $4n$ walks before time $4$ and at least $2n$ walks before time $5$. The number of walks at $h$ changes in total by $\sum_{\ell\text{ true}}(2-2\tau_\ell)=2n-2m$, because there are $n$ true literals and $\sum_\ell\tau_\ell=m$. Hence $h$ holds $6n-2m\ge0$ walks before time $6$, and here $m\le2n$ is used. Before time $6$ every vertex that is not a leaf thus holds exactly as many walks as it has end leaves, and the edges at time $6$ are directed towards the end leaves. The final numbers of walks are $z$.
+At each of the times $4$ and $5$ at most $2n_\varphi$ edges leave $h$, and $h$ holds $4n_\varphi$ walks before time $4$ and at least $2n_\varphi$ walks before time $5$. The number of walks at $h$ changes in total by $\sum_{\ell\text{ true}}(2-2\theta_\ell)=2n_\varphi-2m_\varphi$, because there are $n_\varphi$ true literals and $\sum_\ell\theta_\ell=m_\varphi$. Hence $h$ holds $6n_\varphi-2m_\varphi\ge0$ walks before time $6$, and here $m_\varphi\le2n_\varphi$ is used. Before time $6$ every vertex that is not a leaf thus holds exactly as many walks as it has end leaves, and the edges at time $6$ are directed towards the end leaves. The final numbers of walks are $z$.
 
 \emph{Free end vertices.} Keep only the literal and clause vertices and the edges of times $2$ and $3$, and set $a_v=1$ at every literal vertex and $a_{C_j}=s_j-1$. Before time $2$ each literal vertex holds one walk because $a_v=1$, and each clause vertex holds $s_j-1$ walks. The arguments for the times $2$ and $3$ then apply unchanged, so this instance of \SFREE{} is feasible if and only if $\varphi$ is satisfiable. In a solution, a true literal that no clause chooses keeps an empty walk. If empty walks are not allowed, keep in addition the start leaves and the edges of time~$1$, with $a_v=1$ at every start leaf and $a_v=0$ elsewhere. Every walk then starts with an edge, and the same arguments apply with three time labels.
 \end{proof}
 
 \subsection{Discussion}
 
-The graph $G_\varphi$ is not proper and its snapshots have different numbers of edges, so the polynomial cases of Corollary~6.4 and Theorem~6.5 of~\cite{deligkas2025} do not apply. Theorem~5.4 of~\cite{deligkas2025} concerns the problem without prescribed start vertices and does not imply Theorem~\ref{thm:strict}. Every terminal in the construction is a leaf of multiplicity one, so it also satisfies the multiset-terminal model of~\cite{deligkas2025}. A computer check of the reduction is reported in Section~\ref{sec:exp-correct}. The construction uses a hub with many edges in one snapshot, so it does not settle the case in which every vertex has at most two edges in every snapshot, which lies between Corollary~6.4 of~\cite{deligkas2025} and Theorem~\ref{thm:strict}. We leave it open.
+The graph $G_\varphi$ is not proper and its snapshots have different numbers of edges, so Corollary~6.4 of~\cite{deligkas2025} does not apply, and Theorem~6.5 does not apply either: its running time is exponential in $|V_S|$, which grows with $n_\varphi$ here, and its hypothesis $|E_t|\in\{0,k\}$ is violated. Theorem~5.4 of~\cite{deligkas2025} concerns the problem without prescribed start vertices and does not imply Theorem~\ref{thm:strict}. Every terminal in the construction is a leaf of multiplicity one, so it also satisfies the multiset-terminal model of~\cite{deligkas2025}. A computer check of the reduction is reported in Section~\ref{sec:exp-correct}. The construction uses a hub with many edges in one snapshot, so it does not settle the case in which every vertex has at most two edges in every snapshot, which lies between Corollary~6.4 of~\cite{deligkas2025} and Theorem~\ref{thm:strict}. We leave it open.
 
 %% =====================================================================
 \section{Computational experiments}\label{sec:eval}
 
-The experiments support the correctness and practical performance of the pair flow (\textbf{PF}) algorithm (Algorithm~\ref{alg:pf}) and demonstrate errors in the static reduction. Independent checks agree with Theorem~\ref{thm:correct} (Sections~\ref{sec:exp-correct} and~\ref{sec:exp-even}). PF completes the transit, contact and synthetic benchmarks, while BB reaches its limits on larger instances (Sections~\ref{sec:exp-real} and~\ref{sec:exp-scale}). The static reduction accepts infeasible instances (Section~\ref{sec:exp-static}).
+The experiments are consistent with the correctness of the implementation of the pair flow (\textbf{PF}) algorithm (Algorithm~\ref{alg:pf}) and demonstrate errors in the static reduction. Independent checks agree with Theorem~\ref{thm:correct} (Sections~\ref{sec:exp-correct} and~\ref{sec:exp-even}). PF completes the transit, contact and synthetic benchmarks, while BB reaches its limits on larger instances (Sections~\ref{sec:exp-real} and~\ref{sec:exp-scale}). The static reduction accepts infeasible instances (Section~\ref{sec:exp-static}).
 
 \subsection{Implementation and instances}\label{sec:exp-setup}
 
 The benchmark design tests the need for condition~(ii) of Theorem~\ref{thm:char} and the performance of the implementation in Section~\ref{sec:impl}. Independent implementations of PF in Python and C++17 are compared with BB. The Python implementations of PF and BB use the same maximum flow backend.
 
-\paragraph{Even-rich synthetic instances.} Walks move in pairs. At every time, each pair is active with probability $0.7$, and an active pair crosses a double edge to another vertex (probability $0.25$), lets one of its walks traverse a cycle of length $3$ to $6$ through its vertex (probability $0.3$), or moves to another vertex along two internally disjoint paths of length $1$ to $3$ (probability $0.45$). Every snapshot is then a union of closed trails, so every degree and every walk counter is even, and \emph{every} snapshot component is even. Every component is also balanced, so the counting condition alone accepts every \FREE{} instance. In the \emph{sparse} family the graph has about $m/3$ vertices, so the components in one snapshot rarely touch. In the \emph{dense} family it has about $2\sqrt m$ vertices, so they often merge into larger even components. Both families have about $\sqrt m/2$ pairs. Vertex labels and edge order are shuffled, so the initial maximum flow does not see the planted orientation. Each generated graph gives four instances, namely \FIX{} and \FREE{} with the planted vectors of start and end counts, which are feasible by construction, and \FIX{} and \FREE{} with one pair removed, whose answer is not known in advance. We generated $764$ graphs with $12\le m\le 20{,}000$, which give $3{,}056$ instances (Table~\ref{tab:even}). These runs were executed one at a time on an Intel Core i9-9980HK under Linux with Python~3.13 and the default backend of the library without SciPy.
+\paragraph{Even-rich synthetic instances.} Walks move in pairs. At every time, each pair is active with probability $0.7$, and an active pair crosses a double edge to another vertex (probability $0.25$), lets one of its walks traverse a cycle of length $3$ to $6$ through its vertex (probability $0.3$), or moves to another vertex along two internally disjoint paths of length $1$ to $3$ (probability $0.45$). Every snapshot is then a union of closed trails, so every degree and every walk counter is even, and \emph{every} snapshot component is even. Every component is also balanced, so the counting condition alone accepts every \FREE{} instance. In the \emph{sparse} family the graph has about $m/3$ vertices, so the components in one snapshot rarely touch. In the \emph{dense} family it has about $2\sqrt m$ vertices, so they often merge into larger even components. Both families have about $\sqrt m/2$ pairs. Vertex labels and edge order are shuffled, so the initial maximum flow does not see the planted orientation. Each generated graph gives four instances, namely \FIX{} and \FREE{} with the planted vectors of start and end counts, which are feasible by construction, and \FIX{} and \FREE{} with one pair removed, whose answer is not known in advance. We generated $764$ graphs with $12\le m\le 20{,}000$, which give $3{,}056$ instances (Table~\ref{tab:even}). These runs were executed one at a time on an Intel Core i9-9980HK under Linux with Python~3.13.12 and the default backend of the library, without SciPy.
 
-\paragraph{Transit and contact data.} We also built instances from the one-day timetables of transit networks from version~1.2 of the data set of~\cite{kujala2018} (Zenodo record 1186215) and from three layers of the Copenhagen Networks Study (CNS)~\cite{sapiezynski2019}. For the census of Section~\ref{sec:exp-real}, each data set was cut into time windows of several lengths (for transit, windows of one hour and, for Kuopio, Turku and Grenoble, the whole day). For transit data every vehicle trip is a walk whose segments have their departure minute as time label, and edge directions are ignored. The census and the C++ experiments of Section~\ref{sec:exp-scale} use different loaders (Kuopio has $987$ edges in the census and $32{,}122$ edges in the C++ experiments), so the two transit sets are not directly comparable. Contact data do not record who is responsible for an event, so start counts were constructed by a greedy rule that processes the contacts in time order, moves a walk across each contact from an endpoint that holds one, and creates a new walk at the first endpoint when neither does. Each window gives up to four instances, namely \FIX{} and \FREE{} instances that are feasible by construction and two \FREE{} instances with one walk or $10\%$ of the walks removed (omitted when the window has too few walks). This yields $18{,}250$ instances from $4{,}639$ windows. These runs and all other Python experiments were made on an Intel Core i5-10210U (4 cores) under the second-generation Windows Subsystem for Linux (WSL2) with SciPy for the maximum flow, with Python~3.14 recorded for the runs from 26 October 2026 onwards. Two to four of these runs were executed concurrently, so their running times may vary by a factor of about two.
+\paragraph{Transit and contact data.} We also built instances from the one-day timetables of transit networks from version~1.2 of the data set of~\cite{kujala2018} (Zenodo record 1186215) and from three layers of the Copenhagen Networks Study (CNS)~\cite{sapiezynski2019}. For the census of Section~\ref{sec:exp-real}, each data set was cut into time windows of several lengths (for transit, windows of one hour and, for Kuopio, Turku and Grenoble, the whole day). For transit data every vehicle trip is a walk whose segments have their departure minute as time label, and edge directions are ignored. The census and the C++ experiments of Section~\ref{sec:exp-scale} use different loaders (Kuopio has $987$ edges in the census and $32{,}122$ edges in the C++ experiments), so the two transit sets are not directly comparable. Contact data do not record who is responsible for an event, so start counts were constructed by a greedy rule that processes the contacts in time order, moves a walk across each contact from an endpoint that holds one, and creates a new walk at the first endpoint when neither does. Each window gives up to four instances, namely \FIX{} and \FREE{} instances that are feasible by construction and two \FREE{} instances with one walk or $10\%$ of the walks removed (omitted when the window has too few walks). This yields $18{,}250$ instances from $4{,}639$ windows. The census and transit runs were made on an Intel Core i5-10210U (4 cores) under the second-generation Windows Subsystem for Linux (WSL2) with SciPy for the maximum flow. The Python experiments used Python~3.14.4 and SciPy~1.16.3, and the C++ experiments used g++~15.2.0 and CMake~4.2.3. Two to four of these runs were executed concurrently, so their running times may vary by a factor of about two.
 
 \subsection{Correctness}\label{sec:exp-correct}
 
@@ -795,7 +795,7 @@ Check & Scale & Result \\
 \midrule
 Exhaustive oracle & $102{,}476$ small instances, each solved as \FIX{} and \FREE{} ($204{,}952$ runs) & all agree, $1{,}379$ runs complete an augmentation \\
 PF against BB & $105{,}182$ runs ($52{,}591$ instances as \FIX{} and \FREE{}), $1{,}840{,}950$ edges in total & all agree \\
-Even-rich instances & $1{,}176$ runs with $m\le14$ against the oracle, $2{,}960$ runs with $m\le1{,}005$ against BB & all agree, BB stopped at its limit in $42$ runs \\
+Even-rich instances & $1{,}176$ runs with $m\le14$ against the oracle, $2{,}960$ runs with $m\le1{,}005$ against BB & all completed runs agree; BB stopped at its limit in $42$ runs \\
 Lemma~\ref{lem:gamma} & all labelled connected multigraphs with $n\le5$, $m\le6$, box $0\le\alpha_v,\beta_v\le\deg(v)$ & no violation in $119{,}040$ sets $\Gamma_K$ and $153$ sets $\Gamma'_K$ \\
 Maximum flow backends & $32{,}256$ instances, four solvers & agree on whether the flow reaches $m$ \\
 C++ against oracle & $378{,}040$ small instances & all agree \\
@@ -814,7 +814,7 @@ The even-rich benchmark isolates the augmentation step of Algorithm~\ref{alg:pf}
 \emph{Graphs}: generated graphs, each giving four instances. \emph{Even}: mean number of even components. \emph{Dead}: mean and largest number $D$ of dead even components after the initial maximum flow. \emph{Cut}: \YES{}/\NO{} answers of the two instances with one pair removed. \emph{PF}: median and largest time in seconds. \emph{BB}: runs stopped at the limit of $2{,}000$ maximum flows or $10$ seconds ($5$ seconds for $m=1{,}000$) out of all runs. \emph{Static}: \FIX{} instances accepted by the rule of Section~\ref{sec:exp-static} out of the infeasible \FIX{} instances. A dash means not run.
 
 \begin{table}[t]
-\caption{Even-rich synthetic benchmark.}
+\caption{Even-rich synthetic benchmark. Each cell reports $a/b$. \textbf{Even}: mean number of even components per graph. \textbf{Dead}: mean/maximum number of dead even components left by the initial maximum flow. \textbf{Cut}: YES/NO answers of PF on the instances with one pair removed. \textbf{PF}: median/maximum running time in seconds. \textbf{BB}: runs stopped at the time limit / all BB runs. \textbf{Static}: instances on which the static rule answers YES although PF answers NO, out of the instances with a PF NO answer on which the rule was run. A dash means the method was not run.}
 \label{tab:even}
 \footnotesize
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrr}
@@ -876,11 +876,11 @@ Every instance is infeasible. The run had a total budget of $270$ seconds, and B
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{loglogaxis}[width=0.9\textwidth,height=6.6cm,
+\begin{loglogaxis}[width=0.9\textwidth,height=6.8cm,
   xlabel={$e$ (number of blocks)},ylabel={running time (s)},
   xmin=1.5,xmax=3000,ymin=0.0001,ymax=300,
   grid=major,grid style={black!10},
-  legend pos=south east,legend cell align=left,
+  legend style={at={(0.5,-0.26)},anchor=north,legend columns=3,draw=none,column sep=10pt},legend cell align=left,
   mark size=2pt,
   every axis plot/.append style={thick}]
 \addplot[color=cA,mark=*,only marks] coordinates {
@@ -924,11 +924,11 @@ Across the benchmarks, PF completed all runs, reaching $387{,}467$ edges on tran
 
 The tests confirm that the static reduction can accept temporally infeasible instances, as Proposition~\ref{prop:aaai} establishes, and check its orientation constraints against Lemma~\ref{lem:aaai}.
 
-\paragraph{Random instances.} On $20{,}000$ small random \FIX{} instances (seed $20261030$, $n\le5$, $m\le7$, three time labels) every temporal solution gives a feasible $S$. A balanced orientation of $S$ exists if and only if~(i) holds, as Lemma~\ref{lem:aaai} predicts. There are $52$ instances in which $S$ is feasible but the temporal instance is not, and in $9$ instances condition~(i) holds but $S$ is infeasible because of the static connectivity condition. Under the literal reading, the same instances give $5$ wrong \YES{} answers and $3{,}778$ wrong \NO{} answers, so the conclusion depends on how the construction is read.
+\paragraph{Random instances.} On $20{,}000$ small random \FIX{} instances (seed $20261030$, $n\le5$, $m\le7$, three time labels) every temporal solution gives a feasible $S$. A balanced orientation of $S$ exists if and only if some orientation satisfies~(i) and the prescribed end counts, as Lemma~\ref{lem:aaai} predicts. There are $52$ instances in which $S$ is feasible but the temporal instance is not, and in $9$ instances condition~(i) holds but $S$ is infeasible because of the static connectivity condition. Under the literal reading, the same instances give $5$ wrong \YES{} answers and $3{,}778$ wrong \NO{} answers, so the conclusion depends on how the construction is read.
 
 \paragraph{Even-rich instances.} On the \FIX{} instances of the even-rich benchmark with $m\le1{,}005$ we ran the rule ``if $S$ has a balanced orientation and every component touches a terminal, answer \YES{}'', under the reading of Figure~3 of~\cite{deligkas2025}. It accepts $250$ of the $251$ infeasible instances. These include $121$ of the $122$ instances that the exhaustive oracle proves infeasible and $233$ of the $234$ instances that BB proves infeasible. It never rejects a feasible instance. An earlier benchmark using disjoint triangles and copies of the counterexample exhibited the same type of error. The two solvers disagreed on $160$ of $437$ instances, and in all $160$ cases the rule accepted an instance that PF rejects. Exhaustive search confirms PF in the $40$ of these cases that are small enough.
 
-The rule based on Figure~3 of~\cite{deligkas2025} therefore fails chiefly when condition~(ii) determines infeasibility in the tested even-rich instances.
+The rule based on Figure~3 of~\cite{deligkas2025} therefore fails on the tested even-rich instances, which are constructed so that condition~(ii) carries the difficulty.
 
 \subsection{Scope and limitations}\label{sec:scope}
 
@@ -951,10 +951,10 @@ We thank the authors of~\cite{deligkas2025} for helpful correspondence about the
 \item \textbf{Competing interests} The authors declare that they have no competing interests.
 \item \textbf{Ethics approval and consent to participate} Not applicable.
 \item \textbf{Consent for publication} Not applicable.
-\item \textbf{Data availability} The Copenhagen Networks Study data~\cite{sapiezynski2019} and the transit data~\cite{kujala2018} are available from their providers under their terms. The generator of the synthetic instances, the generated instances and the raw results are available at [repository URL to be added].
+\item \textbf{Data availability} The Copenhagen Networks Study data~\cite{sapiezynski2019} and the transit data~\cite{kujala2018} are available from their providers under their terms. The code, the instance generators and the summaries of the raw results are available at https://github.com/th1enq/exact-edge-cover-temporal-walks. The raw data are not redistributed, and the instances can be regenerated from the scripts in that repository.
 \item \textbf{Materials availability} Not applicable.
-\item \textbf{Code availability} The Python library, the C++17 implementation and the experiment scripts are available at [repository URL to be added].
-\item \textbf{Author contribution} [To be completed by the authors.]
+\item \textbf{Code availability} The Python library, the C++17 implementation and the experiment scripts are available at https://github.com/th1enq/exact-edge-cover-temporal-walks.
+\item \textbf{Author contribution} D.T.Q.: Conceptualization, Methodology, Formal analysis, Software, Investigation, Validation, Writing – original draft. M.C.T.: Supervision, Writing – review \& editing; M.C.T. is the corresponding author. All authors read and approved the final manuscript.
 \end{itemize}
 
 \bibliography{references}

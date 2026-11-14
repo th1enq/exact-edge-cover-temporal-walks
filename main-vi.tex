@@ -112,7 +112,7 @@
 
 \affil[1]{\orgdiv{Khoa Công nghệ Thông tin}, \orgname{Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội}, \orgaddress{\city{Hà Nội}, \country{Việt Nam}}}
 
-\abstract{Cho một đồ thị thời gian vô hướng và số walk xuất phát tại mỗi đỉnh, bài toán phủ chính xác cạnh hỏi liệu các cạnh có thể được chia thành các walk thời gian với đỉnh kết thúc cho trước hoặc tự do hay không. Với walk không chặt, tức các walk có nhãn thời gian không bao giờ giảm, Deligkas và cộng sự đã khẳng định tại AAAI 2025 rằng bài toán giải được trong thời gian đa thức, thông qua một phép quy về đồ thị tĩnh; một phản ví dụ năm đỉnh cho thấy phép quy này, xây dựng như Hình 3 của họ, bỏ sót một điều kiện. Chúng tôi đưa ra một thuật toán đa thức đầy đủ. Một định hướng là khả thi khi và chỉ khi một điều kiện đếm được thỏa mãn và mọi thành phần snapshot đều chứa một walk; chỉ các thành phần có bậc và bộ đếm walk đều chẵn mới có thể vi phạm điều kiện thứ hai. Đếm walk theo cặp, chúng tôi chứng minh tập trạng thái của một thành phần như vậy vẫn là M-lồi sau khi bỏ trạng thái chết, điều này cho một mô hình luồng submodular M-lồi và một thuật toán đường tăng trả về các walk hoặc một chứng nhận vô nghiệm. Với walk chặt, tức các walk có nhãn thời gian tăng nghiêm ngặt, chúng tôi chứng minh bài toán NP-đầy đủ ngay cả khi đỉnh kết thúc được cho trước và có sáu nhãn thời gian, giải quyết một trường hợp còn mở do Deligkas và cộng sự nêu. Các thực nghiệm trên instance có tới $387{,}467$ cạnh ủng hộ tính đúng và tính thực tế của thuật toán.}
+\abstract{Cho một đồ thị thời gian vô hướng và số walk xuất phát tại mỗi đỉnh, bài toán phủ chính xác cạnh hỏi liệu các cạnh có thể được chia thành các walk thời gian với đỉnh kết thúc cho trước hoặc tự do hay không. Với walk không chặt, tức các walk có nhãn thời gian không bao giờ giảm, Deligkas và cộng sự đã khẳng định tại AAAI 2025 rằng bài toán giải được trong thời gian đa thức, thông qua một phép quy về đồ thị tĩnh; một phản ví dụ năm đỉnh cho thấy phép quy này, xây dựng như Hình 3 của họ, bỏ sót một điều kiện. Chúng tôi đưa ra một chứng minh đầy đủ tính đa thức bằng một con đường khác, dựa trên luồng submodular M-lồi. Một định hướng là khả thi khi và chỉ khi một điều kiện đếm được thỏa mãn và mọi thành phần snapshot đều chứa một walk; chỉ các thành phần có bậc và bộ đếm walk đều chẵn mới có thể vi phạm điều kiện thứ hai. Đếm walk theo cặp, chúng tôi chứng minh tập trạng thái của một thành phần như vậy vẫn là M-lồi sau khi bỏ trạng thái chết, điều này cho một mô hình luồng submodular M-lồi và một thuật toán đường tăng trả về các walk hoặc một chứng nhận vô nghiệm. Với walk chặt, tức các walk có nhãn thời gian tăng nghiêm ngặt, chúng tôi chứng minh bài toán NP-đầy đủ ngay cả khi đỉnh kết thúc được cho trước và có sáu nhãn thời gian, giải quyết một trường hợp còn mở do Deligkas và cộng sự nêu. Các thực nghiệm trên instance có tới $387{,}467$ cạnh phù hợp với tính đúng của cài đặt và cho thấy hiệu năng trên các bộ thử đã chọn.}
 
 \keywords{Đồ thị thời gian, Phủ chính xác cạnh, Walk thời gian, Tập M-lồi, Luồng submodular, NP-đầy đủ}
 
@@ -126,7 +126,7 @@
 
 Đồ thị thời gian mô hình hóa các kết nối phụ thuộc thời gian trong mạng tiếp xúc, mạng truyền thông và mạng giao thông~\cite{kempe2002,holme2012,casteigts2012,michail2016}. Phủ các cạnh của mạng bằng các lộ trình là vấn đề trung tâm của bài toán người đưa thư Trung Hoa và định tuyến cung~\cite{edmonds1973,corberan2015}, còn việc phân công các chuyến theo lịch cho phương tiện bổ sung các ràng buộc thời gian~\cite{dantzig1954,bunte2009,kliewer2006}. Phủ chính xác cạnh bằng walk thời gian hỏi liệu các cạnh mang nhãn thời gian có thể được chia thành các walk tôn trọng thời gian, với số walk xuất phát tại mỗi đỉnh được cho trước, hay không.
 
-Deligkas và cộng sự~\cite{deligkas2025} giới thiệu bài toán phủ chính xác cạnh trong đồ thị thời gian tại Hội nghị AAAI về Trí tuệ nhân tạo (AAAI 2025). Chúng tôi nghiên cứu trường hợp vô hướng với các đỉnh xuất phát cho trước và các đỉnh kết thúc cho trước hoặc tự do. Chiều của mỗi lần đi qua cạnh là một phần của lời giải. Chúng tôi xét cả walk \emph{không chặt}, có nhãn thời gian không giảm, và walk \emph{chặt}, có nhãn thời gian tăng nghiêm ngặt. Mô hình không chặt cho phép các cạnh liên tiếp có cùng nhãn thời gian khi các sự kiện được ghi lại với độ phân giải thời gian hữu hạn. Sự phân biệt này có thể làm thay đổi độ phức tạp của các bài toán đồ thị thời gian~\cite{casteigts2024}. Deligkas và cộng sự chứng minh tính NP-đầy đủ cho walk không có đỉnh xuất phát cho trước, tương ứng với việc cực tiểu hóa số walk chứ không phải các bài toán của chúng tôi với số lượng xuất phát cho trước, và để mở trường hợp tổng quát của walk chặt với đầu cuối cho trước~\cite{deligkas2025}.
+Deligkas và cộng sự~\cite{deligkas2025} giới thiệu bài toán phủ chính xác cạnh trong đồ thị thời gian (arXiv 2024; AAAI 2025). Chúng tôi nghiên cứu trường hợp vô hướng với các đỉnh xuất phát cho trước và các đỉnh kết thúc cho trước hoặc tự do. Chiều của mỗi lần đi qua cạnh là một phần của lời giải. Chúng tôi xét cả walk \emph{không chặt}, có nhãn thời gian không giảm, và walk \emph{chặt}, có nhãn thời gian tăng nghiêm ngặt. Mô hình không chặt cho phép các cạnh liên tiếp có cùng nhãn thời gian khi các sự kiện được ghi lại với độ phân giải thời gian hữu hạn. Sự phân biệt này có thể làm thay đổi độ phức tạp của các bài toán đồ thị thời gian~\cite{casteigts2024}. Deligkas và cộng sự chứng minh tính NP-đầy đủ cho walk không có đỉnh xuất phát cho trước, tương ứng với việc cực tiểu hóa số walk chứ không phải các bài toán của chúng tôi với số lượng xuất phát cho trước, và để mở trường hợp tổng quát của walk chặt với đầu cuối cho trước~\cite{deligkas2025}.
 
 Phép quy tĩnh mà Deligkas và cộng sự dùng để lập luận về tính giải được trong thời gian đa thức cho walk không chặt bỏ sót một điều kiện cần: mọi thành phần liên thông chứa cạnh trong một \emph{snapshot}, tức đồ thị con gồm các cạnh có cùng nhãn thời gian, phải chứa một walk ngay trước thời điểm đó. Phản ví dụ của chúng tôi vô nghiệm về mặt thời gian, dù đồ thị tĩnh của nó có một phủ chính xác cạnh. Mục~\ref{sec:counterexample} trình bày cách xây dựng.
 
@@ -134,7 +134,7 @@ Phép quy tĩnh mà Deligkas và cộng sự dùng để lập luận về tính
 \begin{enumerate}
 \item \emph{Đặc trưng.} Một định hướng của các cạnh khả thực hiện bởi các walk khi và chỉ khi điều kiện đếm được thỏa mãn và mọi thành phần snapshot đều chứa một walk (Định lý~\ref{thm:char}). Chỉ các thành phần chẵn mới có thể vi phạm điều kiện thứ hai (Bổ đề~\ref{lem:noneven}), nên các instance không có chúng được giải bằng một luồng cực đại (Hệ quả~\ref{cor:flow}).
 \item \emph{Tính M-lồi của thành phần chẵn.} Bằng cách đếm walk theo cặp, chúng tôi chứng minh rằng tập trạng thái của một thành phần chẵn vẫn M-lồi sau khi bỏ trạng thái chết (Bổ đề~\ref{lem:gamma}(b)). Đây là kết quả cấu trúc mới then chốt.
-\item \emph{Thuật toán đa thức cho walk không chặt.} Bài toán là một bài toán luồng submodular M-lồi (Định lý~\ref{thm:reduction}). Thuật toán đường tăng của chúng tôi trả về các walk hoặc một chứng nhận vô nghiệm (Định lý~\ref{thm:correct}) trong thời gian đa thức (Định lý~\ref{thm:time}) và mở rộng cho trường hợp đỉnh kết thúc bị giới hạn trong một tập cho trước (Định lý~\ref{thm:endset}).
+\item \emph{Chứng minh đầy đủ cho walk không chặt.} Deligkas và cộng sự khẳng định tính đa thức; phép quy tĩnh của họ không nắm bắt điều kiện tồn tại walk (Mục~\ref{sec:counterexample}), nên chúng tôi đưa ra một chứng minh độc lập: bài toán là một bài toán luồng submodular M-lồi (Định lý~\ref{thm:reduction}). Thuật toán đường tăng của chúng tôi trả về các walk hoặc một chứng nhận vô nghiệm (Định lý~\ref{thm:correct}) trong thời gian đa thức (Định lý~\ref{thm:time}) và mở rộng cho trường hợp đỉnh kết thúc bị giới hạn trong một tập cho trước (Định lý~\ref{thm:endset}).
 \item \emph{Tính NP-đầy đủ cho walk chặt.} Bài toán chặt là NP-đầy đủ ngay cả khi đỉnh kết thúc được cho trước và chỉ có sáu nhãn thời gian (Định lý~\ref{thm:strict}), qua đó giải quyết trường hợp được để mở trong~\cite{deligkas2025}.
 \item \emph{Phép quy tĩnh.} Chúng tôi đưa ra phản ví dụ năm đỉnh (Mệnh đề~\ref{prop:aaai}) và chỉ ra chính xác những ràng buộc định hướng mà đồ thị tĩnh biểu diễn (Bổ đề~\ref{lem:aaai}).
 \end{enumerate}
@@ -176,7 +176,7 @@ Deligkas và cộng sự~\cite{deligkas2025} nghiên cứu phủ chính xác c�
 
 Kết quả đa thức cho trường hợp không chặt của họ, Định lý~6.3, chỉ đề cập đến đầu cuối xuất phát, trong khi phác thảo chứng minh và Hình~3 của nó cũng dùng đầu cuối kết thúc. Phiên bản mở rộng~\cite{deligkas2024arxiv} phát biểu kết quả cho đầu cuối xuất phát và kết thúc cho trước. Mục~\ref{sec:counterexample} phân tích cách xây dựng theo các cách đọc này về đầu cuối.
 
-Mô hình của chúng tôi cho phép cạnh song song trong một snapshot và walk rỗng, khác với mô hình của~\cite{deligkas2025}. Những khác biệt này không cần thiết cho phản ví dụ, vốn là một đồ thị đơn, hoặc cho kết quả khó với đỉnh kết thúc cho trước, mà cách xây dựng không dùng cạnh song song trong một snapshot cũng không dùng walk rỗng.
+Phản ví dụ ở Mục~\ref{sec:counterexample} là một đồ thị đơn, và phép xây dựng khó ở Mục~\ref{sec:strict} không có cạnh song song trong một snapshot.
 
 \paragraph{Mạng thời gian và các bài toán phủ.}
 Biểu diễn bằng các bản sao theo thời gian là cách biểu diễn chuẩn trong đồ thị thời gian~\cite{kostakos2009} và các bài toán luồng thời gian~\cite{akrida2019}. Mạng chuỗi và mạng cổng của chúng tôi bổ sung các ràng buộc chi phối việc định hướng và phủ các cạnh của snapshot. Các bài toán phủ thời gian liên quan yêu cầu một walk duy nhất đi qua mọi cạnh tĩnh~\cite{marino2023}, khám phá mọi cạnh~\cite{bumpus2023}, hoặc phủ các đỉnh của một đồ thị có hướng không chu trình (DAG) thời gian bằng đường đi~\cite{chakraborty2024}.
@@ -246,14 +246,14 @@ Nếu có đỉnh của $K$ có bậc lẻ trong $E_t$, thì $\out_t-\inn_t$ l�
 
 Chúng tôi áp đặt các cận này dưới dạng sức chứa trong một \emph{mạng chuỗi} có một nguồn và một đích $r$. Với mỗi lần xuất hiện $(v,j)$ có một nút $s_{v,j}$, và các nút này tạo thành một chuỗi $s_{v,1}\to\dots\to s_{v,q_v}\to r$. Cung rời khỏi $s_{v,j}$ có sức chứa $C_{v,j}=\floor{(a_v+G_{v,j})/2}$ trong \FREE{}, và $C_{v,j}=\min(\floor{(a_v+G_{v,j})/2},h_v)$ trong \FIX{}. Với mỗi cạnh $e=\{u,v\}$ có nhãn thời gian $t$, có một nút nhận một đơn vị từ nguồn và có hai cung sức chứa $1$ tới các nút lần xuất hiện của $u$ và $v$ tại thời điểm $t$.
 
-Đơn vị của $e$ đi tới đầu mút được chọn làm đuôi, nên luồng trên cung rời khỏi $s_{v,j}$ bằng $B_{v,j}$. Mạng có $O(m)$ nút và cung, và một luồng có giá trị $m$ tương ứng chính xác với một định hướng thỏa mãn (i).
+Đơn vị của $e$ đi tới đầu mút được chọn làm đuôi, nên luồng trên cung rời khỏi $s_{v,j}$ bằng $B_{v,j}$. Mạng có $O(m)$ nút và cung, và với \FREE{} một luồng có giá trị $m$ tương ứng chính xác với một định hướng thỏa mãn (i).
 
 Hình~\ref{fig:chain} minh họa mạng trên một ví dụ nhỏ.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm,
-  cap/.style={font=\scriptsize,fill=white,inner sep=1pt},
+  lbl/.style={font=\scriptsize,fill=white,inner sep=1pt},
   occ/.style={circle,draw,semithick,fill=white,minimum size=7mm,inner sep=0pt,font=\footnotesize},
   edg/.style={rectangle,draw,semithick,fill=white,minimum size=6mm,inner sep=0pt,font=\footnotesize},
   flow/.style={->,semithick,black!70},
@@ -262,20 +262,20 @@ Hình~\ref{fig:chain} minh họa mạng trên một ví dụ nhỏ.
   \node[edg] (e) at (2.6,1.8) {$e$};
   \node[edg] (f) at (2.6,-1.8) {$f$};
   \node[occ] (su1) at (5.4,2.6) {$s_{u,1}$};
-  \node[occ] (sv1) at (5.4,0.6) {$s_{v,1}$};
-  \node[occ] (sv2) at (5.4,-0.6) {$s_{v,2}$};
+  \node[occ] (sv1) at (5.4,1.0) {$s_{v,1}$};
+  \node[occ] (sv2) at (5.4,-1.0) {$s_{v,2}$};
   \node[occ] (sw1) at (5.4,-2.6) {$s_{w,1}$};
   \node[occ] (r) at (8.6,0) {$r$};
-  \draw[flow] (src) -- node[cap,pos=0.45,yshift=4pt] {$1$} (e);
-  \draw[flow] (src) -- node[cap,pos=0.45,yshift=-4pt] {$1$} (f);
-  \draw[flow] (e) -- node[cap,pos=0.5,above=1pt] {$1$} (su1);
-  \draw[flow] (e) -- node[cap,pos=0.5] {$1$} (sv1);
-  \draw[flow] (f) -- node[cap,pos=0.5] {$1$} (sv2);
-  \draw[flow] (f) -- node[cap,pos=0.5,below=1pt] {$1$} (sw1);
-  \draw[chain] (sv1) -- node[cap,pos=0.5,above=0pt] {$C_{v,1}$} (sv2);
-  \draw[chain] (sv2) -- node[cap,pos=0.4,below=1pt] {$C_{v,2}$} (r);
-  \draw[chain] (su1) -- node[cap,pos=0.5,above=0pt] {$C_{u,1}$} (r);
-  \draw[chain] (sw1) -- node[cap,pos=0.5,below=0pt] {$C_{w,1}$} (r);
+  \draw[flow] (src) -- node[lbl,pos=0.45,yshift=4pt] {$1$} (e);
+  \draw[flow] (src) -- node[lbl,pos=0.45,yshift=-4pt] {$1$} (f);
+  \draw[flow] (e) -- node[lbl,pos=0.5,above=1pt] {$1$} (su1);
+  \draw[flow] (e) -- node[lbl,pos=0.5] {$1$} (sv1);
+  \draw[flow] (f) -- node[lbl,pos=0.5] {$1$} (sv2);
+  \draw[flow] (f) -- node[lbl,pos=0.5,below=1pt] {$1$} (sw1);
+  \draw[chain] (sv1) -- node[lbl,pos=0.5,right=3pt] {$C_{v,1}$} (sv2);
+  \draw[chain] (sv2) -- node[lbl,pos=0.45,above=2pt] {$C_{v,2}$} (r);
+  \draw[chain] (su1) -- node[lbl,pos=0.5,above=0pt] {$C_{u,1}$} (r);
+  \draw[chain] (sw1) -- node[lbl,pos=0.5,below=0pt] {$C_{w,1}$} (r);
 \end{tikzpicture}
 \caption{Mạng chuỗi trên một ví dụ nhỏ. Đỉnh $v$ có hai lần xuất hiện, tại thời điểm của $e=\{u,v\}$ và tại thời điểm của $f=\{v,w\}$, trong đó $f$ là cạnh muộn hơn. Mỗi nút cạnh nhận một đơn vị từ nguồn $\sigma$ và gửi đơn vị đó đến nút lần xuất hiện của đầu mút được chọn làm đuôi. Cung rời khỏi $s_{v,j}$ có sức chứa $C_{v,j}$, và mọi chuỗi kết thúc tại đích $r$.}
 \label{fig:chain}
@@ -605,7 +605,7 @@ Giả sử $i$ là một cổng của $v$ và $j$ là một cổng của $w$ tro
 \begin{algorithm}[t]
 \caption{Thuật toán đường tăng cho \FIX{} và \FREE{}}\label{alg:pf}
 \begin{algorithmic}[1]
-\State Kiểm tra các điều kiện đếm ($\sum a=\sum z$ và $h_v\in\N$ với \FIX{}, $k\ge\sum_vp_{\mathrm{end}}(v)$ với \FREE{}).
+\State Kiểm tra các điều kiện đếm ($\sum a=\sum z$ và $h_v\in\N$ với \FIX{}, $k\ge\sum_vp_{\mathrm{end}}(v)$ với \FREE{}). \textbf{nếu} một kiểm tra thất bại \textbf{thì trả về} \NO{}.
 \State Giải một luồng cực đại trong mạng chuỗi. \textbf{nếu} giá trị của nó nhỏ hơn $m$ \textbf{thì trả về} \NO{} cùng với lát cắt nhỏ nhất.
 \State Lấy định hướng của luồng cực đại và $\xi$, $x$ cảm sinh. Với mỗi thành phần chẵn chết $K$, chọn $v\in K$, đặt $x=(-\e_v,\e_v)$ tại $(\IN(K,v),\OUT(K,v))$, để có $d=+1$ tại $\IN(K,v)$ và $d=-1$ tại $\OUT(K,v)$.
 \While{tồn tại cổng có $d>0$}
@@ -714,17 +714,17 @@ So với Định lý~\ref{thm:char}, điều kiện (i) được thay bằng đi
 
 \subsection{Phép quy}
 
-Chúng tôi quy từ bài toán thỏa mãn được cho dạng hội chuẩn (CNF), trong đó mỗi mệnh đề có hai hoặc ba literal trên các biến khác nhau và mỗi literal xuất hiện nhiều nhất hai lần. Bài toán này là NP-đầy đủ. Chúng tôi đưa ra một phép quy tự thân từ 3-SAT, bài toán thỏa mãn được Boolean với ba literal trên các biến khác nhau trong mỗi mệnh đề. Một hạn chế gần giống được Tovey nghiên cứu~\cite{tovey1984}. Trong một công thức mà mỗi mệnh đề có ba literal trên các biến khác nhau, thay $r\ge2$ lần xuất hiện của một biến $x$ bằng các biến mới $x_1,\dots,x_r$ và thêm các mệnh đề $(\lnot x_1\lor x_2),\dots,(\lnot x_{r-1}\lor x_r),(\lnot x_r\lor x_1)$, các mệnh đề này buộc $x_1,\dots,x_r$ bằng nhau. Khi đó mỗi literal của biến mới xuất hiện nhiều nhất hai lần: $x_j$ và $\lnot x_j$ mỗi cái xuất hiện một lần trong các mệnh đề thêm vào và nhiều nhất một lần trong các mệnh đề gốc.
+Chúng tôi quy từ 3-SAT, bài toán thỏa mãn được Boolean với ba literal trên các biến khác nhau trong mỗi mệnh đề. Bước đầu của phép quy làm cho mỗi literal xuất hiện nhiều nhất hai lần; lớp bài toán thu được gần với lớp được Tovey nghiên cứu~\cite{tovey1984}. Trong một công thức mà mỗi mệnh đề có ba literal trên các biến khác nhau, thay $r\ge2$ lần xuất hiện của một biến $x$ bằng các biến mới $x_1,\dots,x_r$ và thêm các mệnh đề $(\lnot x_1\lor x_2),\dots,(\lnot x_{r-1}\lor x_r),(\lnot x_r\lor x_1)$, các mệnh đề này buộc $x_1,\dots,x_r$ bằng nhau. Khi đó mỗi literal của biến mới xuất hiện nhiều nhất hai lần: $x_j$ và $\lnot x_j$ mỗi cái xuất hiện một lần trong các mệnh đề thêm vào và nhiều nhất một lần trong các mệnh đề gốc.
 
-Gọi $\varphi$ là một công thức như vậy với các biến $x_1,\dots,x_n$ và các mệnh đề $C_1,\dots,C_m$. Gọi $s_j\in\{2,3\}$ là số literal của $C_j$ và $d(\ell)\le2$ là số mệnh đề chứa literal $\ell$. Vì $\sum_js_j=\sum_\ell d(\ell)\le4n$ và $s_j\ge2$, ta có $m\le2n$. Đồ thị thời gian $G_\varphi$ có một đỉnh cho mỗi trong $2n$ literal, một đỉnh cho mỗi mệnh đề, một \emph{trung tâm} $h$, và các đỉnh bậc một gọi là \emph{lá}. Các cạnh của nó như sau (Hình~\ref{fig:strict}).
+Gọi $\varphi$ là một công thức như vậy với các biến $x_1,\dots,x_n$ và các mệnh đề $C_1,\dots,C_m$. Gọi $s_j\in\{2,3\}$ là số literal của $C_j$ và $d(\ell)\le2$ là số mệnh đề chứa literal $\ell$. Vì $\sum_js_j=\sum_\ell d(\ell)\le4n_\varphi$ và $s_j\ge2$, ta có $m_\varphi\le2n_\varphi$. Đồ thị thời gian $G_\varphi$ có một đỉnh cho mỗi trong $2n_\varphi$ literal, một đỉnh cho mỗi mệnh đề, một \emph{trung tâm} $h$, và các đỉnh bậc một gọi là \emph{lá}. Các cạnh của nó như sau (Hình~\ref{fig:strict}).
 \begin{itemize}
-\item \emph{Thời điểm $1$.} Một \emph{lá xuất phát} được nối với mỗi đỉnh literal, $s_j-1$ lá xuất phát được nối với $C_j$, và $4n$ lá xuất phát được nối với $h$.
+\item \emph{Thời điểm $1$.} Một \emph{lá xuất phát} được nối với mỗi đỉnh literal, $s_j-1$ lá xuất phát được nối với $C_j$, và $4n_\varphi$ lá xuất phát được nối với $h$.
 \item \emph{Thời điểm $2$.} Cạnh $\{x_i,\lnot x_i\}$ với mỗi biến $x_i$.
 \item \emph{Thời điểm $3$.} Cạnh $\{C_j,\ell\}$ với mỗi mệnh đề $C_j$ và mỗi literal $\ell$ của $C_j$.
 \item \emph{Thời điểm $4$ và $5$.} Một cạnh $\{\ell,h\}$ tại thời điểm $4$ và một cạnh tại thời điểm $5$, với mỗi đỉnh literal $\ell$.
-\item \emph{Thời điểm $6$.} $d(\ell)$ \emph{lá kết thúc} được nối với mỗi đỉnh literal $\ell$, một lá kết thúc được nối với mỗi $C_j$, và $6n-2m$ lá kết thúc được nối với $h$.
+\item \emph{Thời điểm $6$.} $d(\ell)$ \emph{lá kết thúc} được nối với mỗi đỉnh literal $\ell$, một lá kết thúc được nối với mỗi $C_j$, và $6n_\varphi-2m_\varphi$ lá kết thúc được nối với $h$.
 \end{itemize}
-Ta đặt $a_v=1$ tại mọi lá xuất phát, $z_v=1$ tại mọi lá kết thúc, và $a_v=z_v=0$ trong các trường hợp khác. Có $6n+\sum_js_j-m$ lá xuất phát và cũng bấy nhiêu lá kết thúc. Đồ thị $G_\varphi$ không có cạnh song song trong một snapshot, và kích thước của nó tuyến tính theo kích thước của $\varphi$. Hình~\ref{fig:strict} cho thấy các cạnh của nó tại một biến và một mệnh đề. Các cạnh từ $C_j$ đến các literal khác và các lá kết thúc của $\lnot x_i$ được lược bỏ ở đó. Nhãn cạnh là nhãn thời gian, và số bên cạnh một lá cho biết bội số của nó.
+Ta đặt $a_v=1$ tại mọi lá xuất phát, $z_v=1$ tại mọi lá kết thúc, và $a_v=z_v=0$ trong các trường hợp khác. Có $6n_\varphi+\sum_js_j-m_\varphi$ lá xuất phát và cũng bấy nhiêu lá kết thúc. Đồ thị $G_\varphi$ không có cạnh song song trong một snapshot, và kích thước của nó tuyến tính theo kích thước của $\varphi$. Hình~\ref{fig:strict} cho thấy các cạnh của nó tại một biến và một mệnh đề. Các cạnh từ $C_j$ đến các literal khác và các lá kết thúc của $\lnot x_i$ được lược bỏ ở đó. Nhãn cạnh là nhãn thời gian, và số bên cạnh một lá cho biết bội số của nó.
 
 \begin{figure}[t]
 \centering
@@ -758,10 +758,10 @@ Ta đặt $a_v=1$ tại mọi lá xuất phát, $z_v=1$ tại mọi lá kết th
   \draw[ed] (c) -- node[lab] {6} (ec);
   \node[leaf] (sh) at (4.7,-0.6) {};
   \draw[ed] (sh) -- node[lab] {1} (h);
-  \node[note,anchor=west] at (4.85,-0.6) {$4n$};
+  \node[note,anchor=west] at (4.85,-0.6) {$4n_\varphi$};
   \node[eleaf] (eh) at (4.7,-1.6) {};
   \draw[ed] (h) -- node[lab] {6} (eh);
-  \node[note,anchor=west] at (4.85,-1.6) {$6n-2m$};
+  \node[note,anchor=west] at (4.85,-1.6) {$6n_\varphi-2m_\varphi$};
   \node[leaf] at (6.9,1.6) {};
   \node[note,anchor=west] at (7.05,1.6) {lá xuất phát ($a=1$)};
   \node[eleaf] at (6.9,1.1) {};
@@ -776,17 +776,17 @@ Ta đặt $a_v=1$ tại mọi lá xuất phát, $z_v=1$ tại mọi lá kết th
 \end{theorem}
 
 \begin{proof}
-Cả hai bài toán đều thuộc NP, vì một định hướng là một chứng nhận được kiểm tra trong thời gian đa thức theo Bổ đề~\ref{lem:strict}. Ta chứng minh $\varphi$ thỏa được khi và chỉ khi $G_\varphi$ cùng các vector $a$ và $z$ ở trên là một instance khả thi của \SFIX{}.
+Cả hai bài toán đều thuộc NP. Một định hướng là một chứng nhận được kiểm tra trong thời gian đa thức theo Bổ đề~\ref{lem:strict}; khi không cho phép walk rỗng, chứng nhận còn liệt kê các walk, số lượng nhiều nhất là $m_\varphi$, vì mỗi walk không rỗng dùng ít nhất một cạnh. Ta chứng minh $\varphi$ thỏa được khi và chỉ khi $G_\varphi$ cùng các vector $a$ và $z$ ở trên là một instance khả thi của \SFIX{}.
 
-\emph{Một lời giải cho ra một phép gán thỏa mãn.} Lấy định hướng của một lời giải. Trước thời điểm $1$ chỉ các lá xuất phát giữ walk, nên điều kiện $\out_1(v)\le c_1(v)$ của Bổ đề~\ref{lem:strict} buộc mọi cạnh tại thời điểm $1$ hướng ra khỏi lá của nó. Trước thời điểm $2$ mọi đỉnh literal do đó giữ một walk, $C_j$ giữ $s_j-1$ walk và $h$ giữ $4n$ walk. Cạnh $\{x_i,\lnot x_i\}$ tại thời điểm $2$ chuyển một walk, nên trước thời điểm $3$ một trong hai đỉnh $x_i$ và $\lnot x_i$ giữ hai walk và đỉnh kia không giữ walk nào. Gọi một literal là \emph{đúng} nếu đỉnh của nó giữ hai walk. Đúng một trong hai $x_i$ và $\lnot x_i$ là đúng, nên đây là một phép gán chân trị. Tại thời điểm $3$ đỉnh $C_j$ có $s_j$ cạnh nhưng chỉ giữ $s_j-1$ walk. Theo Bổ đề~\ref{lem:strict}, ít nhất một trong các cạnh này hướng từ một đỉnh literal $\ell$ đến $C_j$, và $\ell$ giữ một walk trước thời điểm $3$. Vậy $\ell$ đúng và $C_j$ được thỏa mãn.
+\emph{Một lời giải cho ra một phép gán thỏa mãn.} Lấy định hướng của một lời giải. Trước thời điểm $1$ chỉ các lá xuất phát giữ walk, nên điều kiện $\out_1(v)\le c_1(v)$ của Bổ đề~\ref{lem:strict} buộc mọi cạnh tại thời điểm $1$ hướng ra khỏi lá của nó. Trước thời điểm $2$ mọi đỉnh literal do đó giữ một walk, $C_j$ giữ $s_j-1$ walk và $h$ giữ $4n_\varphi$ walk. Cạnh $\{x_i,\lnot x_i\}$ tại thời điểm $2$ chuyển một walk, nên trước thời điểm $3$ một trong hai đỉnh $x_i$ và $\lnot x_i$ giữ hai walk và đỉnh kia không giữ walk nào. Gọi một literal là \emph{đúng} nếu đỉnh của nó giữ hai walk. Đúng một trong hai $x_i$ và $\lnot x_i$ là đúng, nên đây là một phép gán chân trị. Tại thời điểm $3$ đỉnh $C_j$ có $s_j$ cạnh nhưng chỉ giữ $s_j-1$ walk. Theo Bổ đề~\ref{lem:strict}, ít nhất một trong các cạnh này hướng từ một đỉnh literal $\ell$ đến $C_j$, và $\ell$ giữ một walk trước thời điểm $3$. Vậy $\ell$ đúng và $C_j$ được thỏa mãn.
 
-\emph{Một phép gán thỏa mãn cho ra một lời giải.} Ta đưa ra một định hướng và kiểm tra Bổ đề~\ref{lem:strict}. Định hướng các cạnh tại thời điểm $1$ ra khỏi các lá, và cạnh $\{x_i,\lnot x_i\}$ từ literal sai đến literal đúng. Với mỗi mệnh đề $C_j$ chọn một literal đúng $\ell_j$ của $C_j$, định hướng $\{C_j,\ell_j\}$ từ $\ell_j$ đến $C_j$, và định hướng $s_j-1$ cạnh còn lại của $C_j$ ra khỏi $C_j$. Đỉnh $C_j$ dùng $s_j-1$ walk của nó. Một literal đúng $\ell$ được chọn bởi $\tau_\ell\le d(\ell)\le2$ mệnh đề và giữ hai walk, còn một literal sai không có cạnh ra. Sau thời điểm $3$, đỉnh $C_j$ giữ một walk, một literal sai $\ell$ giữ $d(\ell)$ walk, một literal đúng $\ell$ giữ $d(\ell)+2-2\tau_\ell$ walk, và $h$ giữ $4n$ walk. Các cạnh tại thời điểm $4$ và $5$ đưa mọi đỉnh literal $\ell$ về đúng $d(\ell)$ walk.
+\emph{Một phép gán thỏa mãn cho ra một lời giải.} Ta đưa ra một định hướng và kiểm tra Bổ đề~\ref{lem:strict}. Định hướng các cạnh tại thời điểm $1$ ra khỏi các lá, và cạnh $\{x_i,\lnot x_i\}$ từ literal sai đến literal đúng. Với mỗi mệnh đề $C_j$ chọn một literal đúng $\ell_j$ của $C_j$, định hướng $\{C_j,\ell_j\}$ từ $\ell_j$ đến $C_j$, và định hướng $s_j-1$ cạnh còn lại của $C_j$ ra khỏi $C_j$. Đỉnh $C_j$ dùng $s_j-1$ walk của nó. Một literal đúng $\ell$ được chọn bởi $\tau_\ell\le d(\ell)\le2$ mệnh đề và giữ hai walk, còn một literal sai không có cạnh ra. Sau thời điểm $3$, đỉnh $C_j$ giữ một walk, một literal sai $\ell$ giữ $d(\ell)$ walk, một literal đúng $\ell$ giữ $d(\ell)+2-2\tau_\ell$ walk, và $h$ giữ $4n_\varphi$ walk. Các cạnh tại thời điểm $4$ và $5$ đưa mọi đỉnh literal $\ell$ về đúng $d(\ell)$ walk.
 \begin{itemize}
 \item Nếu $\ell$ đúng và $\tau_\ell=0$, định hướng cả hai cạnh từ $\ell$ đến $h$. Đỉnh $\ell$ giữ $d(\ell)+2\ge2$ walk trước thời điểm $4$.
 \item Nếu $\ell$ sai, hoặc đúng với $\tau_\ell=1$, định hướng cạnh tại thời điểm $4$ từ $h$ đến $\ell$ và cạnh tại thời điểm $5$ từ $\ell$ đến $h$. Đỉnh $\ell$ giữ ít nhất một walk trước thời điểm $5$.
 \item Nếu $\ell$ đúng và $\tau_\ell=2$, định hướng cả hai cạnh từ $h$ đến $\ell$.
 \end{itemize}
-Tại mỗi thời điểm $4$ và $5$ có nhiều nhất $2n$ cạnh rời $h$, và $h$ giữ $4n$ walk trước thời điểm $4$ và ít nhất $2n$ walk trước thời điểm $5$. Số walk tại $h$ thay đổi tổng cộng $\sum_{\ell\text{ đúng}}(2-2\tau_\ell)=2n-2m$, vì có $n$ literal đúng và $\sum_\ell\tau_\ell=m$. Do đó $h$ giữ $6n-2m\ge0$ walk trước thời điểm $6$, và ở đây $m\le2n$ được dùng. Trước thời điểm $6$ mọi đỉnh không phải lá do đó giữ đúng số walk bằng số lá kết thúc gắn vào nó, và các cạnh tại thời điểm $6$ hướng về các lá kết thúc. Số walk cuối cùng là $z$.
+Tại mỗi thời điểm $4$ và $5$ có nhiều nhất $2n_\varphi$ cạnh rời $h$, và $h$ giữ $4n_\varphi$ walk trước thời điểm $4$ và ít nhất $2n_\varphi$ walk trước thời điểm $5$. Số walk tại $h$ thay đổi tổng cộng $\sum_{\ell\text{ đúng}}(2-2\tau_\ell)=2n_\varphi-2m_\varphi$, vì có $n_\varphi$ literal đúng và $\sum_\ell\tau_\ell=m_\varphi$. Do đó $h$ giữ $6n_\varphi-2m_\varphi\ge0$ walk trước thời điểm $6$, và ở đây $m_\varphi\le2n_\varphi$ được dùng. Trước thời điểm $6$ mọi đỉnh không phải lá do đó giữ đúng số walk bằng số lá kết thúc gắn vào nó, và các cạnh tại thời điểm $6$ hướng về các lá kết thúc. Số walk cuối cùng là $z$.
 
 \emph{Đầu cuối tự do.} Chỉ giữ các đỉnh literal và đỉnh mệnh đề cùng các cạnh của thời điểm $2$ và $3$, và đặt $a_v=1$ tại mỗi đỉnh literal và $a_{C_j}=s_j-1$. Trước thời điểm $2$ mỗi đỉnh literal giữ một walk vì $a_v=1$, và mỗi đỉnh mệnh đề giữ $s_j-1$ walk. Các lập luận cho thời điểm $2$ và $3$ sau đó áp dụng không đổi, nên instance này của \SFREE{} khả thi khi và chỉ khi $\varphi$ thỏa được. Trong một lời giải, một literal đúng không được mệnh đề nào chọn giữ một walk rỗng. Nếu không cho phép walk rỗng, giữ thêm các lá xuất phát và các cạnh của thời điểm~$1$, với $a_v=1$ tại mỗi lá xuất phát và $a_v=0$ ở những nơi khác. Khi đó mọi walk bắt đầu bằng một cạnh, và các lập luận tương tự áp dụng với ba nhãn thời gian.
 \end{proof}
@@ -794,20 +794,20 @@ Tại mỗi thời điểm $4$ và $5$ có nhiều nhất $2n$ cạnh rời $h$,
 
 \subsection{Thảo luận}
 
-Đồ thị $G_\varphi$ không phải proper và các snapshot của nó có số cạnh khác nhau, nên các trường hợp đa thức của Hệ quả~6.4 và Định lý~6.5 của~\cite{deligkas2025} không áp dụng. Định lý~5.4 của~\cite{deligkas2025} xét bài toán không cho trước đỉnh xuất phát và không kéo theo Định lý~\ref{thm:strict}. Mọi đầu cuối trong phép xây dựng đều là một lá có bội số một, nên cũng thỏa mãn mô hình đầu cuối đa tập của~\cite{deligkas2025}. Kiểm tra bằng máy của phép quy được báo cáo ở Mục~\ref{sec:exp-correct}. Phép dựng dùng một hub có nhiều cạnh trong một snapshot, nên không giải quyết trường hợp mọi đỉnh có nhiều nhất hai cạnh trong mỗi snapshot, nằm giữa Hệ quả~6.4 của~\cite{deligkas2025} và Định lý~\ref{thm:strict}. Chúng tôi để mở trường hợp này.
+Đồ thị $G_\varphi$ không phải proper và các snapshot của nó có số cạnh khác nhau, nên Hệ quả~6.4 của~\cite{deligkas2025} không áp dụng, và Định lý~6.5 cũng không áp dụng: thời gian chạy của nó theo cấp số mũ theo $|V_S|$, và ở đây $|V_S|$ tăng theo $n_\varphi$; giả thiết $|E_t|\in\{0,k\}$ cũng bị vi phạm. Định lý~5.4 của~\cite{deligkas2025} xét bài toán không cho trước đỉnh xuất phát và không kéo theo Định lý~\ref{thm:strict}. Mọi đầu cuối trong phép xây dựng đều là một lá có bội số một, nên cũng thỏa mãn mô hình đầu cuối đa tập của~\cite{deligkas2025}. Kiểm tra bằng máy của phép quy được báo cáo ở Mục~\ref{sec:exp-correct}. Phép dựng dùng một hub có nhiều cạnh trong một snapshot, nên không giải quyết trường hợp mọi đỉnh có nhiều nhất hai cạnh trong mỗi snapshot, nằm giữa Hệ quả~6.4 của~\cite{deligkas2025} và Định lý~\ref{thm:strict}. Chúng tôi để mở trường hợp này.
 
 %% =====================================================================
 \section{Thực nghiệm tính toán}\label{sec:eval}
 
-Các thực nghiệm củng cố tính đúng và hiệu năng thực tế của thuật toán luồng cặp (\textbf{PF}, Thuật toán~\ref{alg:pf}) và chỉ ra các lỗi của phép quy tĩnh. Các kiểm tra độc lập phù hợp với Định lý~\ref{thm:correct} (Mục~\ref{sec:exp-correct} và~\ref{sec:exp-even}). PF hoàn thành các bộ thử giao thông, tiếp xúc và tổng hợp, trong khi BB chạm giới hạn trên các instance lớn hơn (Mục~\ref{sec:exp-real} và~\ref{sec:exp-scale}). Phép quy tĩnh chấp nhận các instance vô nghiệm (Mục~\ref{sec:exp-static}).
+Các thực nghiệm phù hợp với tính đúng của cài đặt thuật toán luồng cặp (\textbf{PF}, Thuật toán~\ref{alg:pf}) và chỉ ra các lỗi của phép quy tĩnh. Các kiểm tra độc lập phù hợp với Định lý~\ref{thm:correct} (Mục~\ref{sec:exp-correct} và~\ref{sec:exp-even}). PF hoàn thành các bộ thử giao thông, tiếp xúc và tổng hợp, trong khi BB chạm giới hạn trên các instance lớn hơn (Mục~\ref{sec:exp-real} và~\ref{sec:exp-scale}). Phép quy tĩnh chấp nhận các instance vô nghiệm (Mục~\ref{sec:exp-static}).
 
 \subsection{Cài đặt và instance}\label{sec:exp-setup}
 
 Thiết kế bộ thử kiểm tra sự cần thiết của điều kiện~(ii) trong Định lý~\ref{thm:char} và hiệu năng của cài đặt ở Mục~\ref{sec:impl}. Các bản cài đặt độc lập của PF bằng Python và C++17 được so sánh với BB. Các bản cài đặt Python của PF và BB dùng cùng một backend max-flow.
 
-\paragraph{Instance tổng hợp giàu thành phần chẵn.} Walk di chuyển theo cặp. Tại mỗi thời điểm, mỗi cặp hoạt động với xác suất $0{,}7$, và một cặp hoạt động hoặc đi qua một cạnh kép tới đỉnh khác (xác suất $0{,}25$), hoặc cho một walk của nó đi một chu trình độ dài $3$ đến $6$ qua đỉnh của nó (xác suất $0{,}3$), hoặc chuyển tới đỉnh khác theo hai đường đi rời nhau ở đỉnh trong, độ dài $1$ đến $3$ (xác suất $0{,}45$). Khi đó mỗi snapshot là hợp của các trail đóng, nên mọi bậc và mọi bộ đếm walk đều chẵn, và \emph{mọi} thành phần snapshot đều chẵn. Mọi thành phần cũng cân bằng, nên riêng điều kiện đếm chấp nhận mọi instance \FREE{}. Trong họ \emph{thưa}, đồ thị có khoảng $m/3$ đỉnh, nên các thành phần trong cùng một snapshot hiếm khi chạm nhau. Trong họ \emph{dày}, đồ thị có khoảng $2\sqrt m$ đỉnh, nên chúng thường gộp thành thành phần chẵn lớn hơn. Cả hai họ có khoảng $\sqrt m/2$ cặp. Nhãn đỉnh và thứ tự cạnh được xáo trộn, nên max-flow ban đầu không thấy định hướng đã cài sẵn. Mỗi đồ thị sinh ra cho bốn instance: \FIX{} và \FREE{} với các vector số walk xuất phát và kết thúc đã cài, khả thi theo cách dựng, và \FIX{} và \FREE{} bớt đi một cặp, chưa biết trước câu trả lời. Chúng tôi sinh $764$ đồ thị với $12\le m\le 20.000$, cho $3.056$ instance (Bảng~\ref{tab:even}). Các lượt chạy này thực hiện tuần tự trên Intel Core i9-9980HK chạy Linux, với Python~3.13 và backend mặc định của thư viện, không dùng SciPy.
+\paragraph{Instance tổng hợp giàu thành phần chẵn.} Walk di chuyển theo cặp. Tại mỗi thời điểm, mỗi cặp hoạt động với xác suất $0{,}7$, và một cặp hoạt động hoặc đi qua một cạnh kép tới đỉnh khác (xác suất $0{,}25$), hoặc cho một walk của nó đi một chu trình độ dài $3$ đến $6$ qua đỉnh của nó (xác suất $0{,}3$), hoặc chuyển tới đỉnh khác theo hai đường đi rời nhau ở đỉnh trong, độ dài $1$ đến $3$ (xác suất $0{,}45$). Khi đó mỗi snapshot là hợp của các trail đóng, nên mọi bậc và mọi bộ đếm walk đều chẵn, và \emph{mọi} thành phần snapshot đều chẵn. Mọi thành phần cũng cân bằng, nên riêng điều kiện đếm chấp nhận mọi instance \FREE{}. Trong họ \emph{thưa}, đồ thị có khoảng $m/3$ đỉnh, nên các thành phần trong cùng một snapshot hiếm khi chạm nhau. Trong họ \emph{dày}, đồ thị có khoảng $2\sqrt m$ đỉnh, nên chúng thường gộp thành thành phần chẵn lớn hơn. Cả hai họ có khoảng $\sqrt m/2$ cặp. Nhãn đỉnh và thứ tự cạnh được xáo trộn, nên max-flow ban đầu không thấy định hướng đã cài sẵn. Mỗi đồ thị sinh ra cho bốn instance: \FIX{} và \FREE{} với các vector số walk xuất phát và kết thúc đã cài, khả thi theo cách dựng, và \FIX{} và \FREE{} bớt đi một cặp, chưa biết trước câu trả lời. Chúng tôi sinh $764$ đồ thị với $12\le m\le 20.000$, cho $3.056$ instance (Bảng~\ref{tab:even}). Các lượt chạy này thực hiện tuần tự trên Intel Core i9-9980HK chạy Linux, với Python~3.13.12 và backend mặc định của thư viện, không dùng SciPy.
 
-\paragraph{Dữ liệu giao thông và tiếp xúc.} Chúng tôi cũng dựng instance từ lịch chạy một ngày của các mạng giao thông từ phiên bản~1.2 của bộ dữ liệu~\cite{kujala2018} (Zenodo record 1186215) và từ ba lớp của Copenhagen Networks Study (CNS)~\cite{sapiezynski2019}. Với tập điều tra của Mục~\ref{sec:exp-real}, mỗi bộ dữ liệu được cắt thành các cửa sổ thời gian nhiều độ dài (với giao thông là cửa sổ một giờ và, với Kuopio, Turku và Grenoble, cả ngày). Với dữ liệu giao thông, mỗi chuyến xe là một walk có các đoạn có phút khởi hành làm nhãn thời gian, và hướng cạnh bị bỏ qua. Tập điều tra và thực nghiệm C++ của Mục~\ref{sec:exp-scale} dùng các bộ nạp khác nhau (Kuopio có $987$ cạnh trong tập điều tra và $32.122$ cạnh trong thực nghiệm C++), nên hai tập giao thông không so sánh trực tiếp được. Dữ liệu tiếp xúc không ghi ai phụ trách sự kiện nào, nên số walk xuất phát được dựng bằng một quy tắc tham lam: duyệt các tiếp xúc theo thời gian, chuyển một walk qua mỗi tiếp xúc từ một đầu mút đang có walk, và tạo một walk mới tại đầu mút thứ nhất khi cả hai đều không có. Mỗi cửa sổ cho tối đa bốn instance: \FIX{} và \FREE{} khả thi theo cách dựng, và hai instance \FREE{} bỏ bớt một walk hoặc $10\%$ số walk (bỏ qua khi cửa sổ có quá ít walk). Tổng cộng có $18.250$ instance từ $4.639$ cửa sổ. Các lượt chạy này và mọi thực nghiệm Python khác chạy trên Intel Core i5-10210U (4 nhân) dưới Windows Subsystem for Linux thế hệ thứ hai (WSL2) với SciPy cho max-flow, với Python~3.14 được ghi nhận cho các lượt chạy từ ngày 26/10/2026 trở đi. Hai đến bốn lượt trong số này chạy song song, nên thời gian có thể lệch khoảng hai lần.
+\paragraph{Dữ liệu giao thông và tiếp xúc.} Chúng tôi cũng dựng instance từ lịch chạy một ngày của các mạng giao thông từ phiên bản~1.2 của bộ dữ liệu~\cite{kujala2018} (Zenodo record 1186215) và từ ba lớp của Copenhagen Networks Study (CNS)~\cite{sapiezynski2019}. Với tập điều tra của Mục~\ref{sec:exp-real}, mỗi bộ dữ liệu được cắt thành các cửa sổ thời gian nhiều độ dài (với giao thông là cửa sổ một giờ và, với Kuopio, Turku và Grenoble, cả ngày). Với dữ liệu giao thông, mỗi chuyến xe là một walk có các đoạn có phút khởi hành làm nhãn thời gian, và hướng cạnh bị bỏ qua. Tập điều tra và thực nghiệm C++ của Mục~\ref{sec:exp-scale} dùng các bộ nạp khác nhau (Kuopio có $987$ cạnh trong tập điều tra và $32.122$ cạnh trong thực nghiệm C++), nên hai tập giao thông không so sánh trực tiếp được. Dữ liệu tiếp xúc không ghi ai phụ trách sự kiện nào, nên số walk xuất phát được dựng bằng một quy tắc tham lam: duyệt các tiếp xúc theo thời gian, chuyển một walk qua mỗi tiếp xúc từ một đầu mút đang có walk, và tạo một walk mới tại đầu mút thứ nhất khi cả hai đều không có. Mỗi cửa sổ cho tối đa bốn instance: \FIX{} và \FREE{} khả thi theo cách dựng, và hai instance \FREE{} bỏ bớt một walk hoặc $10\%$ số walk (bỏ qua khi cửa sổ có quá ít walk). Tổng cộng có $18.250$ instance từ $4.639$ cửa sổ. Các lượt chạy tổng kê và giao thông chạy trên Intel Core i5-10210U (4 nhân) dưới Windows Subsystem for Linux thế hệ thứ hai (WSL2) với SciPy cho max-flow. Các thực nghiệm Python dùng Python~3.14.4 và SciPy~1.16.3, còn các thực nghiệm C++ dùng g++~15.2.0 và CMake~4.2.3. Hai đến bốn lượt trong số này chạy song song, nên thời gian có thể lệch khoảng hai lần.
 
 \subsection{Tính đúng}\label{sec:exp-correct}
 
@@ -822,7 +822,7 @@ Kiểm tra & Quy mô & Kết quả \\
 \midrule
 Oracle vét cạn & $102.476$ instance nhỏ, mỗi instance giải cả \FIX{} và \FREE{} ($204.952$ lượt) & trùng khớp, $1.379$ lượt hoàn thành một bước tăng \\
 PF và BB & $105.182$ lượt ($52.591$ instance cả \FIX{} và \FREE{}), tổng $1.840.950$ cạnh & trùng khớp \\
-Instance giàu thành phần chẵn & $1.176$ lượt với $m\le14$ đối chiếu oracle, $2.960$ lượt với $m\le1.005$ đối chiếu BB & trùng khớp, BB dừng ở giới hạn trong $42$ lượt \\
+Instance giàu thành phần chẵn & $1.176$ lượt với $m\le14$ đối chiếu oracle, $2.960$ lượt với $m\le1.005$ đối chiếu BB & các lượt đã hoàn tất đều trùng khớp; BB dừng ở giới hạn trong $42$ lượt \\
 Bổ đề~\ref{lem:gamma} & mọi đa đồ thị liên thông gán nhãn với $n\le5$, $m\le6$, hộp $0\le\alpha_v,\beta_v\le\deg(v)$ & không vi phạm trong $119.040$ tập $\Gamma_K$ và $153$ tập $\Gamma'_K$ \\
 Các backend max-flow & $32.256$ instance, bốn bộ giải & trùng nhau về việc luồng có đạt $m$ \\
 C++ và oracle & $378.040$ instance nhỏ & trùng khớp \\
@@ -841,7 +841,7 @@ Bộ thử giàu thành phần chẵn tách riêng bước tăng của Thuật t
 \emph{Đồ thị}: số đồ thị sinh ra, mỗi đồ thị cho bốn instance. \emph{Chẵn}: số thành phần chẵn trung bình. \emph{Chết}: trung bình và lớn nhất của số thành phần chẵn chết $D$ sau max-flow ban đầu. \emph{Bớt}: số câu trả lời \YES{}/\NO{} của hai instance bớt một cặp. \emph{PF}: trung vị và lớn nhất của thời gian (giây). \emph{BB}: số lượt dừng ở giới hạn $2.000$ max-flow hoặc $10$ giây ($5$ giây với $m=1.000$) trên tổng số lượt. \emph{Tĩnh}: số instance \FIX{} được quy tắc của Mục~\ref{sec:exp-static} chấp nhận trên số instance \FIX{} vô nghiệm. Dấu gạch nghĩa là không chạy.
 
 \begin{table}[t]
-\caption{Bộ thử tổng hợp giàu thành phần chẵn.}
+\caption{Bộ thử tổng hợp giàu thành phần chẵn. Mỗi ô ghi $a/b$. \textbf{Even}: số thành phần chẵn trung bình trên mỗi đồ thị. \textbf{Dead}: trung bình/lớn nhất số thành phần chẵn chết còn lại sau luồng cực đại ban đầu. \textbf{Cut}: số đáp án YES/NO của PF trên các instance đã bỏ một cặp. \textbf{PF}: trung vị/lớn nhất thời gian chạy tính bằng giây. \textbf{BB}: số lần dừng ở giới hạn thời gian / tổng số lần chạy BB. \textbf{Static}: số instance mà quy tắc tĩnh trả YES trong khi PF trả NO, trên tổng số instance PF trả NO mà quy tắc được chạy. Dấu gạch ngang nghĩa là phương pháp không được chạy.}
 \label{tab:even}
 \footnotesize
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrr}
@@ -903,11 +903,11 @@ Mọi instance đều vô nghiệm. Lượt chạy có tổng ngân sách $270$ 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
-\begin{loglogaxis}[width=0.9\textwidth,height=6.6cm,
+\begin{loglogaxis}[width=0.9\textwidth,height=6.8cm,
   xlabel={$e$ (số khối)},ylabel={thời gian chạy (s)},
   xmin=1.5,xmax=3000,ymin=0.0001,ymax=300,
   grid=major,grid style={black!10},
-  legend pos=north west,legend cell align=left,
+  legend style={at={(0.5,-0.26)},anchor=north,legend columns=3,draw=none,column sep=10pt},legend cell align=left,
   mark size=2pt,
   every axis plot/.append style={thick}]
 \addplot[color=cA,mark=*,only marks] coordinates {
@@ -951,7 +951,7 @@ Trên các bộ thử, PF hoàn thành mọi lượt chạy, đạt tới $387.4
 
 Các phép kiểm tra xác nhận rằng phép quy tĩnh có thể chấp nhận các instance thời gian vô nghiệm, như Mệnh đề~\ref{prop:aaai} khẳng định, và đối chiếu các ràng buộc định hướng của nó với Bổ đề~\ref{lem:aaai}.
 
-\paragraph{Instance ngẫu nhiên.} Trên $20.000$ instance \FIX{} nhỏ ngẫu nhiên (hạt giống $20261030$, $n\le5$, $m\le7$, ba nhãn thời gian), mọi lời giải thời gian đều cho một $S$ khả thi. Một định hướng cân bằng của $S$ tồn tại khi và chỉ khi (i) đúng, như Bổ đề~\ref{lem:aaai} dự đoán. Có $52$ instance mà $S$ khả thi nhưng instance thời gian vô nghiệm, và ở $9$ instance điều kiện (i) đúng nhưng $S$ không khả thi do điều kiện liên thông tĩnh. Với cách đọc đúng từng chữ, cùng các instance này cho $5$ câu trả lời \YES{} sai và $3.778$ câu trả lời \NO{} sai, nên kết luận phụ thuộc vào cách đọc phép dựng.
+\paragraph{Instance ngẫu nhiên.} Trên $20.000$ instance \FIX{} nhỏ ngẫu nhiên (hạt giống $20261030$, $n\le5$, $m\le7$, ba nhãn thời gian), mọi lời giải thời gian đều cho một $S$ khả thi. Một định hướng cân bằng của $S$ tồn tại khi và chỉ khi có một định hướng thỏa mãn (i) và các số walk cuối cho trước, như Bổ đề~\ref{lem:aaai} dự đoán. Có $52$ instance mà $S$ khả thi nhưng instance thời gian vô nghiệm, và ở $9$ instance điều kiện (i) đúng nhưng $S$ không khả thi do điều kiện liên thông tĩnh. Với cách đọc đúng từng chữ, cùng các instance này cho $5$ câu trả lời \YES{} sai và $3.778$ câu trả lời \NO{} sai, nên kết luận phụ thuộc vào cách đọc phép dựng.
 
 \paragraph{Instance giàu thành phần chẵn.} Trên các instance \FIX{} của bộ thử giàu thành phần chẵn với $m\le1.005$, chúng tôi chạy quy tắc ``nếu $S$ có định hướng cân bằng và mọi thành phần chạm một terminal thì trả lời \YES{}'', theo cách đọc của Hình~3 trong~\cite{deligkas2025}. Quy tắc này chấp nhận $250$ trên $251$ instance vô nghiệm. Trong đó có $121$ trên $122$ instance mà oracle vét cạn chứng minh vô nghiệm và $233$ trên $234$ instance mà BB chứng minh vô nghiệm. Nó không bao giờ bác một instance khả thi. Một bộ thử trước đó trên một họ tam giác rời nhau và trên các bản sao của phản ví dụ cho bức tranh tương tự. Hai bộ giải bất đồng ở $160$ trên $437$ instance, và trong cả $160$ ca quy tắc chấp nhận một instance mà PF bác. Vét cạn xác nhận PF ở $40$ ca đủ nhỏ trong số đó.
 
@@ -978,10 +978,10 @@ Chúng tôi cảm ơn các tác giả của~\cite{deligkas2025} về những tra
 \item \textbf{Xung đột lợi ích} Các tác giả tuyên bố không có xung đột lợi ích.
 \item \textbf{Phê duyệt đạo đức và đồng ý tham gia} Không áp dụng.
 \item \textbf{Đồng ý xuất bản} Không áp dụng.
-\item \textbf{Khả dụng dữ liệu} Dữ liệu Copenhagen Networks Study~\cite{sapiezynski2019} và dữ liệu giao thông~\cite{kujala2018} có sẵn từ các nhà cung cấp theo điều khoản của họ. Bộ sinh instance tổng hợp, các instance đã sinh và kết quả thô có tại [địa chỉ kho sẽ bổ sung].
+\item \textbf{Khả dụng dữ liệu} Dữ liệu Copenhagen Networks Study~\cite{sapiezynski2019} và dữ liệu giao thông~\cite{kujala2018} có sẵn từ các nhà cung cấp theo điều khoản của họ. Bộ sinh instance tổng hợp và tóm tắt kết quả thô có tại https://github.com/th1enq/exact-edge-cover-temporal-walks. Dữ liệu thô không được phân phối lại; các instance có thể tái tạo bằng các script trong kho.
 \item \textbf{Khả dụng vật liệu} Không áp dụng.
-\item \textbf{Khả dụng mã nguồn} Thư viện Python, bản C++17 và các script thực nghiệm có tại [địa chỉ kho sẽ bổ sung].
-\item \textbf{Đóng góp của tác giả} [Các tác giả sẽ bổ sung.]
+\item \textbf{Khả dụng mã nguồn} Thư viện Python, bản C++17 và các script thực nghiệm có tại https://github.com/th1enq/exact-edge-cover-temporal-walks.
+\item \textbf{Đóng góp của tác giả} D.T.Q.: Ý tưởng (Conceptualization), phương pháp (Methodology), phân tích hình thức (Formal analysis), phần mềm (Software), điều tra (Investigation), thẩm định (Validation), viết bản thảo gốc (Writing – original draft). M.C.T.: giám sát (Supervision), viết lại và chỉnh sửa (Writing – review \& editing); M.C.T. là tác giả liên hệ. Tất cả tác giả đã đọc và phê duyệt bản thảo cuối cùng.
 \end{itemize}
 
 \bibliography{references}
