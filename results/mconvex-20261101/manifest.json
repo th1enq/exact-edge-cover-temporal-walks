@@ -1,0 +1,14 @@
+{
+  "python": "3.14.4",
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "sha256": {
+    "experiments/gamma_mconvex.py": "34b5c482623163806d1f2f5372678223a37467336d15c7aa77605a200b8b4c94",
+    "experiments/gamma_mconvex_audit.py": "6b35478f939f21cd5dd6b61d3987d1a4ed03f761d901a11d5886bf0771e6fc81",
+    "experiments/gamma_exchange.cpp": "92c3eab957690e7491afb57ae46d1cd4c49059a384735b511ec4eb9a5bbebc4d",
+    "nscover/pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+    "nscover/timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+    "nscover/chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+    "nscover/instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+    "nscover/maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe"
+  }
+}

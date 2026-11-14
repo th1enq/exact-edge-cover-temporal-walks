@@ -1,0 +1,137 @@
+{
+  "gadget": {
+    "num_vertices": 5,
+    "start": [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "edges": [
+      {
+        "u": 3,
+        "v": 0,
+        "time": 2
+      },
+      {
+        "u": 3,
+        "v": 4,
+        "time": 1
+      },
+      {
+        "u": 1,
+        "v": 4,
+        "time": 1
+      },
+      {
+        "u": 0,
+        "v": 3,
+        "time": 2
+      },
+      {
+        "u": 4,
+        "v": 0,
+        "time": 3
+      },
+      {
+        "u": 2,
+        "v": 1,
+        "time": 1
+      },
+      {
+        "u": 3,
+        "v": 0,
+        "time": 1
+      }
+    ]
+  },
+  "rows": [
+    {
+      "m": 7,
+      "n": 5,
+      "copies": 1,
+      "status": "YES",
+      "D": 1,
+      "dead": 1,
+      "seconds": 0.000897500998689793
+    },
+    {
+      "m": 14,
+      "n": 10,
+      "copies": 2,
+      "status": "YES",
+      "D": 2,
+      "dead": 2,
+      "seconds": 0.0011613999959081411
+    },
+    {
+      "m": 35,
+      "n": 25,
+      "copies": 5,
+      "status": "YES",
+      "D": 5,
+      "dead": 5,
+      "seconds": 0.003135101003863383
+    },
+    {
+      "m": 70,
+      "n": 50,
+      "copies": 10,
+      "status": "YES",
+      "D": 10,
+      "dead": 10,
+      "seconds": 0.008011001998966094
+    },
+    {
+      "m": 140,
+      "n": 100,
+      "copies": 20,
+      "status": "YES",
+      "D": 20,
+      "dead": 20,
+      "seconds": 0.0158540040065418
+    },
+    {
+      "m": 350,
+      "n": 250,
+      "copies": 50,
+      "status": "YES",
+      "D": 50,
+      "dead": 50,
+      "seconds": 0.1890339430028689
+    },
+    {
+      "m": 700,
+      "n": 500,
+      "copies": 100,
+      "status": "YES",
+      "D": 100,
+      "dead": 100,
+      "seconds": 0.5160682170026121
+    },
+    {
+      "m": 1400,
+      "n": 1000,
+      "copies": 200,
+      "status": "YES",
+      "D": 200,
+      "dead": 200,
+      "seconds": 1.7673909010045463
+    },
+    {
+      "m": 2996,
+      "n": 2140,
+      "copies": 428,
+      "status": "YES",
+      "D": 428,
+      "dead": 428,
+      "seconds": 15.263098363000609
+    }
+  ],
+  "linear": true,
+  "note": "D counts pair-flow augmentations, excluding chain max-flow work",
+  "experiment": "D",
+  "seed": 20261101,
+  "total_seconds": 17.9774002080012
+}

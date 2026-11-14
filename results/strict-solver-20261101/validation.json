@@ -1,0 +1,499 @@
+{
+  "seed": 20261101,
+  "random_instances": 3000,
+  "identity_instances": 300,
+  "boundary_cases": 11,
+  "disagreements": 0,
+  "totals": {
+    "samples": 3000,
+    "strict_yes": 881,
+    "ns_yes": 1442,
+    "ns_yes_strict_no": 561,
+    "ns_orientation_works": 774
+  },
+  "rows": {
+    "general/FREE": {
+      "samples": 250,
+      "strict_yes": 92,
+      "ns_yes": 172,
+      "ns_yes_strict_no": 80,
+      "ns_orientation_works": 83
+    },
+    "general/FIX": {
+      "samples": 250,
+      "strict_yes": 28,
+      "ns_yes": 59,
+      "ns_yes_strict_no": 31,
+      "ns_orientation_works": 26
+    },
+    "proper/FREE": {
+      "samples": 250,
+      "strict_yes": 171,
+      "ns_yes": 171,
+      "ns_yes_strict_no": 0,
+      "ns_orientation_works": 171
+    },
+    "proper/FIX": {
+      "samples": 250,
+      "strict_yes": 53,
+      "ns_yes": 53,
+      "ns_yes_strict_no": 0,
+      "ns_orientation_works": 53
+    },
+    "star/FREE": {
+      "samples": 250,
+      "strict_yes": 121,
+      "ns_yes": 182,
+      "ns_yes_strict_no": 61,
+      "ns_orientation_works": 97
+    },
+    "star/FIX": {
+      "samples": 250,
+      "strict_yes": 29,
+      "ns_yes": 55,
+      "ns_yes_strict_no": 26,
+      "ns_orientation_works": 24
+    },
+    "forest/FREE": {
+      "samples": 250,
+      "strict_yes": 133,
+      "ns_yes": 180,
+      "ns_yes_strict_no": 47,
+      "ns_orientation_works": 121
+    },
+    "forest/FIX": {
+      "samples": 250,
+      "strict_yes": 48,
+      "ns_yes": 57,
+      "ns_yes_strict_no": 9,
+      "ns_orientation_works": 48
+    },
+    "cycle/FREE": {
+      "samples": 250,
+      "strict_yes": 61,
+      "ns_yes": 239,
+      "ns_yes_strict_no": 178,
+      "ns_orientation_works": 18
+    },
+    "cycle/FIX": {
+      "samples": 250,
+      "strict_yes": 9,
+      "ns_yes": 46,
+      "ns_yes_strict_no": 37,
+      "ns_orientation_works": 8
+    },
+    "maxdeg2/FREE": {
+      "samples": 250,
+      "strict_yes": 111,
+      "ns_yes": 183,
+      "ns_yes_strict_no": 72,
+      "ns_orientation_works": 101
+    },
+    "maxdeg2/FIX": {
+      "samples": 250,
+      "strict_yes": 25,
+      "ns_yes": 45,
+      "ns_yes_strict_no": 20,
+      "ns_orientation_works": 24
+    }
+  },
+  "examples": {
+    "general/FREE": {
+      "num_vertices": 4,
+      "start": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "edges": [
+        {
+          "u": 3,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 3,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 2,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 3,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 2,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 3,
+          "time": 1
+        }
+      ]
+    },
+    "star/FREE": {
+      "num_vertices": 3,
+      "start": [
+        1,
+        1,
+        0
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 3
+        }
+      ]
+    },
+    "cycle/FREE": {
+      "num_vertices": 3,
+      "start": [
+        1,
+        0,
+        0
+      ],
+      "edges": [
+        {
+          "u": 2,
+          "v": 1,
+          "time": 0
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 0
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 0
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 2,
+          "v": 1,
+          "time": 1
+        }
+      ]
+    },
+    "maxdeg2/FREE": {
+      "num_vertices": 4,
+      "start": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 3,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 3,
+          "time": 1
+        },
+        {
+          "u": 2,
+          "v": 3,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 2
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 3
+        },
+        {
+          "u": 2,
+          "v": 3,
+          "time": 3
+        }
+      ]
+    },
+    "forest/FREE": {
+      "num_vertices": 4,
+      "start": [
+        0,
+        2,
+        0,
+        1
+      ],
+      "edges": [
+        {
+          "u": 2,
+          "v": 3,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 3,
+          "time": 2
+        }
+      ]
+    },
+    "cycle/FIX": {
+      "num_vertices": 3,
+      "start": [
+        1,
+        1,
+        0
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 2,
+          "time": 0
+        },
+        {
+          "u": 2,
+          "v": 0,
+          "time": 0
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 0
+        }
+      ],
+      "end": [
+        1,
+        1,
+        0
+      ]
+    },
+    "star/FIX": {
+      "num_vertices": 3,
+      "start": [
+        3,
+        0,
+        0
+      ],
+      "edges": [
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 0,
+          "v": 2,
+          "time": 3
+        }
+      ],
+      "end": [
+        2,
+        0,
+        1
+      ]
+    },
+    "general/FIX": {
+      "num_vertices": 3,
+      "start": [
+        0,
+        2,
+        0
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 0,
+          "time": 2
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 2,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 3
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 2
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 3
+        }
+      ],
+      "end": [
+        0,
+        2,
+        0
+      ]
+    },
+    "maxdeg2/FIX": {
+      "num_vertices": 2,
+      "start": [
+        0,
+        1
+      ],
+      "edges": [
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        }
+      ],
+      "end": [
+        1,
+        0
+      ]
+    },
+    "forest/FIX": {
+      "num_vertices": 3,
+      "start": [
+        1,
+        0,
+        0
+      ],
+      "edges": [
+        {
+          "u": 0,
+          "v": 2,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 2,
+          "time": 1
+        }
+      ],
+      "end": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "seconds": 25.442574169996078
+}

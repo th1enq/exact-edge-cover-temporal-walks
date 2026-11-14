@@ -1,0 +1,1 @@
+{"source": "nantes", "problem": "free", "resolution": 0, "loader": "nonstrict", "n": 2337, "m": 194621, "k": 7657, "even": 1175, "pair": {"status": "YES", "seconds": 8.92, "dead": 11, "augmentations": 11}, "witness": "checked"}

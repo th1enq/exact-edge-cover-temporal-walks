@@ -1,0 +1,1 @@
+{"source": "kuopio", "problem": "fix", "resolution": 0, "loader": "nonstrict", "n": 549, "m": 32122, "k": 1087, "even": 603, "pair": {"status": "YES", "seconds": 4.68, "dead": 81, "augmentations": 81}, "witness": "checked"}

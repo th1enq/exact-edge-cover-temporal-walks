@@ -1,0 +1,1 @@
+{"source": "grenoble", "problem": "free", "n": 936, "m": 52710, "k": 2693, "even": 440, "pair": {"status": "YES", "seconds": 1.97, "dead": 44, "augmentations": 44}, "witness": "checked", "branch": {"status": "YES", "flows": 9, "seconds": 7.05}}

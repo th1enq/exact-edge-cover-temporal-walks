@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "complete": true,
+  "release_suites": 4,
+  "sanitizer_suites": 4,
+  "sanitizer_execution": "outside ptrace sandbox; ASan, UBSan and default LeakSanitizer enabled",
+  "small_oracle_instances": 378040,
+  "large_branch_instances": 310000,
+  "cross_language_instances": 8000,
+  "cli_checks": 25,
+  "standalone_headers": 8,
+  "transit": {
+    "complete": true,
+    "sources": 25,
+    "seconds": 2016.3946005679973,
+    "instances": 50,
+    "branch_limit": 48,
+    "augmented": 48,
+    "branch_checked": 2,
+    "all_witnesses_checked": true,
+    "max_edges": 387467,
+    "max_dead": 467,
+    "max_augmentations": 467,
+    "max_primary_seconds": 79.150935366
+  },
+  "notes": [
+    "Counts describe test executions, not necessarily unique graphs.",
+    "augmented/dead_ge2/no_path verifier counters count backend runs.",
+    "Operational exhaustive backtracking is restricted to small inputs.",
+    "48 real-data branch LIMIT cases are not counted as successful branch comparisons.",
+    "Development timings overlap and do not establish speedup."
+  ]
+}

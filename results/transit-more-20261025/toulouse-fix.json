@@ -1,0 +1,1 @@
+{"source": "toulouse", "problem": "fix", "resolution": 0, "loader": "nonstrict", "n": 3307, "m": 219165, "k": 9247, "even": 1095, "pair": {"status": "YES", "seconds": 52.8, "dead": 163, "augmentations": 163}, "witness": "checked"}

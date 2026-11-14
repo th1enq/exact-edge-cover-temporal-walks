@@ -1,0 +1,25 @@
+[
+  {
+    "round": 1,
+    "exit_code": 124,
+    "wall_seconds": 277.5,
+    "states": 18,
+    "converged": 0
+  },
+  {
+    "round": 2,
+    "exit_code": 124,
+    "wall_seconds": 277.116,
+    "states": 25,
+    "converged": 0,
+    "checks": 1653
+  },
+  {
+    "round": 3,
+    "exit_code": 124,
+    "wall_seconds": 277.14,
+    "states": 25,
+    "converged": 1,
+    "checks": 2012
+  }
+]

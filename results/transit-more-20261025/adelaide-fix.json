@@ -1,0 +1,1 @@
+{"source": "adelaide", "problem": "fix", "resolution": 0, "loader": "nonstrict", "n": 7543, "m": 403611, "k": 9940, "even": 1176, "pair": {"status": "YES", "seconds": 114.22, "dead": 97, "augmentations": 97}, "witness": "checked"}

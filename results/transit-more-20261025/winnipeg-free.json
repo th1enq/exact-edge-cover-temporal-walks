@@ -1,0 +1,1 @@
+{"source": "winnipeg", "problem": "free", "resolution": 0, "loader": "nonstrict", "n": 5079, "m": 333882, "k": 6217, "even": 1028, "pair": {"status": "YES", "seconds": 40.62, "dead": 1, "augmentations": 1}, "witness": "checked"}

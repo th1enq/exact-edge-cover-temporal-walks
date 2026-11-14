@@ -1,0 +1,1 @@
+{"source": "canberra", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "n": 2764, "m": 124305, "k": 3326, "even": 686, "pair": {"status": "YES", "seconds": 4.77, "dead": 9, "augmentations": 9}, "witness": "checked"}

@@ -1,0 +1,41 @@
+{
+  "seed": 20261101,
+  "count": 20000,
+  "stats": {
+    "FIX": {
+      "instances": 10000,
+      "YES": 1585,
+      "NO": 8415,
+      "attempts": 4538,
+      "augmentations": 2926,
+      "reorient_calls": 825
+    },
+    "FREE": {
+      "instances": 10000,
+      "YES": 5508,
+      "NO": 4492,
+      "attempts": 5720,
+      "augmentations": 3379,
+      "reorient_calls": 1392
+    }
+  },
+  "failures": [],
+  "source_hash": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+  "initial_source_hashes": {
+    "pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+    "chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+    "timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+    "instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+    "maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+    "branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8"
+  },
+  "final_source_hashes": {
+    "pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+    "chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+    "timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+    "instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+    "maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+    "branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8"
+  },
+  "source_stable": true
+}

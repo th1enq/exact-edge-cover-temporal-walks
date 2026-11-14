@@ -1,0 +1,177 @@
+{
+  "families": {
+    "Gamma": {
+      "sets": 119040,
+      "representative_sets": 2328,
+      "pairs_checked": 26850940698,
+      "pairs_labelled_equivalent": 1689769021822,
+      "failures": 0,
+      "disconnected_sets": 0,
+      "graphs": 4065
+    },
+    "fixed_g": {
+      "sets": 4058252,
+      "representative_sets": 70036,
+      "pairs_checked": 865040790,
+      "pairs_labelled_equivalent": 55917072358,
+      "failures": 0,
+      "disconnected_sets": 0,
+      "graphs": 4065
+    },
+    "Gamma_prime": {
+      "sets": 153,
+      "representative_sets": 17,
+      "pairs_checked": 131551396,
+      "pairs_labelled_equivalent": 3666102224,
+      "failures": 0,
+      "disconnected_sets": 0,
+      "graphs": 153
+    },
+    "fixed_g_prime": {
+      "sets": 5279,
+      "representative_sets": 355,
+      "pairs_checked": 3378450,
+      "pairs_labelled_equivalent": 86543792,
+      "failures": 153,
+      "disconnected_sets": 0,
+      "graphs": 153
+    },
+    "fixed_internal_Gamma": {
+      "sets": 119040,
+      "representative_sets": 2328,
+      "pairs_checked": 26850940698,
+      "pairs_labelled_equivalent": 1689769021822,
+      "failures": 0,
+      "disconnected_sets": 0,
+      "graphs": 4065
+    },
+    "fixed_internal_Gamma_prime": {
+      "sets": 153,
+      "representative_sets": 17,
+      "pairs_checked": 131551396,
+      "pairs_labelled_equivalent": 3666102224,
+      "failures": 0,
+      "disconnected_sets": 0,
+      "graphs": 153
+    },
+    "Z_simplex": {
+      "graphs": 0,
+      "dimensions": 5,
+      "sets": 65,
+      "pairs_checked": 7659899,
+      "failures": 0
+    }
+  },
+  "smallest_failures": {
+    "fixed_g_prime": {
+      "n": 2,
+      "m": 2,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "p_in": [
+        0,
+        0
+      ],
+      "p_out": [
+        0,
+        0
+      ],
+      "x": [
+        -2,
+        0,
+        2,
+        0
+      ],
+      "y": [
+        0,
+        -1,
+        0,
+        1
+      ],
+      "i": 1,
+      "fixed_g": [
+        0,
+        0
+      ]
+    }
+  },
+  "supplemental_singleton": [
+    {
+      "family": "Gamma",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 0,
+      "size": 1,
+      "pairs": 1,
+      "failure": false,
+      "exchange_components": 1
+    },
+    {
+      "family": "Gamma_prime",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 0,
+      "size": 0,
+      "pairs": 0,
+      "failure": false,
+      "exchange_components": 0
+    },
+    {
+      "family": "fixed_g",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 0,
+      "size": 1,
+      "pairs": 1,
+      "failure": false,
+      "exchange_components": 1,
+      "fixed_g": [
+        0
+      ]
+    },
+    {
+      "family": "fixed_g_prime",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 0,
+      "size": 0,
+      "pairs": 0,
+      "failure": false,
+      "exchange_components": 0,
+      "fixed_g": [
+        0
+      ]
+    },
+    {
+      "family": "Gamma",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 1,
+      "size": 1,
+      "pairs": 1,
+      "failure": false,
+      "exchange_components": 1
+    },
+    {
+      "family": "fixed_g",
+      "graph_id": 0,
+      "weight": 1,
+      "parity_mask": 1,
+      "size": 1,
+      "pairs": 1,
+      "failure": false,
+      "exchange_components": 1,
+      "fixed_g": [
+        0
+      ]
+    }
+  ]
+}

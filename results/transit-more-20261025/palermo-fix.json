@@ -1,0 +1,1 @@
+{"source": "palermo", "problem": "fix", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 2176, "m": 224311, "k": 8286, "even": 209, "pair": {"status": "YES", "seconds": 55.14, "dead": 1, "augmentations": 1}, "witness": "checked"}

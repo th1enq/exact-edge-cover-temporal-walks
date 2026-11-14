@@ -1,0 +1,1 @@
+{"source": "belfast", "problem": "fix", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "n": 1917, "m": 122693, "k": 3835, "even": 733, "pair": {"status": "YES", "seconds": 17.73, "dead": 57, "augmentations": 57}, "witness": "checked"}

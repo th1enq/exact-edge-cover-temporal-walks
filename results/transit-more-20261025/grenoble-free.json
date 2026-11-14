@@ -1,0 +1,1 @@
+{"source": "grenoble", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 1547, "m": 114434, "k": 5404, "even": 922, "pair": {"status": "YES", "seconds": 6.18, "dead": 29, "augmentations": 29}, "witness": "checked"}

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "counts": {
+    "instances": 437,
+    "independent_S_size_checks": 437,
+    "brute_force_rechecked": 120,
+    "planted_witnesses_checked": 137,
+    "many_even_components_checked": 140,
+    "disagreements": 160,
+    "disagreements_brute": 40,
+    "disagreements_pairflow_reference": 120
+  },
+  "source_hashes_identical_across_and_within_runs": true,
+  "checks": [
+    "three positive timing samples and minima",
+    "independent S vertex/arc counts",
+    "small brute-force recomputation and constructor equivalence",
+    "saved planted walk witnesses",
+    "even-component counts and answers",
+    "cell/command wall caps",
+    "summary totals"
+  ]
+}

@@ -1,0 +1,982 @@
+{
+  "cells": [
+    {
+      "family": "planted-YES",
+      "m": 5,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.03461369999422459,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00010730000212788582,
+        "max_seconds": 0.00018119999731425196
+      },
+      "baseline": {
+        "median_seconds": 0.0001498500059824437,
+        "max_seconds": 0.00028220000240253285
+      },
+      "baseline_over_pairflow_medians": 1.3965517521970272,
+      "disagreements": 0,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        8,
+        27
+      ],
+      "static_arcs_range": [
+        9,
+        32
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 5,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.035698699997738004,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 4.555000123218633e-05,
+        "max_seconds": 0.0007686000026296824
+      },
+      "baseline": {
+        "median_seconds": 9.990000035031699e-05,
+        "max_seconds": 0.00023190000501926988
+      },
+      "baseline_over_pairflow_medians": 2.1931942403489137,
+      "disagreements": 0,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 2,
+        "baseline": 2
+      },
+      "static_vertices_range": [
+        9,
+        27
+      ],
+      "static_arcs_range": [
+        9,
+        31
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 5,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.029380801002844237,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0001359999951091595,
+        "max_seconds": 0.00022950000129640102
+      },
+      "baseline": {
+        "median_seconds": 0.00011914999777218327,
+        "max_seconds": 0.00019320000137668103
+      },
+      "baseline_over_pairflow_medians": 0.8761029563019345,
+      "disagreements": 20,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "brute_force": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        10,
+        10
+      ],
+      "static_arcs_range": [
+        11,
+        11
+      ]
+    },
+    {
+      "family": "counterexample",
+      "m": 5,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.04193519999535056,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00019290000273031183,
+        "max_seconds": 0.0002445999998599291
+      },
+      "baseline": {
+        "median_seconds": 0.00016450000111944973,
+        "max_seconds": 0.00024030000349739566
+      },
+      "baseline_over_pairflow_medians": 0.8527734514832156,
+      "disagreements": 20,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "brute_force": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        10,
+        10
+      ],
+      "static_arcs_range": [
+        11,
+        11
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 7,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.061330399999860674,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0001566499995533377,
+        "max_seconds": 0.0015514999977312982
+      },
+      "baseline": {
+        "median_seconds": 0.00025159999859170057,
+        "max_seconds": 0.00043139999615959823
+      },
+      "baseline_over_pairflow_medians": 1.6061283071120176,
+      "disagreements": 0,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        10,
+        25
+      ],
+      "static_arcs_range": [
+        14,
+        36
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 7,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.04530790099670412,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 5.749999763793312e-05,
+        "max_seconds": 0.0009942000033333898
+      },
+      "baseline": {
+        "median_seconds": 0.00013390000094659626,
+        "max_seconds": 0.00029349999385885894
+      },
+      "baseline_over_pairflow_medians": 2.3286957642979376,
+      "disagreements": 0,
+      "brute_checked": 20,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 2,
+        "baseline": 2
+      },
+      "static_vertices_range": [
+        10,
+        26
+      ],
+      "static_arcs_range": [
+        14,
+        36
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 7,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.04468059999635443,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00023964999854797497,
+        "max_seconds": 0.00028359999851090834
+      },
+      "baseline": {
+        "median_seconds": 0.00019940000129281543,
+        "max_seconds": 0.00023330000112764537
+      },
+      "baseline_over_pairflow_medians": 0.8320467452575344,
+      "disagreements": 20,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        12,
+        12
+      ],
+      "static_arcs_range": [
+        13,
+        13
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 20,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.12735130099463277,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00028265000219107606,
+        "max_seconds": 0.0013677000024472363
+      },
+      "baseline": {
+        "median_seconds": 0.0006508500009658746,
+        "max_seconds": 0.0009936010028468445
+      },
+      "baseline_over_pairflow_medians": 2.3026711336300973,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        19,
+        38
+      ],
+      "static_arcs_range": [
+        40,
+        83
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 20,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.07232900000235531,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00013869999747839756,
+        "max_seconds": 0.0012032000013277866
+      },
+      "baseline": {
+        "median_seconds": 0.00034249999953317456,
+        "max_seconds": 0.0007501000000047497
+      },
+      "baseline_over_pairflow_medians": 2.4693583688530256,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 3,
+        "baseline": 3
+      },
+      "static_vertices_range": [
+        21,
+        38
+      ],
+      "static_arcs_range": [
+        45,
+        80
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 20,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.0859955009946134,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0004075500000908505,
+        "max_seconds": 0.0006176999959279783
+      },
+      "baseline": {
+        "median_seconds": 0.000390799996239366,
+        "max_seconds": 0.0005483999993884936
+      },
+      "baseline_over_pairflow_medians": 0.9589007389332582,
+      "disagreements": 20,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        25,
+        25
+      ],
+      "static_arcs_range": [
+        32,
+        32
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 50,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.3913416020004661,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0011881499958690256,
+        "max_seconds": 0.0019295000020065345
+      },
+      "baseline": {
+        "median_seconds": 0.0026554999967629556,
+        "max_seconds": 0.004355900004156865
+      },
+      "baseline_over_pairflow_medians": 2.234987169966444,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        46,
+        69
+      ],
+      "static_arcs_range": [
+        143,
+        265
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 50,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.18827570099529112,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.00018134999845642596,
+        "max_seconds": 0.0014448000001721084
+      },
+      "baseline": {
+        "median_seconds": 0.0007990999984031077,
+        "max_seconds": 0.004616099999111611
+      },
+      "baseline_over_pairflow_medians": 4.4063964996123905,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 2,
+        "baseline": 2
+      },
+      "static_vertices_range": [
+        47,
+        70
+      ],
+      "static_arcs_range": [
+        143,
+        266
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 50,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.192037701002846,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0008867500000633299,
+        "max_seconds": 0.00112490000174148
+      },
+      "baseline": {
+        "median_seconds": 0.0009572499984642491,
+        "max_seconds": 0.001255000002856832
+      },
+      "baseline_over_pairflow_medians": 1.0795038042242844,
+      "disagreements": 20,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        55,
+        55
+      ],
+      "static_arcs_range": [
+        78,
+        78
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 100,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 1.2194698070015875,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0016775000003690366,
+        "max_seconds": 0.00226499999553198
+      },
+      "baseline": {
+        "median_seconds": 0.010305599997082027,
+        "max_seconds": 0.015677100003813393
+      },
+      "baseline_over_pairflow_medians": 6.14342771673018,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        90,
+        123
+      ],
+      "static_arcs_range": [
+        422,
+        667
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 100,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.6707231129985303,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.000456600002507912,
+        "max_seconds": 0.0030133000036585145
+      },
+      "baseline": {
+        "median_seconds": 0.003381999998964602,
+        "max_seconds": 0.01591740000003483
+      },
+      "baseline_over_pairflow_medians": 7.406920675402315,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 3,
+        "baseline": 3
+      },
+      "static_vertices_range": [
+        90,
+        125
+      ],
+      "static_arcs_range": [
+        425,
+        665
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 100,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.5355698280036449,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0024831999980960973,
+        "max_seconds": 0.003133400001388509
+      },
+      "baseline": {
+        "median_seconds": 0.00282484999843291,
+        "max_seconds": 0.003833300004771445
+      },
+      "baseline_over_pairflow_medians": 1.1375845685400936,
+      "disagreements": 20,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        105,
+        105
+      ],
+      "static_arcs_range": [
+        152,
+        152
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 200,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 4.286296471000242,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.002754750501480885,
+        "max_seconds": 0.003925001001334749
+      },
+      "baseline": {
+        "median_seconds": 0.03893870250249165,
+        "max_seconds": 0.06949131999863312
+      },
+      "baseline_over_pairflow_medians": 14.135110414376612,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 20,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        176,
+        251
+      ],
+      "static_arcs_range": [
+        1176,
+        1854
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 200,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 1.9539815610041842,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.0008330500022566412,
+        "max_seconds": 0.002869999996619299
+      },
+      "baseline": {
+        "median_seconds": 0.01134390299921506,
+        "max_seconds": 0.054178315003809985
+      },
+      "baseline_over_pairflow_medians": 13.617313448755382,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 0
+      },
+      "static_vertices_range": [
+        178,
+        251
+      ],
+      "static_arcs_range": [
+        1177,
+        1861
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 200,
+      "requested": 20,
+      "stopped": "completed",
+      "wall_seconds": 0.9474780729942722,
+      "completed": 20,
+      "pairflow": {
+        "median_seconds": 0.003901601001416566,
+        "max_seconds": 0.005690302001312375
+      },
+      "baseline": {
+        "median_seconds": 0.004924602002574829,
+        "max_seconds": 0.006506901998363901
+      },
+      "baseline_over_pairflow_medians": 1.2622003123299486,
+      "disagreements": 20,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 20,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 20
+      },
+      "static_vertices_range": [
+        205,
+        205
+      ],
+      "static_arcs_range": [
+        302,
+        302
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 400,
+      "requested": 10,
+      "stopped": "completed",
+      "wall_seconds": 10.9843584429982,
+      "completed": 10,
+      "pairflow": {
+        "median_seconds": 0.005926000496401684,
+        "max_seconds": 0.009350498003186658
+      },
+      "baseline": {
+        "median_seconds": 0.2107983969981433,
+        "max_seconds": 0.38512714600074105
+      },
+      "baseline_over_pairflow_medians": 35.571781866394005,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 10,
+        "baseline": 10
+      },
+      "static_vertices_range": [
+        381,
+        500
+      ],
+      "static_arcs_range": [
+        3670,
+        5054
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 400,
+      "requested": 10,
+      "stopped": "completed",
+      "wall_seconds": 5.881081621002522,
+      "completed": 10,
+      "pairflow": {
+        "median_seconds": 0.0022497999998449814,
+        "max_seconds": 0.00608980000106385
+      },
+      "baseline": {
+        "median_seconds": 0.06809049999719718,
+        "max_seconds": 0.3096161010034848
+      },
+      "baseline_over_pairflow_medians": 30.26513467947766,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 0
+      },
+      "static_vertices_range": [
+        381,
+        500
+      ],
+      "static_arcs_range": [
+        3670,
+        5054
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 400,
+      "requested": 10,
+      "stopped": "completed",
+      "wall_seconds": 2.050532107001345,
+      "completed": 10,
+      "pairflow": {
+        "median_seconds": 0.016271650001726812,
+        "max_seconds": 0.018825200000719633
+      },
+      "baseline": {
+        "median_seconds": 0.022266949999902863,
+        "max_seconds": 0.03257360000134213
+      },
+      "baseline_over_pairflow_medians": 1.3684506486766743,
+      "disagreements": 10,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 10,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 10
+      },
+      "static_vertices_range": [
+        405,
+        405
+      ],
+      "static_arcs_range": [
+        602,
+        602
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 800,
+      "requested": 5,
+      "stopped": "completed",
+      "wall_seconds": 27.036070185997232,
+      "completed": 5,
+      "pairflow": {
+        "median_seconds": 0.015512400001171045,
+        "max_seconds": 0.021104102001118008
+      },
+      "baseline": {
+        "median_seconds": 1.1611777559955954,
+        "max_seconds": 1.4038915540004382
+      },
+      "baseline_over_pairflow_medians": 74.85481008147914,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 5,
+        "baseline": 5
+      },
+      "static_vertices_range": [
+        792,
+        956
+      ],
+      "static_arcs_range": [
+        11219,
+        13877
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 800,
+      "requested": 5,
+      "stopped": "completed",
+      "wall_seconds": 11.202338068003883,
+      "completed": 5,
+      "pairflow": {
+        "median_seconds": 0.00353780099976575,
+        "max_seconds": 0.013773001999652479
+      },
+      "baseline": {
+        "median_seconds": 0.22988844200153835,
+        "max_seconds": 1.365654421999352
+      },
+      "baseline_over_pairflow_medians": 64.98060292728734,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 0
+      },
+      "static_vertices_range": [
+        791,
+        956
+      ],
+      "static_arcs_range": [
+        11213,
+        13891
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 800,
+      "requested": 5,
+      "stopped": "completed",
+      "wall_seconds": 2.819439358994714,
+      "completed": 5,
+      "pairflow": {
+        "median_seconds": 0.0409481059978134,
+        "max_seconds": 0.04242170699581038
+      },
+      "baseline": {
+        "median_seconds": 0.07436381199659081,
+        "max_seconds": 0.08036651300062658
+      },
+      "baseline_over_pairflow_medians": 1.816050100108703,
+      "disagreements": 5,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 5,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 5
+      },
+      "static_vertices_range": [
+        805,
+        805
+      ],
+      "static_arcs_range": [
+        1202,
+        1202
+      ]
+    },
+    {
+      "family": "planted-YES",
+      "m": 1600,
+      "requested": 5,
+      "stopped": "cell deadline",
+      "wall_seconds": 60.013959087998956,
+      "completed": 2,
+      "pairflow": {
+        "median_seconds": 0.03150210149760824,
+        "max_seconds": 0.03733290200034389
+      },
+      "baseline": {
+        "median_seconds": 5.3611643525000545,
+        "max_seconds": 5.95860002200061
+      },
+      "baseline_over_pairflow_medians": 170.18434001639844,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 2,
+        "baseline": 2
+      },
+      "static_vertices_range": [
+        1768,
+        2078
+      ],
+      "static_arcs_range": [
+        35600,
+        42038
+      ]
+    },
+    {
+      "family": "perturbed",
+      "m": 1600,
+      "requested": 5,
+      "stopped": "completed",
+      "wall_seconds": 36.57175006699981,
+      "completed": 5,
+      "pairflow": {
+        "median_seconds": 0.007341001000895631,
+        "max_seconds": 0.02496540200081654
+      },
+      "baseline": {
+        "median_seconds": 0.767718725001032,
+        "max_seconds": 4.325508262998483
+      },
+      "baseline_over_pairflow_medians": 104.57956958558749,
+      "disagreements": 0,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {},
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 0
+      },
+      "static_vertices_range": [
+        1708,
+        2078
+      ],
+      "static_arcs_range": [
+        34314,
+        42026
+      ]
+    },
+    {
+      "family": "many-even-components",
+      "m": 1600,
+      "requested": 5,
+      "stopped": "completed",
+      "wall_seconds": 11.707700090002618,
+      "completed": 5,
+      "pairflow": {
+        "median_seconds": 0.1610370900016278,
+        "max_seconds": 0.1951154089983902
+      },
+      "baseline": {
+        "median_seconds": 0.29028191399993375,
+        "max_seconds": 0.32157141499919817
+      },
+      "baseline_over_pairflow_medians": 1.8025779899338688,
+      "disagreements": 5,
+      "brute_checked": 0,
+      "brute_pairflow_mismatches": 0,
+      "disagreement_agreement": {
+        "solve_pairflow (reference, not independent)": {
+          "pairflow": 5,
+          "baseline": 0
+        }
+      },
+      "answers_yes": {
+        "pairflow": 0,
+        "baseline": 5
+      },
+      "static_vertices_range": [
+        1605,
+        1605
+      ],
+      "static_arcs_range": [
+        2402,
+        2402
+      ]
+    }
+  ],
+  "instances": 437,
+  "disagreements": 160,
+  "brute_checked": 120,
+  "brute_pairflow_mismatches": 0
+}

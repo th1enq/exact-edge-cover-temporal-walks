@@ -1,0 +1,1 @@
+{"source": "detroit", "problem": "fix", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "n": 5683, "m": 214863, "k": 2642, "even": 24, "pair": {"status": "YES", "seconds": 9.05, "dead": 0, "augmentations": 0}, "witness": "checked"}

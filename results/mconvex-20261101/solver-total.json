@@ -1,0 +1,11 @@
+{
+  "instances": 40000,
+  "augmentations": 12610,
+  "reorient_calls": 4434,
+  "AssertionError": 0,
+  "final_run_source_stable": true,
+  "runs": [
+    "random-initial.json",
+    "random.json"
+  ]
+}

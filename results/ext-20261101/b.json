@@ -1,0 +1,73 @@
+{
+  "cases": 20000,
+  "base_counts": {
+    "YES": 13256,
+    "NO": 6744
+  },
+  "implications": 33734,
+  "violations": [],
+  "solver_disagreements": [],
+  "counterexample": {
+    "absolute": {
+      "yes": {
+        "num_vertices": 1,
+        "start": [
+          0
+        ],
+        "edges": [],
+        "end_set": []
+      },
+      "no": {
+        "num_vertices": 1,
+        "start": [
+          1
+        ],
+        "edges": [],
+        "end_set": []
+      },
+      "v": 0
+    },
+    "nonempty": {
+      "yes": {
+        "num_vertices": 2,
+        "start": [
+          0,
+          1
+        ],
+        "edges": [
+          {
+            "u": 0,
+            "v": 1,
+            "time": 1
+          }
+        ],
+        "end_set": [
+          0
+        ]
+      },
+      "no": {
+        "num_vertices": 2,
+        "start": [
+          0,
+          2
+        ],
+        "edges": [
+          {
+            "u": 0,
+            "v": 1,
+            "time": 1
+          }
+        ],
+        "end_set": [
+          0
+        ]
+      },
+      "v": 1
+    },
+    "examined": 143,
+    "minimality": "absolute: (m,n,k)=(0,1,0); nonempty edges/nonempty proper T: (m,n,k)=(1,2,1), minimal since k=0 cannot traverse a nonempty edge set"
+  },
+  "experiment": "B",
+  "seed": 20261101,
+  "total_seconds": 49.42906879200018
+}

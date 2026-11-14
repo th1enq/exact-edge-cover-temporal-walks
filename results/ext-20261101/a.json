@@ -1,0 +1,18 @@
+{
+  "cases": 20000,
+  "counts": {
+    "YES": 6986,
+    "NO": 13014
+  },
+  "set_modes": {
+    "full": 5000,
+    "singleton": 5000,
+    "empty": 5000,
+    "random": 5000
+  },
+  "disagreements": [],
+  "full_set_result_disagreements": [],
+  "experiment": "A",
+  "seed": 20261101,
+  "total_seconds": 50.05979164600285
+}

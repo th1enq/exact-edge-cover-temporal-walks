@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "headers": [
+    "cpp/include/nscover/backtrack.hpp",
+    "cpp/include/nscover/chainflow.hpp",
+    "cpp/include/nscover/instance.hpp",
+    "cpp/include/nscover/io.hpp",
+    "cpp/include/nscover/maxflow.hpp",
+    "cpp/include/nscover/solver.hpp",
+    "cpp/include/nscover/timeline.hpp",
+    "cpp/include/nscover/walks.hpp"
+  ],
+  "flags": "-std=c++17 -Wall -Wextra -Wpedantic -Werror -fsyntax-only",
+  "check": "Each public header compiles in isolation."
+}

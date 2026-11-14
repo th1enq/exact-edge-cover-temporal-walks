@@ -1,0 +1,31 @@
+{
+  "self_test": {
+    "command": "python3 experiments/certify_no.py --self-test",
+    "status": "PASS",
+    "instances": 20000,
+    "YES_with_certificate": 0,
+    "tamper_checks": "PASS"
+  },
+  "coverage": {
+    "command": "python3 experiments/certify_no.py --coverage",
+    "status": "PASS",
+    "practice_tests_inspected": 999,
+    "practice_NO_processed": 435,
+    "random_FIX_instances": 5000
+  },
+  "replay": {
+    "command_template": "python3 experiments/certify_no.py --verify results/certify-no-20261101/<dataset>.json",
+    "status": "PASS",
+    "import_guard": "Every nscover import blocked by MetaPathFinder during all three replays",
+    "verified": {
+      "soundness": 9166,
+      "practice": 435,
+      "random-fix": 3427
+    }
+  },
+  "unverified": [
+    "Theory-relative evidence checks valid local state and closure, not the M-convex NO implication.",
+    "Transit: 141 historical NO rows skipped; no certification fraction measured."
+  ],
+  "development_note": "Initial pure-Python practice cut extraction was interrupted for performance; rerun using existing SciPy acceleration completed successfully."
+}

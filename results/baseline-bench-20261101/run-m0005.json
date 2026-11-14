@@ -1,0 +1,6466 @@
+{
+  "m": 5,
+  "metadata": {
+    "language": "Python",
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "executable": "/usr/bin/python3",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "machine": "x86_64",
+    "processor": "",
+    "nproc": "4",
+    "cpu_count": 4,
+    "backend_default": "augment",
+    "seed": 20261101,
+    "command": [
+      "experiments/aaai_baseline_bench.py",
+      "--sizes",
+      "5",
+      "7",
+      "20",
+      "50",
+      "100"
+    ],
+    "source_sha256": {
+      "nscover/__init__.py": "8eadee5893f19b57157f86ce0a528e16a7fffffb342839a9c9dd2212c146e85f",
+      "nscover/branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8",
+      "nscover/brute.py": "1512cce026dcca868e4e3ed13f3315b2db54a0c866fce27112514e3180f6f243",
+      "nscover/chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+      "nscover/generators.py": "e2684ceb352124c9f52599ce0144028018dd6b61e12d3027a2d85279339132c9",
+      "nscover/instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+      "nscover/maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+      "nscover/pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+      "nscover/timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+      "nscover/walks.py": "156a7b58065c2c11541a7d3598e4de096daf640949761db29a72d177729b7614",
+      "experiments/aaai_baseline_bench.py": "0f417d0d21a880a7dc237953443c29a771278768418746945487d1addf0c75a7",
+      "experiments/aaai_gap_study.py": "23bccf973882c577b0e03572f2fa2fac5f305ffaa983702deab0269adba3f4ad",
+      "experiments/aaai_reading_study.py": "07ea904fd82b163eb7fecd8f1fdfe329a9e660342bc82e78118ab9b5da4bda76",
+      "experiments/aaai_static_check.py": "a060f62313e96fa09e0d349a0d7cd92328db12c1b49e8fdc886143fa2d39abac"
+    }
+  },
+  "cells": [
+    {
+      "family": "planted-YES",
+      "m": 5,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m5-00"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 10,
+          "static_arcs": 12,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00018119999731425196,
+              0.0002859999949578196,
+              0.0003268000000389293
+            ],
+            "baseline": [
+              0.00022570000146515667,
+              0.00024329999723704532,
+              0.00028929999825777486
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018119999731425196,
+            "baseline": 0.00022570000146515667
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 3
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "planted-YES-m5-01"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 12,
+          "static_arcs": 15,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001388000018778257,
+              0.00012379999679978937,
+              0.0001607999947736971
+            ],
+            "baseline": [
+              0.00017150000348920003,
+              0.0002134000023943372,
+              0.0001812999980757013
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012379999679978937,
+            "baseline": 0.00017150000348920003
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              2,
+              1
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              2,
+              0,
+              2
+            ],
+            "name": "planted-YES-m5-02"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                2,
+                4
+              ],
+              [],
+              [
+                0
+              ],
+              [
+                3
+              ]
+            ]
+          },
+          "static_vertices": 20,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001511999944341369,
+              0.0002686000007088296,
+              0.0001233000002685003
+            ],
+            "baseline": [
+              0.00029790000553475693,
+              0.00028220000240253285,
+              0.00031099999614525586
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001233000002685003,
+            "baseline": 0.00028220000240253285
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m5-03"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 8,
+          "static_arcs": 9,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00010150000161956996,
+              9.410000347997993e-05,
+              0.0001905999961309135
+            ],
+            "baseline": [
+              0.0001258000047528185,
+              0.0002891999974963255,
+              0.0003403000009711832
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.410000347997993e-05,
+            "baseline": 0.0001258000047528185
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              3,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              3,
+              0
+            ],
+            "name": "planted-YES-m5-04"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1
+              ],
+              [
+                4
+              ],
+              [
+                0,
+                3
+              ],
+              [
+                2
+              ]
+            ]
+          },
+          "static_vertices": 18,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00012509999942267314,
+              0.00012670000432990491,
+              0.0001131999961216934
+            ],
+            "baseline": [
+              0.00018760000239126384,
+              0.00019149999570799991,
+              0.00025129999994533136
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001131999961216934,
+            "baseline": 0.00018760000239126384
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m5-05"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                4
+              ],
+              [],
+              [
+                0,
+                2,
+                3
+              ]
+            ]
+          },
+          "static_vertices": 15,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00010460000339662656,
+              9.490000229561701e-05,
+              0.00010260000271955505
+            ],
+            "baseline": [
+              0.0001536999989184551,
+              0.0001536999989184551,
+              0.0001432999997632578
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.490000229561701e-05,
+            "baseline": 0.0001432999997632578
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              2,
+              2
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              2,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-06"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                3
+              ],
+              [],
+              [
+                0,
+                1
+              ],
+              [
+                4
+              ],
+              [
+                2
+              ]
+            ]
+          },
+          "static_vertices": 21,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013719999697059393,
+              0.00010680000559659675,
+              9.43000050028786e-05
+            ],
+            "baseline": [
+              0.00019640000391518697,
+              0.00018529999942984432,
+              0.0001931000006152317
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.43000050028786e-05,
+            "baseline": 0.00018529999942984432
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 4
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 4
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 4
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "planted-YES-m5-07"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 11,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00012889999925391749,
+              0.00011680000170599669,
+              0.00015469999925699085
+            ],
+            "baseline": [
+              0.00013780000153928995,
+              0.00012710000009974465,
+              0.00020509999740170315
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011680000170599669,
+            "baseline": 0.00012710000009974465
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-08"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 10,
+          "static_arcs": 12,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00012239999341545627,
+              0.00011810000432888046,
+              0.0001078000059351325
+            ],
+            "baseline": [
+              0.0001416000013705343,
+              0.00013130000297678635,
+              0.00013789999502478167
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001078000059351325,
+            "baseline": 0.00013130000297678635
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              2,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              2
+            ],
+            "name": "planted-YES-m5-09"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                2
+              ],
+              [
+                0,
+                3,
+                4
+              ],
+              [
+                1
+              ]
+            ]
+          },
+          "static_vertices": 14,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001328999933321029,
+              9.510000381851569e-05,
+              0.00011000000085914508
+            ],
+            "baseline": [
+              0.00015190000704023987,
+              0.00017459999799029902,
+              0.00021559999731834978
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.510000381851569e-05,
+            "baseline": 0.00015190000704023987
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              1,
+              1,
+              2,
+              1
+            ],
+            "name": "planted-YES-m5-10"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [],
+              [
+                4
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                2,
+                3
+              ],
+              []
+            ]
+          },
+          "static_vertices": 27,
+          "static_arcs": 32,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00014060000103199854,
+              0.0001429999974789098,
+              0.00012649999553104863
+            ],
+            "baseline": [
+              0.0002701999983401038,
+              0.0003336000008857809,
+              0.00030669999978272244
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012649999553104863,
+            "baseline": 0.0002701999983401038
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-11"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [],
+              [
+                1,
+                4
+              ],
+              [
+                2
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          },
+          "static_vertices": 21,
+          "static_arcs": 24,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00012670000432990491,
+              0.00011419999646022916,
+              0.0001238999975612387
+            ],
+            "baseline": [
+              0.0002164999968954362,
+              0.0002181999952881597,
+              0.00020680000307038426
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011419999646022916,
+            "baseline": 0.00020680000307038426
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "planted-YES-m5-12"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 9,
+          "static_arcs": 9,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00011119999544462189,
+              0.00015770000027259812,
+              0.00010679999832063913
+            ],
+            "baseline": [
+              0.00011390000145183876,
+              0.00010440000187372789,
+              0.00011420000373618677
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00010679999832063913,
+            "baseline": 0.00010440000187372789
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              1,
+              0,
+              1
+            ],
+            "name": "planted-YES-m5-13"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                3
+              ],
+              [
+                1
+              ],
+              [
+                0,
+                2,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 18,
+          "static_arcs": 19,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00010520000068936497,
+              9.389999468112364e-05,
+              0.00013279999984661117
+            ],
+            "baseline": [
+              0.00022809999791206792,
+              0.00015690000145696104,
+              0.0001478000049246475
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.389999468112364e-05,
+            "baseline": 0.0001478000049246475
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              2,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              3,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m5-14"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                4
+              ],
+              [
+                0
+              ],
+              [],
+              [
+                1,
+                2,
+                3
+              ]
+            ]
+          },
+          "static_vertices": 20,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00010969999857479706,
+              0.00010859999747481197,
+              9.899999713525176e-05
+            ],
+            "baseline": [
+              0.00017099999968195334,
+              0.0001632999992580153,
+              0.00017159999697469175
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.899999713525176e-05,
+            "baseline": 0.0001632999992580153
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 4
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 5
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 5
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "planted-YES-m5-15"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 13,
+          "static_arcs": 14,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0034919000027002767,
+              0.00016680000408086926,
+              0.00024049999774433672
+            ],
+            "baseline": [
+              0.00026989999605575576,
+              0.00024189999385271221,
+              0.00022059999901102856
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00016680000408086926,
+            "baseline": 0.00022059999901102856
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-16"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3
+              ],
+              [
+                4
+              ]
+            ]
+          },
+          "static_vertices": 14,
+          "static_arcs": 16,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.000130899999930989,
+              0.00014969999756431207,
+              0.00013560000661527738
+            ],
+            "baseline": [
+              0.00015109999367268756,
+              0.0001384999995934777,
+              0.0001866000020527281
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.000130899999930989,
+            "baseline": 0.0001384999995934777
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-17"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                4
+              ],
+              [
+                0,
+                2,
+                3
+              ]
+            ]
+          },
+          "static_vertices": 14,
+          "static_arcs": 16,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              9.879999561235309e-05,
+              9.019999561132863e-05,
+              0.00012570000399136916
+            ],
+            "baseline": [
+              0.0001329000006080605,
+              0.00016139999934239313,
+              0.0001249999986612238
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 9.019999561132863e-05,
+            "baseline": 0.0001249999986612238
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "name": "planted-YES-m5-18"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                3
+              ],
+              [],
+              [
+                1,
+                2,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 15,
+          "static_arcs": 17,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              9.539999882690609e-05,
+              9.4600000011269e-05,
+              8.47000046633184e-05
+            ],
+            "baseline": [
+              0.00013959999341750517,
+              0.00013239999680081382,
+              0.00014039999950909987
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 8.47000046633184e-05,
+            "baseline": 0.00013239999680081382
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 4
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "planted-YES-m5-19"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            ]
+          },
+          "static_vertices": 13,
+          "static_arcs": 16,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00011539999832166359,
+              0.00010409999958937988,
+              0.00013690000196220353
+            ],
+            "baseline": [
+              0.0001438000035705045,
+              0.00013860000035492703,
+              0.00013020000187680125
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00010409999958937988,
+            "baseline": 0.00013020000187680125
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.03461369999422459
+    },
+    {
+      "family": "perturbed",
+      "m": 5,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-00"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-00",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                3
+              ]
+            }
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.059999577701092e-05,
+              9.660000068834051e-05,
+              4.820000322069973e-05
+            ],
+            "baseline": [
+              7.46000005165115e-05,
+              6.459999713115394e-05,
+              7.400000322377309e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.820000322069973e-05,
+            "baseline": 6.459999713115394e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-01"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-01",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                3
+              ]
+            }
+          },
+          "static_vertices": 12,
+          "static_arcs": 14,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.10999995842576e-05,
+              5.119999696034938e-05,
+              5.789999704575166e-05
+            ],
+            "baseline": [
+              8.38999985717237e-05,
+              8.070000330917537e-05,
+              7.20999960321933e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.119999696034938e-05,
+            "baseline": 7.20999960321933e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              2,
+              1
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              3,
+              0,
+              1
+            ],
+            "name": "perturbed-m5-02"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-02",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                2
+              ]
+            }
+          },
+          "static_vertices": 20,
+          "static_arcs": 23,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.7000004744622856e-05,
+              5.5500000598840415e-05,
+              4.640000406652689e-05
+            ],
+            "baseline": [
+              0.00012849999620812014,
+              0.0001207999957841821,
+              0.00028050000400980935
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.640000406652689e-05,
+            "baseline": 0.0001207999957841821
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m5-03"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-03",
+            "perturbation": {
+              "edge": 0,
+              "old_time": 1,
+              "new_time": 2
+            }
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0008021999965421855,
+              0.0007318999996641651,
+              0.000858799998241011
+            ],
+            "baseline": [
+              0.00015929999790387228,
+              0.00027630000113276765,
+              0.00013310000213095918
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0007318999996641651,
+            "baseline": 0.00013310000213095918
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              3,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              1,
+              2,
+              0
+            ],
+            "name": "perturbed-m5-04"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-04",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                2
+              ]
+            }
+          },
+          "static_vertices": 19,
+          "static_arcs": 23,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.539999983739108e-05,
+              5.300000339047983e-05,
+              4.3199994252063334e-05
+            ],
+            "baseline": [
+              0.00011339999764459208,
+              0.00010379999730503187,
+              0.00010959999781334773
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.3199994252063334e-05,
+            "baseline": 0.00010379999730503187
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-05"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-05",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                3
+              ]
+            }
+          },
+          "static_vertices": 15,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              4.269999772077426e-05,
+              3.6299999919719994e-05,
+              4.069999704370275e-05
+            ],
+            "baseline": [
+              9.069999941857532e-05,
+              8.850000449456275e-05,
+              8.140000136336312e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.6299999919719994e-05,
+            "baseline": 8.140000136336312e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              2,
+              2
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              3,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-06"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-06",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                2
+              ]
+            }
+          },
+          "static_vertices": 20,
+          "static_arcs": 23,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              8.600000001024455e-05,
+              4.9299997044727206e-05,
+              3.6600002204068005e-05
+            ],
+            "baseline": [
+              0.00011410000297473744,
+              0.0001460999992559664,
+              0.00010850000398932025
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.6600002204068005e-05,
+            "baseline": 0.00010850000398932025
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 5
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 4
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 4
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-07"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-07",
+            "perturbation": {
+              "edge": 2,
+              "old_time": 4,
+              "new_time": 5
+            }
+          },
+          "static_vertices": 13,
+          "static_arcs": 14,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015110000094864517,
+              0.000130899999930989,
+              0.00012100000458303839
+            ],
+            "baseline": [
+              0.00031239999952958897,
+              0.0001612999985809438,
+              0.00015829999756533653
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012100000458303839,
+            "baseline": 0.00015829999756533653
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 3
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-08"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-08",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                0
+              ]
+            }
+          },
+          "static_vertices": 10,
+          "static_arcs": 12,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              4.579999949783087e-05,
+              4.780000017490238e-05,
+              3.670000296551734e-05
+            ],
+            "baseline": [
+              5.77000027988106e-05,
+              5.099999543745071e-05,
+              5.62999994144775e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.670000296551734e-05,
+            "baseline": 5.099999543745071e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              2,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              2
+            ],
+            "name": "perturbed-m5-09"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-09",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                0
+              ]
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              3.560000186553225e-05,
+              2.9900002118665725e-05,
+              3.4000004234258085e-05
+            ],
+            "baseline": [
+              7.409999670926481e-05,
+              7.140000525396317e-05,
+              6.570000550709665e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 2.9900002118665725e-05,
+            "baseline": 6.570000550709665e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              0,
+              2,
+              1
+            ],
+            "name": "perturbed-m5-10"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-10",
+            "perturbation": {
+              "end_unit_move": [
+                2,
+                0
+              ]
+            }
+          },
+          "static_vertices": 27,
+          "static_arcs": 31,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              4.980000085197389e-05,
+              5.299999611452222e-05,
+              4.099999932805076e-05
+            ],
+            "baseline": [
+              0.00013590000162366778,
+              0.00012799999967683107,
+              0.0002463999990141019
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.099999932805076e-05,
+            "baseline": 0.00012799999967683107
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 3
+              }
+            ],
+            "end": [
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-11"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-11",
+            "perturbation": {
+              "edge": 4,
+              "old_time": 1,
+              "new_time": 3
+            }
+          },
+          "static_vertices": 22,
+          "static_arcs": 25,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0008234999986598268,
+              0.0007686000026296824,
+              0.0035330000027897768
+            ],
+            "baseline": [
+              0.00023190000501926988,
+              0.0005225000058999285,
+              0.00048149999929592013
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0007686000026296824,
+            "baseline": 0.00023190000501926988
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-12"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-12",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                3
+              ]
+            }
+          },
+          "static_vertices": 9,
+          "static_arcs": 9,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              4.859999899053946e-05,
+              5.129999772179872e-05,
+              5.999999848427251e-05
+            ],
+            "baseline": [
+              6.410000059986487e-05,
+              7.560000085504726e-05,
+              0.00013139999646227807
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.859999899053946e-05,
+            "baseline": 6.410000059986487e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              2,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-13"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-13",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                0
+              ]
+            }
+          },
+          "static_vertices": 17,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.409999721450731e-05,
+              4.4699998397845775e-05,
+              5.140000575920567e-05
+            ],
+            "baseline": [
+              0.00010340000153519213,
+              0.00010209999891230837,
+              9.600000339560211e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.4699998397845775e-05,
+            "baseline": 9.600000339560211e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              2,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              2,
+              1,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m5-14"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-14",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                1
+              ]
+            }
+          },
+          "static_vertices": 21,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.650000093737617e-05,
+              6.520000169984996e-05,
+              4.659999831346795e-05
+            ],
+            "baseline": [
+              0.00017139999545179307,
+              0.00013310000213095918,
+              0.000131200002215337
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.659999831346795e-05,
+            "baseline": 0.000131200002215337
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 6
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 5
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 5
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-15"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-15",
+            "perturbation": {
+              "edge": 2,
+              "old_time": 4,
+              "new_time": 6
+            }
+          },
+          "static_vertices": 13,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0006735999995726161,
+              0.0006465999977081083,
+              0.0006863000016892329
+            ],
+            "baseline": [
+              0.00014709999959450215,
+              0.0001416000013705343,
+              0.00011879999510711059
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0006465999977081083,
+            "baseline": 0.00011879999510711059
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "name": "perturbed-m5-16"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-16",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                2
+              ]
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 16,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.8999998145736754e-05,
+              5.360000068321824e-05,
+              4.3799998820759356e-05
+            ],
+            "baseline": [
+              8.549999620299786e-05,
+              7.349999941652641e-05,
+              7.780000305501744e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.3799998820759356e-05,
+            "baseline": 7.349999941652641e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-17"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-17",
+            "perturbation": {
+              "end_unit_move": [
+                2,
+                0
+              ]
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 15,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              4.600000102072954e-05,
+              3.840000135824084e-05,
+              4.400000034365803e-05
+            ],
+            "baseline": [
+              7.74000000092201e-05,
+              7.579999510198832e-05,
+              7.000000186963007e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.840000135824084e-05,
+            "baseline": 7.000000186963007e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              2
+            ],
+            "name": "perturbed-m5-18"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-18",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                4
+              ]
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 17,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              7.200000254670158e-05,
+              3.760000254260376e-05,
+              3.149999974993989e-05
+            ],
+            "baseline": [
+              8.779999916441739e-05,
+              7.510000432375818e-05,
+              7.820000610081479e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.149999974993989e-05,
+            "baseline": 7.510000432375818e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 5
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 4
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m5-19"
+          },
+          "generation": {
+            "parent": "planted-YES-m5-19",
+            "perturbation": {
+              "edge": 1,
+              "old_time": 2,
+              "new_time": 5
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 17,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0005967000033706427,
+              0.0005578999989666045,
+              0.0008692999981576577
+            ],
+            "baseline": [
+              0.00014859999646432698,
+              0.00015040000289445743,
+              0.00014770000416319817
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0005578999989666045,
+            "baseline": 0.00014770000416319817
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.035698699997738004
+    },
+    {
+      "family": "many-even-components",
+      "m": 5,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-00"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0002106000029016286,
+              0.00013010000111535192,
+              0.00026920000527752563
+            ],
+            "baseline": [
+              0.00010520000068936497,
+              9.729999874252826e-05,
+              0.00029990099574206397
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013010000111535192,
+            "baseline": 9.729999874252826e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-01"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013279999984661117,
+              0.00017420000222045928,
+              0.00013159999798517674
+            ],
+            "baseline": [
+              9.869999485090375e-05,
+              0.00013749999925494194,
+              0.00016680000408086926
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013159999798517674,
+            "baseline": 9.869999485090375e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "many-even-components-m5-02"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001114999977289699,
+              0.00011139999696752056,
+              0.00010479999764356762
+            ],
+            "baseline": [
+              9.849999332800508e-05,
+              0.0001841000048443675,
+              9.910000517265871e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00010479999764356762,
+            "baseline": 9.849999332800508e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-03"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00011069999891333282,
+              0.0001534000039100647,
+              0.00011119999544462189
+            ],
+            "baseline": [
+              9.57000011112541e-05,
+              0.00011790000280598179,
+              9.019999561132863e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011069999891333282,
+            "baseline": 9.019999561132863e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-04"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00023990000045159832,
+              0.00022950000129640102,
+              0.00024760000087553635
+            ],
+            "baseline": [
+              0.00015339999663410708,
+              0.0001286999977310188,
+              0.00018350000027567148
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00022950000129640102,
+            "baseline": 0.0001286999977310188
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "many-even-components-m5-05"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015010000061010942,
+              0.0002598999999463558,
+              0.00017490000027464703
+            ],
+            "baseline": [
+              0.00013150000449968502,
+              0.0001320000010309741,
+              0.00012119999882997945
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015010000061010942,
+            "baseline": 0.00012119999882997945
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-06"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001692000005277805,
+              0.0001503000021330081,
+              0.00013999999646330252
+            ],
+            "baseline": [
+              0.00021190000552451238,
+              0.00012409999908413738,
+              0.00013360000593820587
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013999999646330252,
+            "baseline": 0.00012409999908413738
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-07"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00017769999976735562,
+              0.00014000000373926014,
+              0.00027460000274004415
+            ],
+            "baseline": [
+              0.0001306000049225986,
+              0.000130899999930989,
+              0.00023639999562874436
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00014000000373926014,
+            "baseline": 0.0001306000049225986
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-08"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0003634000022429973,
+              0.00019470000552246347,
+              0.00015810000331839547
+            ],
+            "baseline": [
+              0.00014879999798722565,
+              0.00012789999891538173,
+              0.0001520000005257316
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015810000331839547,
+            "baseline": 0.00012789999891538173
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-09"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00019150000298395753,
+              0.00018450000061420724,
+              0.00015899999561952427
+            ],
+            "baseline": [
+              0.00019320000137668103,
+              0.00023640000290470198,
+              0.000225800002226606
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015899999561952427,
+            "baseline": 0.00019320000137668103
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-10"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0004034000012325123,
+              0.00016859999595908448,
+              0.00019040000188397244
+            ],
+            "baseline": [
+              0.00025919999461621046,
+              0.00013220000255387276,
+              0.00015140000323299319
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00016859999595908448,
+            "baseline": 0.00013220000255387276
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-11"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.000203800002054777,
+              0.0001477999976486899,
+              0.00015490000077988952
+            ],
+            "baseline": [
+              0.00024190000112866983,
+              0.00014069999451749027,
+              0.00013029999536229298
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001477999976486899,
+            "baseline": 0.00013029999536229298
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "many-even-components-m5-12"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015549999807262793,
+              0.0001562000034027733,
+              0.00014590000500902534
+            ],
+            "baseline": [
+              0.00013439999747788534,
+              0.00012409999908413738,
+              0.00013419999595498666
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00014590000500902534,
+            "baseline": 0.00012409999908413738
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-13"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015449999773409218,
+              0.0001754000040818937,
+              0.00016830000095069408
+            ],
+            "baseline": [
+              0.00013770000077784061,
+              0.00014309999824035913,
+              0.0001294999965466559
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015449999773409218,
+            "baseline": 0.0001294999965466559
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-14"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00022159999934956431,
+              0.0001320000010309741,
+              0.00012419999984558672
+            ],
+            "baseline": [
+              0.00011590000212891027,
+              0.00010679999832063913,
+              0.00011530000483617187
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012419999984558672,
+            "baseline": 0.00010679999832063913
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-15"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013419999595498666,
+              0.00012350000179139897,
+              0.00013670000043930486
+            ],
+            "baseline": [
+              0.00011920000542886555,
+              0.0001173999989987351,
+              0.00010789999942062423
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012350000179139897,
+            "baseline": 0.00010789999942062423
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-16"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013049999688519165,
+              0.00013130000297678635,
+              0.0001235999952768907
+            ],
+            "baseline": [
+              0.00011640000593615696,
+              0.00010910000128205866,
+              0.00011729999823728576
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001235999952768907,
+            "baseline": 0.00010910000128205866
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-17"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013199999375501648,
+              0.00016950000281212851,
+              0.00023399999918183312
+            ],
+            "baseline": [
+              0.00011709999671438709,
+              0.0001764999979059212,
+              0.00023610000062035397
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013199999375501648,
+            "baseline": 0.00011709999671438709
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m5-18"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00011800000356743112,
+              0.00021999999444233254,
+              0.00022699999681208283
+            ],
+            "baseline": [
+              0.0001016000023810193,
+              0.0001441000058548525,
+              0.00010309999925084412
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011800000356743112,
+            "baseline": 0.0001016000023810193
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m5-19"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015249999705702066,
+              0.00010879999899771065,
+              0.00016260000120382756
+            ],
+            "baseline": [
+              0.00010150000161956996,
+              0.00010169999586651102,
+              9.330000466434285e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00010879999899771065,
+            "baseline": 9.330000466434285e-05
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.029380801002844237
+    },
+    {
+      "family": "counterexample",
+      "m": 5,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-00"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 0
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0002452000044286251,
+              0.00020219999714754522,
+              0.0003448000061325729
+            ],
+            "baseline": [
+              0.00018480000289855525,
+              0.00016600000526523218,
+              0.00026139999681618065
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020219999714754522,
+            "baseline": 0.00016600000526523218
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-01"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 1
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00019719999545486644,
+              0.00018290000298293307,
+              0.0001956999985850416
+            ],
+            "baseline": [
+              0.00020709999807877466,
+              0.00017610000213608146,
+              0.00016399999731220305
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018290000298293307,
+            "baseline": 0.00016399999731220305
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-02"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 2
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00029790000553475693,
+              0.00019829999655485153,
+              0.0011615999974310398
+            ],
+            "baseline": [
+              0.0002223999981652014,
+              0.00016460000188089907,
+              0.0003921000025002286
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00019829999655485153,
+            "baseline": 0.00016460000188089907
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-03"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 3
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001940000001923181,
+              0.00015100000018719584,
+              0.00023139999393606558
+            ],
+            "baseline": [
+              0.00018020000425167382,
+              0.00014460000238614157,
+              0.00013659999967785552
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015100000018719584,
+            "baseline": 0.00013659999967785552
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-04"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 4
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00017169999773614109,
+              0.0001871999993454665,
+              0.0002710999979171902
+            ],
+            "baseline": [
+              0.0001453000004403293,
+              0.00013410000246949494,
+              0.0002976000032504089
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017169999773614109,
+            "baseline": 0.00013410000246949494
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-05"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 5
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00016420000611105934,
+              0.00015189999976428226,
+              0.00019550000433810055
+            ],
+            "baseline": [
+              0.0001734000034048222,
+              0.00016909999976633117,
+              0.0001638999965507537
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015189999976428226,
+            "baseline": 0.0001638999965507537
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-06"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 6
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001936999979079701,
+              0.00023800000053597614,
+              0.00018370000179857016
+            ],
+            "baseline": [
+              0.00017300000035902485,
+              0.0001630000042496249,
+              0.00017630000365898013
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018370000179857016,
+            "baseline": 0.0001630000042496249
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-07"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 7
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020989999757148325,
+              0.00019100000645266846,
+              0.00020799999765586108
+            ],
+            "baseline": [
+              0.00022600000374950469,
+              0.00017939999816007912,
+              0.00020090000180061907
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00019100000645266846,
+            "baseline": 0.00017939999816007912
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-08"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 8
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00019040000188397244,
+              0.00019519999477779493,
+              0.00024560000019846484
+            ],
+            "baseline": [
+              0.0001725999973132275,
+              0.0001618999958736822,
+              0.0003132999991066754
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00019040000188397244,
+            "baseline": 0.0001618999958736822
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-09"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 9
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020509999740170315,
+              0.0001883000004454516,
+              0.00019700000120792538
+            ],
+            "baseline": [
+              0.0002934000003733672,
+              0.0001810000030673109,
+              0.0001644000003580004
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001883000004454516,
+            "baseline": 0.0001644000003580004
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-10"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 10
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020280000171624124,
+              0.00019859999883919954,
+              0.00018519999866839498
+            ],
+            "baseline": [
+              0.00017629999638302252,
+              0.00016360000154236332,
+              0.00017870000010589138
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018519999866839498,
+            "baseline": 0.00016360000154236332
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-11"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 11
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00024289999419124797,
+              0.00030610000248998404,
+              0.00023189999774331227
+            ],
+            "baseline": [
+              0.0001736999984132126,
+              0.00018969999655382708,
+              0.00016419999883510172
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00023189999774331227,
+            "baseline": 0.00016419999883510172
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-12"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 12
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020249999943189323,
+              0.00020120000408496708,
+              0.00018480000289855525
+            ],
+            "baseline": [
+              0.00017500000103609636,
+              0.00020869999571004882,
+              0.00017690000095171854
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018480000289855525,
+            "baseline": 0.00017500000103609636
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-13"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 13
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020289999520173296,
+              0.0004769000006490387,
+              0.00021289999858709052
+            ],
+            "baseline": [
+              0.0002686000007088296,
+              0.0003319000024930574,
+              0.00017500000103609636
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020289999520173296,
+            "baseline": 0.00017500000103609636
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-14"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 14
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020489999587880448,
+              0.0002571000004536472,
+              0.00022090000129537657
+            ],
+            "baseline": [
+              0.00032339999597752467,
+              0.00020220000442350283,
+              0.0002099999983329326
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020489999587880448,
+            "baseline": 0.00020220000442350283
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-15"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 15
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00028500000189524144,
+              0.00022560000070370734,
+              0.0001947999990079552
+            ],
+            "baseline": [
+              0.000207199998840224,
+              0.00027430000045569614,
+              0.0001638999965507537
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001947999990079552,
+            "baseline": 0.0001638999965507537
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-16"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 16
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.000243499998759944,
+              0.0002364999963901937,
+              0.00022000000171829015
+            ],
+            "baseline": [
+              0.0002521999995224178,
+              0.00020480000239331275,
+              0.0002077999961329624
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00022000000171829015,
+            "baseline": 0.00020480000239331275
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-17"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 17
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00027680000494001433,
+              0.00025639999512350187,
+              0.00023550000332761556
+            ],
+            "baseline": [
+              0.0002069000038318336,
+              0.000261799999861978,
+              0.00019699999393196777
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00023550000332761556,
+            "baseline": 0.00019699999393196777
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-18"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 18
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00023749999672872946,
+              0.00024839999969117343,
+              0.0002542000001994893
+            ],
+            "baseline": [
+              0.0002592000018921681,
+              0.00019469999824650586,
+              0.0002125000028172508
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00023749999672872946,
+            "baseline": 0.00019469999824650586
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "counterexample-m5-19"
+          },
+          "generation": {
+            "source": "experiments/aaai_static_check.py",
+            "identical_replicate": 19
+          },
+          "static_vertices": 10,
+          "static_arcs": 11,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0002445999998599291,
+              0.00027099999715574086,
+              0.0003327000013086945
+            ],
+            "baseline": [
+              0.0002948000037577003,
+              0.0019884000066667795,
+              0.00024030000349739566
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0002445999998599291,
+            "baseline": 0.00024030000349739566
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.04193519999535056
+    }
+  ],
+  "source_sha256_after": {
+    "nscover/__init__.py": "8eadee5893f19b57157f86ce0a528e16a7fffffb342839a9c9dd2212c146e85f",
+    "nscover/branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8",
+    "nscover/brute.py": "1512cce026dcca868e4e3ed13f3315b2db54a0c866fce27112514e3180f6f243",
+    "nscover/chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+    "nscover/generators.py": "e2684ceb352124c9f52599ce0144028018dd6b61e12d3027a2d85279339132c9",
+    "nscover/instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+    "nscover/maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+    "nscover/pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+    "nscover/timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+    "nscover/walks.py": "156a7b58065c2c11541a7d3598e4de096daf640949761db29a72d177729b7614",
+    "experiments/aaai_baseline_bench.py": "0f417d0d21a880a7dc237953443c29a771278768418746945487d1addf0c75a7",
+    "experiments/aaai_gap_study.py": "23bccf973882c577b0e03572f2fa2fac5f305ffaa983702deab0269adba3f4ad",
+    "experiments/aaai_reading_study.py": "07ea904fd82b163eb7fecd8f1fdfe329a9e660342bc82e78118ab9b5da4bda76",
+    "experiments/aaai_static_check.py": "a060f62313e96fa09e0d349a0d7cd92328db12c1b49e8fdc886143fa2d39abac"
+  },
+  "source_changed_during_command": false
+}

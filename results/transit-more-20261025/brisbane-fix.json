@@ -1,0 +1,1 @@
+{"source": "brisbane", "problem": "fix", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "n": 9645, "m": 392805, "k": 14180, "even": 1817, "pair": {"status": "YES", "seconds": 138.73, "dead": 119, "augmentations": 119}, "witness": "checked"}

@@ -1,0 +1,29 @@
+{
+  "unit": {
+    "command": "python3 -m unittest discover -s tests",
+    "tests": 10,
+    "status": "PASS"
+  },
+  "mconvex": {
+    "command": "python3 experiments/gamma_mconvex.py",
+    "connected_graphs": 9,
+    "connected_gamma_and_nonzero_gamma_mconvex": true,
+    "disconnected_negative_control_fails_as_expected": true,
+    "status": "PASS"
+  },
+  "aaai": {
+    "command": "python3 experiments/aaai_static_check.py",
+    "temporal_oracle": false,
+    "pairflow": "NO",
+    "branch": "NO",
+    "static_reduction_has_cover": true,
+    "status": "PASS"
+  },
+  "backends": {
+    "command": "python3 tests/backends.py --seconds 30",
+    "cases": 5387,
+    "complete": 2956,
+    "seconds": 30.0,
+    "status": "PASS"
+  }
+}

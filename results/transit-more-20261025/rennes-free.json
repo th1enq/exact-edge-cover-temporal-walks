@@ -1,0 +1,1 @@
+{"source": "rennes", "problem": "free", "resolution": 0, "loader": "nonstrict", "n": 1407, "m": 109075, "k": 4583, "even": 1126, "pair": {"status": "YES", "seconds": 4.68, "dead": 11, "augmentations": 11}, "witness": "checked"}

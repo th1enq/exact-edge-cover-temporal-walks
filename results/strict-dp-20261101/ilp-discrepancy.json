@@ -1,0 +1,334 @@
+{
+  "index": 1250,
+  "instance": {
+    "num_vertices": 6,
+    "start": [
+      0,
+      1,
+      1,
+      2,
+      1,
+      2
+    ],
+    "edges": [
+      {
+        "u": 1,
+        "v": 4,
+        "time": 1
+      },
+      {
+        "u": 3,
+        "v": 5,
+        "time": 1
+      },
+      {
+        "u": 2,
+        "v": 1,
+        "time": 1
+      },
+      {
+        "u": 4,
+        "v": 5,
+        "time": 2
+      },
+      {
+        "u": 5,
+        "v": 3,
+        "time": 2
+      },
+      {
+        "u": 1,
+        "v": 3,
+        "time": 3
+      },
+      {
+        "u": 5,
+        "v": 1,
+        "time": 3
+      },
+      {
+        "u": 3,
+        "v": 1,
+        "time": 3
+      },
+      {
+        "u": 3,
+        "v": 0,
+        "time": 3
+      },
+      {
+        "u": 4,
+        "v": 0,
+        "time": 3
+      },
+      {
+        "u": 3,
+        "v": 0,
+        "time": 3
+      },
+      {
+        "u": 5,
+        "v": 2,
+        "time": 4
+      },
+      {
+        "u": 1,
+        "v": 0,
+        "time": 4
+      },
+      {
+        "u": 0,
+        "v": 5,
+        "time": 4
+      },
+      {
+        "u": 0,
+        "v": 3,
+        "time": 4
+      },
+      {
+        "u": 5,
+        "v": 4,
+        "time": 4
+      },
+      {
+        "u": 0,
+        "v": 3,
+        "time": 4
+      }
+    ]
+  },
+  "dp": {
+    "status": "YES",
+    "states_max": 9,
+    "seconds": 0.0009840999991865829,
+    "orientation": [
+      1,
+      5,
+      2,
+      4,
+      5,
+      3,
+      1,
+      3,
+      3,
+      4,
+      3,
+      5,
+      1,
+      0,
+      0,
+      5,
+      0
+    ],
+    "walks": [
+      {
+        "start": 1,
+        "edges": [
+          0,
+          3,
+          15
+        ]
+      },
+      {
+        "start": 2,
+        "edges": [
+          2,
+          6,
+          11
+        ]
+      },
+      {
+        "start": 3,
+        "edges": [
+          10,
+          13
+        ]
+      },
+      {
+        "start": 3,
+        "edges": [
+          8,
+          16
+        ]
+      },
+      {
+        "start": 4,
+        "edges": [
+          9,
+          14
+        ]
+      },
+      {
+        "start": 5,
+        "edges": [
+          4,
+          5
+        ]
+      },
+      {
+        "start": 5,
+        "edges": [
+          1,
+          7,
+          12
+        ]
+      }
+    ],
+    "reason": "reachable"
+  },
+  "ilp_repeats": [
+    {
+      "status": "NO",
+      "orientation": null,
+      "walks": null,
+      "reason": "ilp-infeasible",
+      "seconds": 0.17801773600513116,
+      "timings": {
+        "ns_filter": 0.0,
+        "ilp": 0.003795300995989237,
+        "ilp_build": 0.17419483500270871,
+        "witness": 0.0
+      },
+      "ilp_status": 2,
+      "ilp_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "matrix": {
+        "variables": 36,
+        "rows": 38,
+        "nonzeros": 113
+      }
+    },
+    {
+      "status": "NO",
+      "orientation": null,
+      "walks": null,
+      "reason": "ilp-infeasible",
+      "seconds": 0.003056100002140738,
+      "timings": {
+        "ns_filter": 0.0,
+        "ilp": 0.0024015000017243437,
+        "ilp_build": 0.0006334999998216517,
+        "witness": 0.0
+      },
+      "ilp_status": 2,
+      "ilp_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "matrix": {
+        "variables": 36,
+        "rows": 38,
+        "nonzeros": 113
+      }
+    },
+    {
+      "status": "NO",
+      "orientation": null,
+      "walks": null,
+      "reason": "ilp-infeasible",
+      "seconds": 0.0035813009963021614,
+      "timings": {
+        "ns_filter": 0.0,
+        "ilp": 0.002998601004946977,
+        "ilp_build": 0.0005648999940603971,
+        "witness": 0.0
+      },
+      "ilp_status": 2,
+      "ilp_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "matrix": {
+        "variables": 36,
+        "rows": 38,
+        "nonzeros": 113
+      }
+    }
+  ],
+  "oracle": true,
+  "ilp_no_presolve": {
+    "status": "YES",
+    "orientation": [
+      4,
+      5,
+      2,
+      5,
+      3,
+      1,
+      1,
+      1,
+      3,
+      4,
+      3,
+      5,
+      0,
+      0,
+      3,
+      5,
+      3
+    ],
+    "walks": [
+      {
+        "start": 1,
+        "edges": [
+          7,
+          14
+        ]
+      },
+      {
+        "start": 2,
+        "edges": [
+          2,
+          5,
+          16
+        ]
+      },
+      {
+        "start": 3,
+        "edges": [
+          10,
+          12
+        ]
+      },
+      {
+        "start": 3,
+        "edges": [
+          8
+        ]
+      },
+      {
+        "start": 4,
+        "edges": [
+          0,
+          6,
+          11
+        ]
+      },
+      {
+        "start": 5,
+        "edges": [
+          3,
+          9,
+          13
+        ]
+      },
+      {
+        "start": 5,
+        "edges": [
+          1,
+          4,
+          15
+        ]
+      }
+    ],
+    "reason": "ilp-feasible",
+    "seconds": 0.005736000995966606,
+    "timings": {
+      "ns_filter": 0.0,
+      "ilp": 0.004731800996523816,
+      "ilp_build": 0.0009267000059480779,
+      "witness": 5.62999994144775e-05
+    },
+    "ilp_status": 0,
+    "ilp_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+    "matrix": {
+      "variables": 36,
+      "rows": 38,
+      "nonzeros": 113
+    }
+  }
+}

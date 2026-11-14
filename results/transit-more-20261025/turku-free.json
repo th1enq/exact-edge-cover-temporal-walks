@@ -1,0 +1,1 @@
+{"source": "turku", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 1850, "m": 133337, "k": 3500, "even": 1106, "pair": {"status": "YES", "seconds": 12.79, "dead": 88, "augmentations": 88}, "witness": "checked"}

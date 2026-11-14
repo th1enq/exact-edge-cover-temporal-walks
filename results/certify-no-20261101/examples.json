@@ -1,0 +1,209 @@
+{
+  "prefix cut": {
+    "name": "soundness-2",
+    "yes": false,
+    "category": "independently verified",
+    "instance": {
+      "num_vertices": 2,
+      "start": [
+        0,
+        0
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 0
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        }
+      ],
+      "end": [
+        0,
+        0
+      ],
+      "name": "soundness-2"
+    },
+    "certificate": {
+      "kind": "prefix cut",
+      "category": "independently verified",
+      "prefixes": [
+        0,
+        0
+      ],
+      "flow_value": 3,
+      "raw_cut": [
+        0,
+        3,
+        6,
+        10
+      ],
+      "network_definition": "chain-v1-endpoint-m+1",
+      "reason": "chain network"
+    }
+  },
+  "counting": {
+    "name": "soundness-4",
+    "yes": false,
+    "category": "independently verified",
+    "instance": {
+      "num_vertices": 2,
+      "start": [
+        1,
+        2
+      ],
+      "edges": [
+        {
+          "u": 1,
+          "v": 0,
+          "time": 2
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        }
+      ],
+      "end": [
+        1,
+        2
+      ],
+      "name": "soundness-4"
+    },
+    "certificate": {
+      "kind": "counting",
+      "violation": "vertex balance",
+      "vertex": 0,
+      "category": "independently verified",
+      "reason": "counting"
+    }
+  },
+  "pair closure": {
+    "name": "soundness-75",
+    "yes": false,
+    "category": "theory-relative",
+    "instance": {
+      "num_vertices": 2,
+      "start": [
+        0,
+        0
+      ],
+      "edges": [
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 1,
+          "v": 0,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 1
+        },
+        {
+          "u": 0,
+          "v": 1,
+          "time": 3
+        }
+      ],
+      "name": "soundness-75"
+    },
+    "certificate": {
+      "kind": "pair closure",
+      "category": "theory-relative",
+      "reason": "no augmenting path",
+      "x": [
+        0,
+        0,
+        0,
+        0,
+        -1,
+        1,
+        0,
+        0,
+        -1,
+        1,
+        0,
+        0
+      ],
+      "flow": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "heads": [
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "d": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0
+      ],
+      "reachable": [
+        0,
+        1,
+        4,
+        6
+      ]
+    }
+  }
+}

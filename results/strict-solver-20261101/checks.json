@@ -1,0 +1,19 @@
+{
+  "full_validation": "PASS",
+  "self_test": "PASS",
+  "self_test_seconds": 3.7807872560006217,
+  "random_instances": 20000,
+  "identity_instances": 2000,
+  "disagreements": 0,
+  "saved_witness_replay_without_scipy": "PASS",
+  "saved_witness_counts": {
+    "solver_yes": 22,
+    "planted_ground_truth": 4
+  },
+  "benchmark_records": 40,
+  "ordinary_planted_yes_assertions": "PASS: 14/14",
+  "scarce_small_planted_yes_assertions": "PASS: 2/2",
+  "stress_planted_yes_assertions": "FAIL: 4/4 returned UNKNOWN on time limit",
+  "missing_scipy_message": "PASS: separately checked with python3 -S",
+  "limitations": "Large NOs lack independent infeasibility certificates; HiGHS time limit is best effort."
+}

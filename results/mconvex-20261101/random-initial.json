@@ -1,0 +1,24 @@
+{
+  "seed": 20261101,
+  "count": 20000,
+  "stats": {
+    "FIX": {
+      "instances": 10000,
+      "YES": 1585,
+      "NO": 8415,
+      "attempts": 4538,
+      "augmentations": 2926,
+      "reorient_calls": 825
+    },
+    "FREE": {
+      "instances": 10000,
+      "YES": 5508,
+      "NO": 4492,
+      "attempts": 5720,
+      "augmentations": 3379,
+      "reorient_calls": 1392
+    }
+  },
+  "failures": [],
+  "source_hash": "3f69a27546ff5c8be2f7e44f058aaf29f70d8153459d7189af4ed4dd528edd9f"
+}

@@ -1,0 +1,1 @@
+{"source": "venice", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 1874, "m": 117646, "k": 6173, "even": 1281, "pair": {"status": "YES", "seconds": 5.47, "dead": 45, "augmentations": 45}, "witness": "checked"}

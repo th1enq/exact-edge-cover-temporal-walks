@@ -1,0 +1,5676 @@
+{
+  "m": 7,
+  "metadata": {
+    "language": "Python",
+    "python": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "executable": "/usr/bin/python3",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "machine": "x86_64",
+    "processor": "",
+    "nproc": "4",
+    "cpu_count": 4,
+    "backend_default": "augment",
+    "seed": 20261101,
+    "command": [
+      "experiments/aaai_baseline_bench.py",
+      "--sizes",
+      "5",
+      "7",
+      "20",
+      "50",
+      "100"
+    ],
+    "source_sha256": {
+      "nscover/__init__.py": "8eadee5893f19b57157f86ce0a528e16a7fffffb342839a9c9dd2212c146e85f",
+      "nscover/branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8",
+      "nscover/brute.py": "1512cce026dcca868e4e3ed13f3315b2db54a0c866fce27112514e3180f6f243",
+      "nscover/chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+      "nscover/generators.py": "e2684ceb352124c9f52599ce0144028018dd6b61e12d3027a2d85279339132c9",
+      "nscover/instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+      "nscover/maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+      "nscover/pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+      "nscover/timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+      "nscover/walks.py": "156a7b58065c2c11541a7d3598e4de096daf640949761db29a72d177729b7614",
+      "experiments/aaai_baseline_bench.py": "0f417d0d21a880a7dc237953443c29a771278768418746945487d1addf0c75a7",
+      "experiments/aaai_gap_study.py": "23bccf973882c577b0e03572f2fa2fac5f305ffaa983702deab0269adba3f4ad",
+      "experiments/aaai_reading_study.py": "07ea904fd82b163eb7fecd8f1fdfe329a9e660342bc82e78118ab9b5da4bda76",
+      "experiments/aaai_static_check.py": "a060f62313e96fa09e0d349a0d7cd92328db12c1b49e8fdc886143fa2d39abac"
+    }
+  },
+  "cells": [
+    {
+      "family": "planted-YES",
+      "m": 7,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              2,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              1,
+              0,
+              1,
+              2
+            ],
+            "name": "planted-YES-m7-00"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                2,
+                5
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                6
+              ],
+              [
+                4
+              ],
+              []
+            ]
+          },
+          "static_vertices": 25,
+          "static_arcs": 35,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00020780000340892002,
+              0.00020059999951627105,
+              0.00021260000357870013
+            ],
+            "baseline": [
+              0.0004304000030970201,
+              0.00041120000241789967,
+              0.0004743000026792288
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020059999951627105,
+            "baseline": 0.00041120000241789967
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "name": "planted-YES-m7-01"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                3,
+                4,
+                6
+              ],
+              [
+                0,
+                1,
+                2,
+                5
+              ]
+            ]
+          },
+          "static_vertices": 16,
+          "static_arcs": 19,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0002094999945256859,
+              0.0002364999963901937,
+              0.00020450000010896474
+            ],
+            "baseline": [
+              0.00032359999750042334,
+              0.0002880000029108487,
+              0.00026620000426191837
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020450000010896474,
+            "baseline": 0.00026620000426191837
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              1,
+              3,
+              0,
+              0
+            ],
+            "name": "planted-YES-m7-02"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                4
+              ],
+              [
+                5
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          "static_vertices": 20,
+          "static_arcs": 31,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00019610000163083896,
+              0.0002552999940235168,
+              0.00017949999892152846
+            ],
+            "baseline": [
+              0.0005425999988801777,
+              0.0004015000013168901,
+              0.0009844000014709309
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017949999892152846,
+            "baseline": 0.0004015000013168901
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 3
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              1,
+              1
+            ],
+            "name": "planted-YES-m7-03"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                2,
+                4,
+                5
+              ],
+              [
+                1,
+                6
+              ],
+              [
+                3
+              ]
+            ]
+          },
+          "static_vertices": 22,
+          "static_arcs": 29,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00022030000400263816,
+              0.0002010000025620684,
+              0.00022650000028079376
+            ],
+            "baseline": [
+              0.0003859999997075647,
+              0.0005450999960885383,
+              0.00043510000250535086
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0002010000025620684,
+            "baseline": 0.0003859999997075647
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              2,
+              0,
+              1,
+              1
+            ],
+            "name": "planted-YES-m7-04"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [],
+              [
+                3,
+                6
+              ],
+              [
+                0,
+                4
+              ],
+              [
+                1,
+                2,
+                5
+              ]
+            ]
+          },
+          "static_vertices": 22,
+          "static_arcs": 27,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0006986000007600524,
+              0.00022620000527240336,
+              0.00018570000247564167
+            ],
+            "baseline": [
+              0.0006403000006685033,
+              0.00047700000141048804,
+              0.00043139999615959823
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018570000247564167,
+            "baseline": 0.00043139999615959823
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              2,
+              0,
+              1,
+              1,
+              0
+            ],
+            "name": "planted-YES-m7-05"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [],
+              [
+                3
+              ],
+              [
+                4,
+                5,
+                6
+              ],
+              [
+                0,
+                1,
+                2
+              ]
+            ]
+          },
+          "static_vertices": 23,
+          "static_arcs": 30,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.000210599995625671,
+              0.00018339999951422215,
+              0.00023299999884329736
+            ],
+            "baseline": [
+              0.00045680000039283186,
+              0.00043369999912101775,
+              0.00037969999539200217
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00018339999951422215,
+            "baseline": 0.00037969999539200217
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ],
+            "name": "planted-YES-m7-06"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                3,
+                6
+              ],
+              [
+                0,
+                1,
+                2,
+                4,
+                5
+              ]
+            ]
+          },
+          "static_vertices": 18,
+          "static_arcs": 25,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0015514999977312982,
+              0.002125399994838517,
+              0.0016238999960478395
+            ],
+            "baseline": [
+              0.0004008000032627024,
+              0.00041459999920334667,
+              0.0003339000031701289
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0015514999977312982,
+            "baseline": 0.0003339000031701289
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m7-07"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 14,
+          "static_arcs": 19,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00017949999892152846,
+              0.0001579000017954968,
+              0.00017110000044340268
+            ],
+            "baseline": [
+              0.00030250000418163836,
+              0.00026000000070780516,
+              0.000243800001044292
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001579000017954968,
+            "baseline": 0.000243800001044292
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "name": "planted-YES-m7-08"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                5
+              ],
+              [
+                2,
+                3,
+                4,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 15,
+          "static_arcs": 21,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00015379999967990443,
+              0.0001579000017954968,
+              0.00014180000289343297
+            ],
+            "baseline": [
+              0.0002953000002889894,
+              0.0002266000010422431,
+              0.00023379999765893444
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00014180000289343297,
+            "baseline": 0.0002266000010422431
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              3,
+              0,
+              1,
+              1
+            ],
+            "name": "planted-YES-m7-09"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0
+              ],
+              [
+                6
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                1
+              ]
+            ]
+          },
+          "static_vertices": 24,
+          "static_arcs": 31,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.000131200002215337,
+              0.00011919999815290794,
+              0.00013000000035390258
+            ],
+            "baseline": [
+              0.0002630000017234124,
+              0.0002583999958005734,
+              0.00024789999588392675
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011919999815290794,
+            "baseline": 0.00024789999588392675
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "name": "planted-YES-m7-10"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                2,
+                4
+              ],
+              [],
+              [
+                0,
+                1,
+                5
+              ],
+              [
+                3,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 22,
+          "static_arcs": 27,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0013206999938120134,
+              0.001059099995472934,
+              0.0010731000002124347
+            ],
+            "baseline": [
+              0.0002734000008786097,
+              0.00023360000341199338,
+              0.0002634999982547015
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.001059099995472934,
+            "baseline": 0.00023360000341199338
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              2,
+              2
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              2,
+              1
+            ],
+            "name": "planted-YES-m7-11"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                2,
+                4,
+                5
+              ],
+              [],
+              [
+                0,
+                3,
+                6
+              ],
+              []
+            ]
+          },
+          "static_vertices": 20,
+          "static_arcs": 26,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.002209899997978937,
+              0.00028469999961089343,
+              0.0001540000012028031
+            ],
+            "baseline": [
+              0.00023459999647457153,
+              0.00038499999936902896,
+              0.0002647000001161359
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001540000012028031,
+            "baseline": 0.00023459999647457153
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ],
+            "name": "planted-YES-m7-12"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                4,
+                6
+              ],
+              [
+                2,
+                5
+              ],
+              [
+                0,
+                1,
+                3
+              ]
+            ]
+          },
+          "static_vertices": 17,
+          "static_arcs": 25,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013240000407677144,
+              0.00029909999284427613,
+              0.0003858999989461154
+            ],
+            "baseline": [
+              0.00032189999910769984,
+              0.00042129999928874895,
+              0.00043340000411262736
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013240000407677144,
+            "baseline": 0.00032189999910769984
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m7-13"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 10,
+          "static_arcs": 14,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001325999983237125,
+              0.00011810000432888046,
+              0.00015169999824138358
+            ],
+            "baseline": [
+              0.00021670000569429249,
+              0.00016529999993508682,
+              0.00018280000222148374
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00011810000432888046,
+            "baseline": 0.00016529999993508682
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              2,
+              0,
+              0,
+              2,
+              0
+            ],
+            "name": "planted-YES-m7-14"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                3
+              ],
+              [
+                1
+              ],
+              [],
+              [
+                0,
+                2,
+                4,
+                5,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 20,
+          "static_arcs": 29,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001638999965507537,
+              0.0002673999988473952,
+              0.00029319999885046855
+            ],
+            "baseline": [
+              0.0004417000018293038,
+              0.000240100001974497,
+              0.00029879999783588573
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001638999965507537,
+            "baseline": 0.000240100001974497
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m7-15"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1,
+                4,
+                5
+              ],
+              [
+                0,
+                2,
+                3,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 13,
+          "static_arcs": 16,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00014770000416319817,
+              0.00013580000086221844,
+              0.00018039999849861488
+            ],
+            "baseline": [
+              0.00018369999452261254,
+              0.00018379999528406188,
+              0.00017159999697469175
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00013580000086221844,
+            "baseline": 0.00017159999697469175
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              1,
+              0
+            ],
+            "name": "planted-YES-m7-16"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                6
+              ],
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            ]
+          },
+          "static_vertices": 15,
+          "static_arcs": 21,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00016419999883510172,
+              0.0001655999949434772,
+              0.00015249999705702066
+            ],
+            "baseline": [
+              0.00024309999571414664,
+              0.00023180000425782055,
+              0.0002449000021442771
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015249999705702066,
+            "baseline": 0.00023180000425782055
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "planted-YES-m7-17"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                4
+              ],
+              [
+                3,
+                5,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 13,
+          "static_arcs": 15,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0001325999983237125,
+              0.00012260000221431255,
+              0.00013210000179242343
+            ],
+            "baseline": [
+              0.00017559999832883477,
+              0.00017610000213608146,
+              0.00016390000382671133
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00012260000221431255,
+            "baseline": 0.00016390000382671133
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              2,
+              1,
+              2,
+              0
+            ],
+            "name": "planted-YES-m7-18"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                0,
+                3,
+                4,
+                5
+              ],
+              [
+                6
+              ],
+              []
+            ]
+          },
+          "static_vertices": 25,
+          "static_arcs": 36,
+          "answers": {
+            "pairflow": true,
+            "baseline": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00017639999714447185,
+              0.00016899999900488183,
+              0.00015130000247154385
+            ],
+            "baseline": [
+              0.0003893999964930117,
+              0.00042889999895123765,
+              0.0004517999987001531
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00015130000247154385,
+            "baseline": 0.0003893999964930117
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 4
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 4
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "planted-YES-m7-19"
+          },
+          "generation": {
+            "walk_edge_ids": [
+              [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            ]
+          },
+          "static_vertices": 13,
+          "static_arcs": 19,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00016940000205067918,
+              0.0001553999973111786,
+              0.00017859999934444204
+            ],
+            "baseline": [
+              0.0002562000008765608,
+              0.0002553000012994744,
+              0.00028310000197961926
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001553999973111786,
+            "baseline": 0.0002553000012994744
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.061330399999860674
+    },
+    {
+      "family": "perturbed",
+      "m": 7,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              2,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              2,
+              0,
+              1,
+              2
+            ],
+            "name": "perturbed-m7-00"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-00",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                1
+              ]
+            }
+          },
+          "static_vertices": 24,
+          "static_arcs": 36,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              7.18000010238029e-05,
+              6.679999933112413e-05,
+              5.589999636868015e-05
+            ],
+            "baseline": [
+              0.00019449999672360718,
+              0.00018390000332146883,
+              0.00018789999739965424
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.589999636868015e-05,
+            "baseline": 0.00018390000332146883
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-01"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-01",
+            "perturbation": {
+              "end_unit_move": [
+                1,
+                3
+              ]
+            }
+          },
+          "static_vertices": 16,
+          "static_arcs": 18,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.819999933009967e-05,
+              4.9200003559235483e-05,
+              5.690000398317352e-05
+            ],
+            "baseline": [
+              9.910000517265871e-05,
+              9.680000221123919e-05,
+              9.000000136438757e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.9200003559235483e-05,
+            "baseline": 9.000000136438757e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              2,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              1,
+              2,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-02"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-02",
+            "perturbation": {
+              "end_unit_move": [
+                2,
+                3
+              ]
+            }
+          },
+          "static_vertices": 21,
+          "static_arcs": 30,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.780000356025994e-05,
+              5.8400000852998346e-05,
+              4.650000482797623e-05
+            ],
+            "baseline": [
+              0.00017349999689031392,
+              0.00013390000094659626,
+              0.0001379000023007393
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.650000482797623e-05,
+            "baseline": 0.00013390000094659626
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 4
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              1,
+              1
+            ],
+            "name": "perturbed-m7-03"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-03",
+            "perturbation": {
+              "edge": 6,
+              "old_time": 3,
+              "new_time": 4
+            }
+          },
+          "static_vertices": 22,
+          "static_arcs": 29,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00014589999773306772,
+              0.00018670000281417742,
+              0.00014770000416319817
+            ],
+            "baseline": [
+              0.0002562000008765608,
+              0.0003643000018200837,
+              0.00024589999520685524
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00014589999773306772,
+            "baseline": 0.00024589999520685524
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              2,
+              1,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-04"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-04",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                2
+              ]
+            }
+          },
+          "static_vertices": 22,
+          "static_arcs": 27,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.729999975301325e-05,
+              6.900000153109431e-05,
+              4.099999932805076e-05
+            ],
+            "baseline": [
+              0.00013619999663205817,
+              0.00012769999739248306,
+              0.0001322999960393645
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.099999932805076e-05,
+            "baseline": 0.00012769999739248306
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              1,
+              2,
+              0
+            ],
+            "name": "perturbed-m7-05"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-05",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                3
+              ]
+            }
+          },
+          "static_vertices": 23,
+          "static_arcs": 29,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00010269999620504677,
+              9.090000094147399e-05,
+              5.890000466024503e-05
+            ],
+            "baseline": [
+              0.0002663999985088594,
+              0.00024059999850578606,
+              0.00016509999841218814
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.890000466024503e-05,
+            "baseline": 0.00016509999841218814
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-06"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-06",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                1
+              ]
+            }
+          },
+          "static_vertices": 19,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.8099998568650335e-05,
+              8.090000483207405e-05,
+              7.220000406960025e-05
+            ],
+            "baseline": [
+              0.00010620000102790073,
+              9.810000483412296e-05,
+              0.00010180000390391797
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.8099998568650335e-05,
+            "baseline": 9.810000483412296e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 4
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 3
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-07"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-07",
+            "perturbation": {
+              "edge": 0,
+              "old_time": 1,
+              "new_time": 4
+            }
+          },
+          "static_vertices": 15,
+          "static_arcs": 20,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0005257999946479686,
+              0.0025705000007292256,
+              0.0012610999983735383
+            ],
+            "baseline": [
+              0.0001740000006975606,
+              0.0002330999996047467,
+              0.00021880000713281333
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0005257999946479686,
+            "baseline": 0.0001740000006975606
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-08"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-08",
+            "perturbation": {
+              "end_unit_move": [
+                1,
+                4
+              ]
+            }
+          },
+          "static_vertices": 15,
+          "static_arcs": 20,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              9.619999764254317e-05,
+              4.440000338945538e-05,
+              3.7500001781154424e-05
+            ],
+            "baseline": [
+              8.349999552592635e-05,
+              7.570000161649659e-05,
+              7.77000022935681e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 3.7500001781154424e-05,
+            "baseline": 7.570000161649659e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              3,
+              1,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-09"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-09",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                2
+              ]
+            }
+          },
+          "static_vertices": 24,
+          "static_arcs": 30,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              5.199999577598646e-05,
+              4.3799998820759356e-05,
+              4.959999932907522e-05
+            ],
+            "baseline": [
+              0.00014000000373926014,
+              0.00013380000018514693,
+              0.00012700000661425292
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 4.3799998820759356e-05,
+            "baseline": 0.00012700000661425292
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              1,
+              1,
+              1,
+              1
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              2,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-10"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-10",
+            "perturbation": {
+              "end_unit_move": [
+                1,
+                0
+              ]
+            }
+          },
+          "static_vertices": 22,
+          "static_arcs": 26,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.310000026132911e-05,
+              6.310000026132911e-05,
+              0.0001703000016277656
+            ],
+            "baseline": [
+              0.0001269999993382953,
+              0.00011329999688314274,
+              0.0001866000020527281
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 6.310000026132911e-05,
+            "baseline": 0.00011329999688314274
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              0,
+              2,
+              2
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              2,
+              1
+            ],
+            "name": "perturbed-m7-11"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-11",
+            "perturbation": {
+              "edge": 0,
+              "old_time": 1,
+              "new_time": 3
+            }
+          },
+          "static_vertices": 21,
+          "static_arcs": 26,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0009045000042533502,
+              0.0008958999969763681,
+              0.0009352999986731447
+            ],
+            "baseline": [
+              0.0002865000060410239,
+              0.00028959999326616526,
+              0.00025749999622348696
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0008958999969763681,
+            "baseline": 0.00025749999622348696
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              2,
+              0
+            ],
+            "name": "perturbed-m7-12"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-12",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                1
+              ]
+            }
+          },
+          "static_vertices": 18,
+          "static_arcs": 24,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.70000008540228e-05,
+              6.939999730093405e-05,
+              5.570000212173909e-05
+            ],
+            "baseline": [
+              0.00013760000001639128,
+              0.0001680999994277954,
+              0.00013390000094659626
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.570000212173909e-05,
+            "baseline": 0.00013390000094659626
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-13"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-13",
+            "perturbation": {
+              "end_unit_move": [
+                4,
+                3
+              ]
+            }
+          },
+          "static_vertices": 10,
+          "static_arcs": 14,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.500000017695129e-05,
+              5.480000254465267e-05,
+              6.479999865405262e-05
+            ],
+            "baseline": [
+              9.100000170292333e-05,
+              0.00010699999984353781,
+              7.989999721758068e-05
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.480000254465267e-05,
+            "baseline": 7.989999721758068e-05
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              3,
+              0
+            ],
+            "name": "perturbed-m7-14"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-14",
+            "perturbation": {
+              "end_unit_move": [
+                0,
+                3
+              ]
+            }
+          },
+          "static_vertices": 20,
+          "static_arcs": 28,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.610000127693638e-05,
+              6.430000212276354e-05,
+              5.400000372901559e-05
+            ],
+            "baseline": [
+              0.00015420000272570178,
+              0.00014260000170907006,
+              0.00019350000366102904
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.400000372901559e-05,
+            "baseline": 0.00014260000170907006
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-15"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-15",
+            "perturbation": {
+              "edge": 0,
+              "old_time": 1,
+              "new_time": 3
+            }
+          },
+          "static_vertices": 15,
+          "static_arcs": 19,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.0010543000025791116,
+              0.0009970000028260984,
+              0.0009942000033333898
+            ],
+            "baseline": [
+              0.0003189999988535419,
+              0.00026900000375462696,
+              0.0002826000054483302
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0009942000033333898,
+            "baseline": 0.00026900000375462696
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 3
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-16"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-16",
+            "perturbation": {
+              "end_unit_move": [
+                1,
+                0
+              ]
+            }
+          },
+          "static_vertices": 15,
+          "static_arcs": 20,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00013529999705497175,
+              8.399999933317304e-05,
+              7.100000220816582e-05
+            ],
+            "baseline": [
+              0.00015040000289445743,
+              0.0001320000010309741,
+              0.00013699999544769526
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 7.100000220816582e-05,
+            "baseline": 0.0001320000010309741
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-17"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-17",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                4
+              ]
+            }
+          },
+          "static_vertices": 13,
+          "static_arcs": 15,
+          "answers": {
+            "baseline": false,
+            "pairflow": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              6.779999966965988e-05,
+              5.6899996707215905e-05,
+              6.379999831551686e-05
+            ],
+            "baseline": [
+              0.00011889999586855993,
+              0.000115999995614402,
+              0.00010639999527484179
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 5.6899996707215905e-05,
+            "baseline": 0.00010639999527484179
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              2,
+              1,
+              0,
+              2,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              2,
+              1,
+              1,
+              0
+            ],
+            "name": "perturbed-m7-18"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-18",
+            "perturbation": {
+              "end_unit_move": [
+                3,
+                0
+              ]
+            }
+          },
+          "static_vertices": 26,
+          "static_arcs": 36,
+          "answers": {
+            "pairflow": false,
+            "baseline": false
+          },
+          "brute_force": false,
+          "truth": false,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              8.569999772589654e-05,
+              8.610000077169389e-05,
+              6.81000019540079e-05
+            ],
+            "baseline": [
+              0.00026879999495577067,
+              0.00022519999765791,
+              0.0002908000024035573
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 6.81000019540079e-05,
+            "baseline": 0.00022519999765791
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 5,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 3
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 3
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 3
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 3
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 4
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 5
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "perturbed-m7-19"
+          },
+          "generation": {
+            "parent": "planted-YES-m7-19",
+            "perturbation": {
+              "edge": 6,
+              "old_time": 4,
+              "new_time": 5
+            }
+          },
+          "static_vertices": 14,
+          "static_arcs": 20,
+          "answers": {
+            "baseline": true,
+            "pairflow": true
+          },
+          "brute_force": true,
+          "truth": true,
+          "truth_source": "brute_force",
+          "seconds": {
+            "pairflow": [
+              0.00021099999867146835,
+              0.0002542000001994893,
+              0.00021099999867146835
+            ],
+            "baseline": [
+              0.00031209999724524096,
+              0.0003158000035909936,
+              0.00029349999385885894
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00021099999867146835,
+            "baseline": 0.00029349999385885894
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.04530790099670412
+    },
+    {
+      "family": "many-even-components",
+      "m": 7,
+      "requested": 20,
+      "records": [
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-00"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00026619999698596075,
+              0.0002756000030785799,
+              0.00024400000256719068
+            ],
+            "baseline": [
+              0.00025379999715369195,
+              0.0003096000000368804,
+              0.0002325000023120083
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00024400000256719068,
+            "baseline": 0.0002325000023120083
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m7-01"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0003116999941994436,
+              0.0002853999976650812,
+              0.00028359999851090834
+            ],
+            "baseline": [
+              0.00023800000053597614,
+              0.00040779999835649505,
+              0.00023330000112764537
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00028359999851090834,
+            "baseline": 0.00023330000112764537
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 4,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-02"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00025459999596932903,
+              0.00025630000163801014,
+              0.00024120000307448208
+            ],
+            "baseline": [
+              0.00022899999748915434,
+              0.00021329999435693026,
+              0.000229199999012053
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00024120000307448208,
+            "baseline": 0.00021329999435693026
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-03"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002586999980849214,
+              0.00024200000189011917,
+              0.0003020000003743917
+            ],
+            "baseline": [
+              0.0003192000003764406,
+              0.00023099999816622585,
+              0.00021130000095581636
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00024200000189011917,
+            "baseline": 0.00021130000095581636
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-04"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002520000052754767,
+              0.00025209999876096845,
+              0.0002686000007088296
+            ],
+            "baseline": [
+              0.0002699000033317134,
+              0.00021070000366307795,
+              0.00023940000392030925
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0002520000052754767,
+            "baseline": 0.00021070000366307795
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-05"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00025019999884534627,
+              0.00024119999579852447,
+              0.0002579000065452419
+            ],
+            "baseline": [
+              0.0002275000006193295,
+              0.00023050000163493678,
+              0.0002629000009619631
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00024119999579852447,
+            "baseline": 0.0002275000006193295
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-06"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002506000018911436,
+              0.00028759999986505136,
+              0.00025319999986095354
+            ],
+            "baseline": [
+              0.00022220000391826034,
+              0.00020770000264747068,
+              0.0003054000044357963
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0002506000018911436,
+            "baseline": 0.00020770000264747068
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m7-07"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00025179999647662044,
+              0.00023810000129742548,
+              0.0002550999997765757
+            ],
+            "baseline": [
+              0.00022219999664230272,
+              0.00029519999952754006,
+              0.0002173000029870309
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00023810000129742548,
+            "baseline": 0.0002173000029870309
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 4,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-08"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002502999996067956,
+              0.0002851000026566908,
+              0.000247500000114087
+            ],
+            "baseline": [
+              0.000367199994798284,
+              0.0002564999958849512,
+              0.00022419999731937423
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.000247500000114087,
+            "baseline": 0.00022419999731937423
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0
+            ],
+            "name": "many-even-components-m7-09"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00031200000375974923,
+              0.00024159999884432182,
+              0.0002536000029067509
+            ],
+            "baseline": [
+              0.00022890000400366262,
+              0.00022929999977350235,
+              0.00020850000146310776
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00024159999884432182,
+            "baseline": 0.00020850000146310776
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 1,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-10"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00029370000265771523,
+              0.0002082999999402091,
+              0.0001936999979079701
+            ],
+            "baseline": [
+              0.00019910000264644623,
+              0.00019220000103814527,
+              0.00018320000526728109
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0001936999979079701,
+            "baseline": 0.00018320000526728109
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m7-11"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002466000005370006,
+              0.00020330000552348793,
+              0.00020640000002458692
+            ],
+            "baseline": [
+              0.0002086000022245571,
+              0.00018460000137565657,
+              0.0001688999982434325
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00020330000552348793,
+            "baseline": 0.0001688999982434325
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "edges": [
+              {
+                "u": 0,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-12"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.0002582000015536323,
+              0.00034109999978682026,
+              0.0002524999945308082
+            ],
+            "baseline": [
+              0.0002027000009547919,
+              0.0002479999966453761,
+              0.0001615999935893342
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.0002524999945308082,
+            "baseline": 0.0001615999935893342
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 2
+              },
+              {
+                "u": 0,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 6,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-13"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00017289999959757552,
+              0.00029519999952754006,
+              0.00019009999959962443
+            ],
+            "baseline": [
+              0.0001505999971413985,
+              0.00020080000103916973,
+              0.00015759999951114878
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017289999959757552,
+            "baseline": 0.0001505999971413985
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 5,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 1,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 2,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 5,
+                "time": 2
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-14"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00020179999410174787,
+              0.00018770000315271318,
+              0.00017669999942881986
+            ],
+            "baseline": [
+              0.00016679999680491164,
+              0.0001551000023027882,
+              0.00020009999570902437
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017669999942881986,
+            "baseline": 0.0001551000023027882
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 2,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 2,
+                "time": 1
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-15"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00018979999731527641,
+              0.00017740000475896522,
+              0.00032360000477638096
+            ],
+            "baseline": [
+              0.00016770000365795568,
+              0.00016630000027362257,
+              0.00015390000044135377
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017740000475896522,
+            "baseline": 0.00015390000044135377
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 4,
+                "v": 3,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 2,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 4,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-16"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00035260000004200265,
+              0.00018229999841423705,
+              0.00016450000111944973
+            ],
+            "baseline": [
+              0.00024509999639121816,
+              0.00019109999993816018,
+              0.0002206999997724779
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00016450000111944973,
+            "baseline": 0.00019109999993816018
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 5,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 4,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 6,
+                "v": 2,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 6,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-17"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00022809999791206792,
+              0.00016459999460494146,
+              0.00017459999799029902
+            ],
+            "baseline": [
+              0.0001773000039975159,
+              0.00015629999688826501,
+              0.0001449999981559813
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00016459999460494146,
+            "baseline": 0.0001449999981559813
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 1,
+                "v": 0,
+                "time": 1
+              },
+              {
+                "u": 6,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 6,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 5,
+                "time": 1
+              },
+              {
+                "u": 3,
+                "v": 5,
+                "time": 2
+              }
+            ],
+            "end": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "name": "many-even-components-m7-18"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "pairflow": false,
+            "baseline": true
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00017279999883612618,
+              0.0002094999945256859,
+              0.00022229999740375206
+            ],
+            "baseline": [
+              0.0001531999951112084,
+              0.00014369999553309754,
+              0.0002520000052754767
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00017279999883612618,
+            "baseline": 0.00014369999553309754
+          }
+        },
+        {
+          "instance": {
+            "num_vertices": 7,
+            "start": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            "edges": [
+              {
+                "u": 3,
+                "v": 0,
+                "time": 2
+              },
+              {
+                "u": 3,
+                "v": 4,
+                "time": 1
+              },
+              {
+                "u": 5,
+                "v": 3,
+                "time": 2
+              },
+              {
+                "u": 4,
+                "v": 1,
+                "time": 1
+              },
+              {
+                "u": 1,
+                "v": 6,
+                "time": 1
+              },
+              {
+                "u": 0,
+                "v": 5,
+                "time": 2
+              },
+              {
+                "u": 2,
+                "v": 3,
+                "time": 1
+              }
+            ],
+            "end": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "name": "many-even-components-m7-19"
+          },
+          "generation": {
+            "triangles": 1,
+            "connecting_path_edges": 4
+          },
+          "static_vertices": 12,
+          "static_arcs": 13,
+          "answers": {
+            "baseline": true,
+            "pairflow": false
+          },
+          "brute_force": null,
+          "truth": false,
+          "truth_source": "solve_pairflow (reference, not independent)",
+          "seconds": {
+            "pairflow": [
+              0.00017490000027464703,
+              0.00014900000678608194,
+              0.0001494999960414134
+            ],
+            "baseline": [
+              0.00013129999570082873,
+              0.00013559999933931977,
+              0.00012350000179139897
+            ]
+          },
+          "best_seconds": {
+            "pairflow": 0.00014900000678608194,
+            "baseline": 0.00012350000179139897
+          }
+        }
+      ],
+      "cell_limit_seconds": 60,
+      "stopped": "completed",
+      "wall_seconds": 0.04468059999635443
+    }
+  ],
+  "source_sha256_after": {
+    "nscover/__init__.py": "8eadee5893f19b57157f86ce0a528e16a7fffffb342839a9c9dd2212c146e85f",
+    "nscover/branch.py": "2d2c08c9873726f95e249a367b729f782beb7a02063d5c7dba346c34d32589b8",
+    "nscover/brute.py": "1512cce026dcca868e4e3ed13f3315b2db54a0c866fce27112514e3180f6f243",
+    "nscover/chainflow.py": "cfb139eae14481645e78ec798e7e7fdf4566c4407be6a655afc159d31d6f1bd4",
+    "nscover/generators.py": "e2684ceb352124c9f52599ce0144028018dd6b61e12d3027a2d85279339132c9",
+    "nscover/instance.py": "1ca21c0dc44e0ad11aeefce0b642c1e698430240f74a3c474bff741f407fd06e",
+    "nscover/maxflow.py": "1ce2b4baf3ae9bb13a9b259b935f14cfb05d7634f401a23cac62a2b627b09cbe",
+    "nscover/pairflow.py": "fd6b3657ac2f2bc13a8496e9de8081ca3918d2527303d0b25bf1f7c9cc39cadd",
+    "nscover/timeline.py": "790730566613c855e91e147200134356f0cdbf60e80ec116d3ee13f6f1abb20a",
+    "nscover/walks.py": "156a7b58065c2c11541a7d3598e4de096daf640949761db29a72d177729b7614",
+    "experiments/aaai_baseline_bench.py": "0f417d0d21a880a7dc237953443c29a771278768418746945487d1addf0c75a7",
+    "experiments/aaai_gap_study.py": "23bccf973882c577b0e03572f2fa2fac5f305ffaa983702deab0269adba3f4ad",
+    "experiments/aaai_reading_study.py": "07ea904fd82b163eb7fecd8f1fdfe329a9e660342bc82e78118ab9b5da4bda76",
+    "experiments/aaai_static_check.py": "a060f62313e96fa09e0d349a0d7cd92328db12c1b49e8fdc886143fa2d39abac"
+  },
+  "source_changed_during_command": false
+}

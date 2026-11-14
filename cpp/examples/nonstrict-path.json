@@ -1,0 +1,10 @@
+{
+  "name": "two-edges-at-the-same-time",
+  "num_vertices": 3,
+  "edges": [
+    {"u": 0, "v": 1, "time": 5},
+    {"u": 1, "v": 2, "time": 5}
+  ],
+  "start": [1, 0, 0],
+  "end": [0, 0, 1]
+}

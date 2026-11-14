@@ -1,0 +1,47 @@
+cmake_minimum_required(VERSION 3.16)
+project(nscover_cpp VERSION 1.0 LANGUAGES CXX)
+
+option(NSCOVER_SANITIZE "Enable AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+option(NSCOVER_BUILD_TESTS "Build verification programs" ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_library(nscover
+    src/instance.cpp src/timeline.cpp src/maxflow.cpp src/chainflow.cpp
+    src/branch.cpp src/pairflow.cpp src/backtrack.cpp src/walks.cpp)
+target_include_directories(nscover PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_compile_options(nscover PRIVATE -Wall -Wextra -Wpedantic)
+if(NSCOVER_SANITIZE)
+    if(NOT CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        message(FATAL_ERROR "Sanitizer configuration requires GCC or Clang")
+    endif()
+    target_compile_options(nscover PUBLIC -fsanitize=address,undefined -fno-omit-frame-pointer)
+    target_link_options(nscover PUBLIC -fsanitize=address,undefined)
+endif()
+
+# The algorithm library itself has no third-party dependency.
+find_package(nlohmann_json 3.2.0 REQUIRED)
+add_library(nscover_io src/io.cpp)
+target_link_libraries(nscover_io PUBLIC nscover nlohmann_json::nlohmann_json)
+target_compile_options(nscover_io PRIVATE -Wall -Wextra -Wpedantic)
+add_executable(nscover_solve apps/solve.cpp)
+target_link_libraries(nscover_solve PRIVATE nscover_io)
+target_compile_options(nscover_solve PRIVATE -Wall -Wextra -Wpedantic)
+
+if(NSCOVER_BUILD_TESTS)
+    enable_testing()
+    add_executable(nscover_verify tests/verify.cpp)
+    target_link_libraries(nscover_verify PRIVATE nscover_io)
+    target_compile_options(nscover_verify PRIVATE -Wall -Wextra -Wpedantic)
+    add_test(NAME deterministic COMMAND nscover_verify --mode unit)
+    add_test(NAME exhaustive COMMAND nscover_verify --mode exhaustive)
+    add_test(NAME random_small COMMAND nscover_verify --mode small --cases 5000 --seed 1)
+    add_test(NAME random_large COMMAND nscover_verify --mode large --cases 5000 --seed 2)
+    set_tests_properties(deterministic exhaustive random_small random_large PROPERTIES TIMEOUT 300)
+endif()
+
+find_package(Threads REQUIRED)
+add_executable(nscover_mink apps/mink.cpp)
+target_link_libraries(nscover_mink PRIVATE nscover_io Threads::Threads)
+target_compile_options(nscover_mink PRIVATE -Wall -Wextra -Wpedantic)

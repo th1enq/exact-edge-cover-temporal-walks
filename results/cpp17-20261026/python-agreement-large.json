@@ -1,0 +1,17 @@
+{
+ "fix_cases": 16157,
+ "fix_dead_ge2": 30,
+ "fix_edges_total": 283282,
+ "fix_max_augmentations": 3,
+ "fix_max_branch_flows": 10,
+ "fix_max_dead": 3,
+ "fix_yes": 3780,
+ "free_cases": 16157,
+ "free_dead_ge2": 214,
+ "free_edges_total": 283282,
+ "free_max_augmentations": 3,
+ "free_max_branch_flows": 16,
+ "free_max_dead": 5,
+ "free_yes": 11296,
+ "seconds": 30.0
+}

@@ -1,0 +1,1 @@
+{"source": "bordeaux", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "n": 3435, "m": 236595, "k": 6283, "even": 344, "pair": {"status": "YES", "seconds": 22.53, "dead": 6, "augmentations": 6}, "witness": "checked"}

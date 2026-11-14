@@ -1,0 +1,295 @@
+{
+  "seed": 20261030,
+  "requested_instances": 20000,
+  "completed_instances": 20000,
+  "time_limit_seconds": 245,
+  "time_guard_triggered": false,
+  "truth_solver": "solve_pairflow (augment-bfs)",
+  "cond_ii_definition": "is orientation-dependent. Here cond_ii means that SOME orientation\nsatisfying (i) and the FIX endpoint constraints has no walk-free snapshot component.\nIt is false by convention if (i) has no witness. We also report (ii) on the initial\nchain witness, since testing just that witness can give false negatives. The\nexistential check enumerates at most 2**7 temporal orientations independently of\nsolve_pairflow; it is not inferred from the truth bit.",
+  "counts": {
+    "truth": 4048,
+    "static": 4100,
+    "cond_i": 4109,
+    "cond_ii": 4048,
+    "static_orientation_a": 4109,
+    "static_connectivity_b": 19443,
+    "truth_not_static": 0,
+    "static_not_truth": 52,
+    "gaps_with_cond_ii_false": 52,
+    "gaps_with_cond_ii_true": 0,
+    "truth_ne_static_and_cond_ii": 0,
+    "static_ne_cond_i": 9,
+    "static_orientation_a_ne_cond_i": 0,
+    "truth_ne_cond_i_and_cond_ii": 0,
+    "initial_chain_ii_false_but_repairable": 6,
+    "brute_crosschecked": 2000,
+    "brute_pairflow_mismatches": 0
+  },
+  "smallest_mismatches": {
+    "static_ne_cond_i": [
+      {
+        "instance": {
+          "num_vertices": 3,
+          "start": [
+            0,
+            1,
+            0
+          ],
+          "edges": [
+            {
+              "u": 0,
+              "v": 2,
+              "time": 3
+            },
+            {
+              "u": 0,
+              "v": 2,
+              "time": 3
+            }
+          ],
+          "end": [
+            0,
+            1,
+            0
+          ],
+          "name": "fix-01002"
+        },
+        "truth": false,
+        "static": false,
+        "cond_i": true,
+        "cond_ii": false,
+        "initial_chain_cond_ii": false,
+        "initial_dead_even_components": [
+          0
+        ],
+        "static_orientation_a": true,
+        "static_connectivity_b": false
+      },
+      {
+        "instance": {
+          "num_vertices": 3,
+          "start": [
+            0,
+            2,
+            0
+          ],
+          "edges": [
+            {
+              "u": 2,
+              "v": 0,
+              "time": 3
+            },
+            {
+              "u": 2,
+              "v": 0,
+              "time": 3
+            }
+          ],
+          "end": [
+            0,
+            2,
+            0
+          ],
+          "name": "fix-06096"
+        },
+        "truth": false,
+        "static": false,
+        "cond_i": true,
+        "cond_ii": false,
+        "initial_chain_cond_ii": false,
+        "initial_dead_even_components": [
+          0
+        ],
+        "static_orientation_a": true,
+        "static_connectivity_b": false
+      },
+      {
+        "instance": {
+          "num_vertices": 4,
+          "start": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "edges": [
+            {
+              "u": 1,
+              "v": 0,
+              "time": 2
+            },
+            {
+              "u": 0,
+              "v": 1,
+              "time": 2
+            }
+          ],
+          "end": [
+            0,
+            0,
+            2,
+            0
+          ],
+          "name": "fix-00381"
+        },
+        "truth": false,
+        "static": false,
+        "cond_i": true,
+        "cond_ii": false,
+        "initial_chain_cond_ii": false,
+        "initial_dead_even_components": [
+          0
+        ],
+        "static_orientation_a": true,
+        "static_connectivity_b": false
+      }
+    ]
+  },
+  "smallest_static_not_truth": [
+    {
+      "instance": {
+        "num_vertices": 3,
+        "start": [
+          0,
+          1,
+          0
+        ],
+        "edges": [
+          {
+            "u": 2,
+            "v": 0,
+            "time": 2
+          },
+          {
+            "u": 2,
+            "v": 1,
+            "time": 3
+          },
+          {
+            "u": 0,
+            "v": 2,
+            "time": 2
+          }
+        ],
+        "end": [
+          0,
+          0,
+          1
+        ],
+        "name": "fix-15152"
+      },
+      "truth": false,
+      "static": true,
+      "cond_i": true,
+      "cond_ii": false,
+      "initial_chain_cond_ii": false,
+      "initial_dead_even_components": [
+        0
+      ],
+      "static_orientation_a": true,
+      "static_connectivity_b": true
+    },
+    {
+      "instance": {
+        "num_vertices": 3,
+        "start": [
+          1,
+          0,
+          0
+        ],
+        "edges": [
+          {
+            "u": 1,
+            "v": 0,
+            "time": 3
+          },
+          {
+            "u": 1,
+            "v": 2,
+            "time": 1
+          },
+          {
+            "u": 2,
+            "v": 1,
+            "time": 1
+          }
+        ],
+        "end": [
+          0,
+          1,
+          0
+        ],
+        "name": "fix-19650"
+      },
+      "truth": false,
+      "static": true,
+      "cond_i": true,
+      "cond_ii": false,
+      "initial_chain_cond_ii": false,
+      "initial_dead_even_components": [
+        0
+      ],
+      "static_orientation_a": true,
+      "static_connectivity_b": true
+    },
+    {
+      "instance": {
+        "num_vertices": 4,
+        "start": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "edges": [
+          {
+            "u": 3,
+            "v": 0,
+            "time": 2
+          },
+          {
+            "u": 3,
+            "v": 1,
+            "time": 3
+          },
+          {
+            "u": 3,
+            "v": 0,
+            "time": 2
+          }
+        ],
+        "end": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "name": "fix-12506"
+      },
+      "truth": false,
+      "static": true,
+      "cond_i": true,
+      "cond_ii": false,
+      "initial_chain_cond_ii": false,
+      "initial_dead_even_components": [
+        0
+      ],
+      "static_orientation_a": true,
+      "static_connectivity_b": true
+    }
+  ],
+  "free": {
+    "status": "skipped",
+    "reason": "Start-only terminals require free endpoint imbalance; the specified balance-at-every-nonterminal test does not model FREE."
+  },
+  "elapsed_seconds": 4.019963,
+  "invariants": {
+    "truth_implies_static": true,
+    "every_static_not_truth_has_cond_ii_false": true,
+    "truth_equals_static_and_cond_ii": true,
+    "static_equals_cond_i": false,
+    "static_orientation_a_equals_cond_i": true,
+    "truth_equals_cond_i_and_cond_ii": true,
+    "brute_equals_pairflow_on_subset": true
+  }
+}

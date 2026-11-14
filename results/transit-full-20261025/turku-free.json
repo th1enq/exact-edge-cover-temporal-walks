@@ -1,0 +1,1 @@
+{"source": "turku", "problem": "free", "n": 1844, "m": 125779, "k": 3332, "even": 1168, "pair": {"status": "YES", "seconds": 33.66, "dead": 134, "augmentations": 134}, "witness": "checked", "branch": {"status": "LIMIT", "flows": 19, "seconds": 152.76}}

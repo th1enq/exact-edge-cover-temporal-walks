@@ -1,0 +1,11 @@
+{
+  "compiler": "g++ (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
+  "cmake": "cmake version 4.2.3",
+  "python": "3.14.4",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "nlohmann_json": "3.11.3",
+  "standard": "C++17, extensions disabled",
+  "release": "CMAKE_BUILD_TYPE=Release",
+  "sanitizer": "CMAKE_BUILD_TYPE=RelWithDebInfo, -fsanitize=address,undefined -fno-omit-frame-pointer",
+  "timing": "Development runs overlap; elapsed times are not isolated benchmarks."
+}

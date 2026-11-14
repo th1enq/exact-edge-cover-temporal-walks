@@ -1,0 +1,227 @@
+[
+  {
+    "city": "adelaide",
+    "n": 7543,
+    "m": 403611,
+    "given_k": 9940,
+    "static_LB": 156,
+    "snapshot_LB": 98,
+    "LB": 156
+  },
+  {
+    "city": "belfast",
+    "n": 1917,
+    "m": 122693,
+    "given_k": 3835,
+    "static_LB": 25,
+    "snapshot_LB": 132,
+    "LB": 132
+  },
+  {
+    "city": "berlin",
+    "n": 4601,
+    "m": 1036274,
+    "given_k": 57901,
+    "static_LB": 218,
+    "snapshot_LB": 600,
+    "LB": 600
+  },
+  {
+    "city": "bordeaux",
+    "n": 3435,
+    "m": 236595,
+    "given_k": 6283,
+    "static_LB": 39,
+    "snapshot_LB": 95,
+    "LB": 95
+  },
+  {
+    "city": "brisbane",
+    "n": 9645,
+    "m": 392805,
+    "given_k": 14180,
+    "static_LB": 150,
+    "snapshot_LB": 413,
+    "LB": 413
+  },
+  {
+    "city": "canberra",
+    "n": 2764,
+    "m": 124305,
+    "given_k": 3326,
+    "static_LB": 23,
+    "snapshot_LB": 142,
+    "LB": 142
+  },
+  {
+    "city": "detroit",
+    "n": 5683,
+    "m": 214863,
+    "given_k": 2642,
+    "static_LB": 27,
+    "snapshot_LB": 50,
+    "LB": 50
+  },
+  {
+    "city": "dublin",
+    "n": 4526,
+    "m": 400186,
+    "given_k": 8676,
+    "static_LB": 103,
+    "snapshot_LB": 246,
+    "LB": 246
+  },
+  {
+    "city": "grenoble",
+    "n": 1547,
+    "m": 114434,
+    "given_k": 5404,
+    "static_LB": 45,
+    "snapshot_LB": 162,
+    "LB": 162
+  },
+  {
+    "city": "helsinki",
+    "n": 6983,
+    "m": 685251,
+    "given_k": 25358,
+    "static_LB": 141,
+    "snapshot_LB": 592,
+    "LB": 592
+  },
+  {
+    "city": "kuopio",
+    "n": 549,
+    "m": 32122,
+    "given_k": 1087,
+    "static_LB": 21,
+    "snapshot_LB": 33,
+    "LB": 33
+  },
+  {
+    "city": "lisbon",
+    "n": 7073,
+    "m": 525469,
+    "given_k": 21296,
+    "static_LB": 220,
+    "snapshot_LB": 97,
+    "LB": 220
+  },
+  {
+    "city": "luxembourg",
+    "n": 1367,
+    "m": 186581,
+    "given_k": 10066,
+    "static_LB": 64,
+    "snapshot_LB": 141,
+    "LB": 141
+  },
+  {
+    "city": "melbourne",
+    "n": 19493,
+    "m": 1097438,
+    "given_k": 28979,
+    "static_LB": 294,
+    "snapshot_LB": 725,
+    "LB": 725
+  },
+  {
+    "city": "nantes",
+    "n": 2337,
+    "m": 194621,
+    "given_k": 7657,
+    "static_LB": 73,
+    "snapshot_LB": 233,
+    "LB": 233
+  },
+  {
+    "city": "palermo",
+    "n": 2176,
+    "m": 224311,
+    "given_k": 8286,
+    "static_LB": 22,
+    "snapshot_LB": 32,
+    "LB": 32
+  },
+  {
+    "city": "paris",
+    "n": 11950,
+    "m": 1823802,
+    "given_k": 81177,
+    "static_LB": 404,
+    "snapshot_LB": 1662,
+    "LB": 1662
+  },
+  {
+    "city": "prague",
+    "n": 5147,
+    "m": 653993,
+    "given_k": 34591,
+    "static_LB": 307,
+    "snapshot_LB": 615,
+    "LB": 615
+  },
+  {
+    "city": "rennes",
+    "n": 1407,
+    "m": 109075,
+    "given_k": 4583,
+    "static_LB": 30,
+    "snapshot_LB": 128,
+    "LB": 128
+  },
+  {
+    "city": "rome",
+    "n": 7869,
+    "m": 1051172,
+    "given_k": 36973,
+    "static_LB": 122,
+    "snapshot_LB": 206,
+    "LB": 206
+  },
+  {
+    "city": "sydney",
+    "n": 24063,
+    "m": 1264219,
+    "given_k": 33052,
+    "static_LB": 500,
+    "snapshot_LB": 1037,
+    "LB": 1037
+  },
+  {
+    "city": "toulouse",
+    "n": 3307,
+    "m": 219165,
+    "given_k": 9247,
+    "static_LB": 57,
+    "snapshot_LB": 252,
+    "LB": 252
+  },
+  {
+    "city": "turku",
+    "n": 1850,
+    "m": 133337,
+    "given_k": 3500,
+    "static_LB": 33,
+    "snapshot_LB": 36,
+    "LB": 36
+  },
+  {
+    "city": "venice",
+    "n": 1874,
+    "m": 117646,
+    "given_k": 6173,
+    "static_LB": 73,
+    "snapshot_LB": 144,
+    "LB": 144
+  },
+  {
+    "city": "winnipeg",
+    "n": 5079,
+    "m": 333882,
+    "given_k": 6217,
+    "static_LB": 67,
+    "snapshot_LB": 59,
+    "LB": 67
+  }
+]

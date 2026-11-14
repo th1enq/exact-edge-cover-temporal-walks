@@ -1,0 +1,1 @@
+{"source": "dublin", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 4526, "m": 400186, "k": 8676, "even": 6461, "pair": {"status": "YES", "seconds": 198.29, "dead": 146, "augmentations": 146}, "witness": "checked"}

@@ -1,0 +1,1 @@
+{"source": "lisbon", "problem": "fix", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 7073, "m": 525469, "k": 21296, "even": 913, "pair": {"status": "YES", "seconds": 194.32, "dead": 32, "augmentations": 32}, "witness": "checked"}

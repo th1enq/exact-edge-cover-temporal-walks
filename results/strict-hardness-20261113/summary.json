@@ -1,0 +1,17 @@
+{
+  "seed": 20261113,
+  "formulas": 1967,
+  "satisfiable": 1389,
+  "unsatisfiable": 578,
+  "exhaustive_n2": 26,
+  "random": 1941,
+  "fix_milp": 221,
+  "fix_dfs": 1967,
+  "free_milp": 221,
+  "free_dfs": 1967,
+  "free_token_search": 1967,
+  "mismatches": 0,
+  "largest_fix_edges": 156,
+  "largest_fix_walks": 51,
+  "seconds": 314.5
+}

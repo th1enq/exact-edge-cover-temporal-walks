@@ -1,0 +1,205 @@
+{
+ "seed": 20261030,
+ "instances": 20000,
+ "requested": 20000,
+ "seconds": 5.6,
+ "counts": {
+  "last": {
+   "false_yes": 52,
+   "false_no": 0,
+   "agree": 19948
+  },
+  "first": {
+   "false_yes": 5,
+   "false_no": 3778,
+   "agree": 16217
+  }
+ },
+ "smallest_examples": {
+  "last": {
+   "false_yes": [
+    {
+     "num_vertices": 3,
+     "start": [
+      0,
+      1,
+      0
+     ],
+     "edges": [
+      {
+       "u": 2,
+       "v": 0,
+       "time": 2
+      },
+      {
+       "u": 2,
+       "v": 1,
+       "time": 3
+      },
+      {
+       "u": 0,
+       "v": 2,
+       "time": 2
+      }
+     ],
+     "end": [
+      0,
+      0,
+      1
+     ],
+     "name": "fix-15152"
+    },
+    {
+     "num_vertices": 3,
+     "start": [
+      1,
+      0,
+      0
+     ],
+     "edges": [
+      {
+       "u": 1,
+       "v": 0,
+       "time": 3
+      },
+      {
+       "u": 1,
+       "v": 2,
+       "time": 1
+      },
+      {
+       "u": 2,
+       "v": 1,
+       "time": 1
+      }
+     ],
+     "end": [
+      0,
+      1,
+      0
+     ],
+     "name": "fix-19650"
+    }
+   ],
+   "false_no": []
+  },
+  "first": {
+   "false_yes": [
+    {
+     "num_vertices": 3,
+     "start": [
+      0,
+      1,
+      0
+     ],
+     "edges": [
+      {
+       "u": 1,
+       "v": 0,
+       "time": 3
+      },
+      {
+       "u": 1,
+       "v": 0,
+       "time": 3
+      },
+      {
+       "u": 0,
+       "v": 2,
+       "time": 2
+      },
+      {
+       "u": 0,
+       "v": 2,
+       "time": 2
+      }
+     ],
+     "end": [
+      0,
+      1,
+      0
+     ],
+     "name": "fix-09158"
+    },
+    {
+     "num_vertices": 4,
+     "start": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "edges": [
+      {
+       "u": 2,
+       "v": 1,
+       "time": 3
+      },
+      {
+       "u": 1,
+       "v": 2,
+       "time": 3
+      },
+      {
+       "u": 1,
+       "v": 0,
+       "time": 1
+      },
+      {
+       "u": 1,
+       "v": 0,
+       "time": 1
+      }
+     ],
+     "end": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "name": "fix-09678"
+    }
+   ],
+   "false_no": [
+    {
+     "num_vertices": 2,
+     "start": [
+      0,
+      2
+     ],
+     "edges": [
+      {
+       "u": 0,
+       "v": 1,
+       "time": 2
+      }
+     ],
+     "end": [
+      1,
+      1
+     ],
+     "name": "fix-00161"
+    },
+    {
+     "num_vertices": 2,
+     "start": [
+      1,
+      1
+     ],
+     "edges": [
+      {
+       "u": 1,
+       "v": 0,
+       "time": 2
+      }
+     ],
+     "end": [
+      2,
+      0
+     ],
+     "name": "fix-00279"
+    }
+   ]
+  }
+ }
+}

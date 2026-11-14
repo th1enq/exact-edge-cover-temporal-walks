@@ -1,0 +1,180 @@
+{
+  "cases": 2000,
+  "cases_by_size": {
+    "1": 667,
+    "2": 667,
+    "3": 666
+  },
+  "oracle_vectors": 23389,
+  "disagreements": [],
+  "scaling": [
+    {
+      "m": 10,
+      "size_S": 1,
+      "degrees_S": [
+        4
+      ],
+      "vectors": 5,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 2,
+      "seconds": 0.00857110300421482,
+      "wall_seconds": 2.688857775996439
+    },
+    {
+      "m": 30,
+      "size_S": 1,
+      "degrees_S": [
+        7
+      ],
+      "vectors": 8,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 3,
+      "seconds": 0.004416002004290931,
+      "wall_seconds": 1.781547843995213
+    },
+    {
+      "m": 100,
+      "size_S": 1,
+      "degrees_S": [
+        39
+      ],
+      "vectors": 40,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 1,
+      "seconds": 0.05603161700128112,
+      "wall_seconds": 2.739824836004118
+    },
+    {
+      "m": 300,
+      "size_S": 1,
+      "degrees_S": [
+        104
+      ],
+      "vectors": 105,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 4,
+      "seconds": 0.41399561899743276,
+      "wall_seconds": 2.5985371700007818
+    },
+    {
+      "m": 10,
+      "size_S": 2,
+      "degrees_S": [
+        4,
+        2
+      ],
+      "vectors": 15,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 4,
+      "seconds": 0.04214331199909793,
+      "wall_seconds": 2.960300245998951
+    },
+    {
+      "m": 30,
+      "size_S": 2,
+      "degrees_S": [
+        7,
+        10
+      ],
+      "vectors": 88,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 3,
+      "seconds": 0.08760518499911996,
+      "wall_seconds": 4.954882392994477
+    },
+    {
+      "m": 100,
+      "size_S": 2,
+      "degrees_S": [
+        43,
+        29
+      ],
+      "vectors": 1320,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 2,
+      "seconds": 1.8813667739959783,
+      "wall_seconds": 4.232870765998086
+    },
+    {
+      "m": 300,
+      "size_S": 2,
+      "degrees_S": [
+        95,
+        110
+      ],
+      "vectors": 10656,
+      "limit_seconds": 12,
+      "status": "TIMEOUT",
+      "seconds_at_least": 12,
+      "wall_seconds": 12.118745791995025
+    },
+    {
+      "m": 10,
+      "size_S": 3,
+      "degrees_S": [
+        6,
+        2,
+        1
+      ],
+      "vectors": 42,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 3,
+      "seconds": 0.053167698002653196,
+      "wall_seconds": 2.4515184229967417
+    },
+    {
+      "m": 30,
+      "size_S": 3,
+      "degrees_S": [
+        7,
+        8,
+        15
+      ],
+      "vectors": 1152,
+      "limit_seconds": 12,
+      "status": "OK",
+      "answer": 2,
+      "seconds": 0.8471055730042281,
+      "wall_seconds": 2.2361748299954343
+    },
+    {
+      "m": 100,
+      "size_S": 3,
+      "degrees_S": [
+        39,
+        34,
+        28
+      ],
+      "vectors": 40600,
+      "limit_seconds": 12,
+      "status": "TIMEOUT",
+      "seconds_at_least": 12,
+      "wall_seconds": 12.115877458003524
+    },
+    {
+      "m": 300,
+      "size_S": 3,
+      "degrees_S": [
+        108,
+        99,
+        90
+      ],
+      "vectors": 991900,
+      "limit_seconds": 12,
+      "status": "TIMEOUT",
+      "seconds_at_least": 12,
+      "wall_seconds": 12.090864532001433
+    }
+  ],
+  "experiment": "C",
+  "seed": 20261101,
+  "total_seconds": 83.20691923400591
+}

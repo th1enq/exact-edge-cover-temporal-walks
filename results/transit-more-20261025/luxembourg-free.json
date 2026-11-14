@@ -1,0 +1,1 @@
+{"source": "luxembourg", "problem": "free", "resolution": 0, "loader": "nonstrict", "window_hours": 0, "window": null, "dedupe": true, "n": 1367, "m": 186581, "k": 10066, "even": 1230, "pair": {"status": "YES", "seconds": 5.21, "dead": 5, "augmentations": 5}, "witness": "checked"}

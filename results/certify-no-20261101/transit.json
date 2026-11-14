@@ -1,0 +1,16 @@
+{
+  "status": "skipped",
+  "measured": false,
+  "counts": null,
+  "reason": "Historical census stores metrics, not instances; transit loader defaults changed since that run. Exact reconstruction and provenance validation omitted under the optional cheap-only scope.",
+  "historical_sources": [
+    {
+      "path": "results/census-20261025/transit-grenoble-adelaide.jsonl",
+      "historical_NO": 81
+    },
+    {
+      "path": "results/census-20261025/transit-kuopio-turku.jsonl",
+      "historical_NO": 60
+    }
+  ]
+}
