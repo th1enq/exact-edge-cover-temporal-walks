@@ -1,0 +1,208 @@
+\section{M-convex feasibility algorithm}\label{sec:mconvex}
+
+The exchange property of M-convexity lets us reroute pairs of walks between vertices without losing a valid orientation. Submodular flow supplies the standard augmenting path scheme~\cite{cunningham1985,fujishige2005}. Figure~\ref{fig:overview} traces the algorithm on the running example of Section~\ref{sec:ports}.
+
+\subsection{M-convexity}\label{sec:mcsets}
+
+A set $B\subseteq\Z^N$ is \emph{M-convex}~\cite{murota1996,murota2003} if for all $x,y\in B$ and every $i$ with $x_i>y_i$ there is $j$ with $x_j<y_j$ such that $x-\e_i+\e_j\in B$ and $y+\e_i-\e_j\in B$. Here $\e_i$ is the $i$-th unit vector.
+
+\paragraph{Pair counting.}
+Write $c_t(v)=2q_t(v)+p_t(v)$ with $p_t(v)\in\{0,1\}$ fixed and $q_t(v)$ the number of \emph{pairs} of walks at $v$. For a component $K$ of $E_t$ and $v\in K$, let $p^{\inn}_v=p_t(v)$, $p^{\out}_v=p_{t^+}(v)$, $\alpha_v=q_t(v)$ (the \emph{incoming} pairs) and $\beta_v=q_{t^+}(v)$ (the \emph{outgoing} pairs). An orientation of $K$ determines the difference $\beta-\alpha$ through
+\begin{equation}\label{eq:balance}
+  \inn_t(v)-\out_t(v)=2(\beta_v-\alpha_v)+p^{\out}_v-p^{\inn}_v\qquad (v\in K).
+\end{equation}
+We say that $g\in\Z^K$ is \emph{realizable} if some orientation of $K$ satisfies~\eqref{eq:balance} with $g=\beta-\alpha$.
+
+\begin{definition}\label{def:gamma}
+Let $\Gamma_K\subseteq\Z^{K}\times\Z^{K}$ be the set of vectors $(-\alpha,\beta)$ with $\alpha,\beta\ge0$ such that $\beta-\alpha$ is realizable. If $K$ is even, let $\Gamma'_K=\Gamma_K\setminus\{0\}$.
+\end{definition}
+
+If $K$ is even, then all walk counters in $K$ are even before and after $t$, so $c_t=2\alpha$ on $K$. Summing~\eqref{eq:balance} over $K$ gives $\beta(K)=\alpha(K)$, where $x(X)=\sum_{i\in X}x_i$. Condition~(ii) at $K$ is therefore exactly $(-\alpha,\beta)\ne0$.
+
+\begin{example}\label{ex:digon}
+Let $K$ be two parallel edges between $u$ and $w$, with all parities $0$. Then $\Gamma_K$ contains $(-\e_u,\e_w)$, $(-\e_w,\e_u)$ and $(-\alpha,\alpha)$ for all $\alpha\ge0$, while $\Gamma'_K$ removes only $\alpha=0$, and the first two points still exchange to the non-zero points $(-\e_u,\e_u)$ and $(-\e_w,\e_w)$.
+\end{example}
+
+\paragraph{Tools from discrete convexity.}
+The following lemmas are standard in orientation theory~\cite{hakimi1965,frank1980,frank2011} and discrete convex analysis~\cite{murota2003,fujishige2005}. Lemmas~\ref{lem:reversal} and~\ref{lem:boundary} are stated with a citation. Lemmas~\ref{lem:exchange} and~\ref{lem:localmax} are proved briefly because they are used in exactly the form below.
+
+\begin{lemma}\label{lem:reversal}
+Let $O$ be an orientation of $K$ that realizes $g$ and let $v\ne w$ be vertices of $K$. Then $g+\e_v-\e_w$ is realizable if and only if $O$ has a directed path from $v$ to $w$.
+\end{lemma}
+
+This is the classical path-reversal property of orientations with prescribed in-degrees~\cite{hakimi1965,frank1980,frank2011}: reversing a directed path from $v$ to $w$ changes the in-degrees by $+\e_v-\e_w$, and conversely the reversed arcs of any two orientations with these in-degrees contain such a path.
+
+\begin{lemma}\label{lem:boundary}
+Let $N$ be a directed network with integer or infinite capacities, a set $P$ of terminal nodes and \emph{fixed} integer supplies at all non-terminal nodes. The set of net inflow vectors at $P$ of integral feasible flows in $N$ is M-convex when it is non-empty. A direct sum of M-convex sets is M-convex.
+\end{lemma}
+
+This is the standard fact that the terminal net-inflow vectors of integral flows form an M-convex set~\cite{murota2003,fujishige2005}. For infinite capacities, truncate all capacities at a bound larger than every value of the two flows that give $x,y$. The statement on direct sums follows from the definition, since an exchange in one summand leaves the others unchanged.
+
+\begin{lemma}\label{lem:exchange}
+Let $B$ be M-convex, $x\in B$, and let $x+\e_{i_l}-\e_{j_l}\in B$ for $l=1,\dots,r$, where the $i_l$ are pairwise distinct and the $j_l$ are pairwise distinct. If there are no $l<l'$ with $x+\e_{i_l}-\e_{j_{l'}}\in B$, then $x+\sum_l(\e_{i_l}-\e_{j_l})\in B$.
+\end{lemma}
+
+\begin{proof}
+This is the simultaneous-exchange argument behind shortest augmenting paths for submodular flow~\cite{cunningham1985,fujishige2005,murota2003}, in the form used here. Pairs with $i_l=j_l$ can be dropped, and the hypothesis gives $i_l\ne j_{l'}$ for $l<l'$. We use induction on $r$, the case $r\le1$ being trivial. Let $x'=x+\e_{i_r}-\e_{j_r}\in B$.
+
+First let $l<r$ and apply the exchange axiom to $x+\e_{i_l}-\e_{j_l}$ and $x'$ at the coordinate $i_l$, where the first point is larger. It yields $k\in\{j_l,i_r\}$, where the first point is smaller, with $x'+\e_{i_l}-\e_k\in B$. If $k=i_r\ne j_l$, then $x+\e_{i_l}-\e_{j_r}\in B$, which the hypothesis excludes. Hence $x'+\e_{i_l}-\e_{j_l}\in B$.
+
+Next let $l<l'<r$ and suppose that $u=x'+\e_{i_l}-\e_{j_{l'}}\in B$. Apply the exchange axiom to $u$ and $x$ at the coordinate $i_l$. It yields $k\in\{j_{l'},j_r\}$ with $x+\e_{i_l}-\e_k\in B$, which the hypothesis excludes in both cases. Hence $x'+\e_{i_l}-\e_{j_{l'}}\notin B$.
+
+The pairs $l<r$ therefore satisfy the hypothesis at $x'$, and induction gives the claim.
+\end{proof}
+
+\begin{lemma}\label{lem:localmax}
+Let $B$ be M-convex, $x\in B$ and $R$ a set of coordinates. If there are no $i\in R$ and $j\notin R$ with $x+\e_i-\e_j\in B$, then $x(R)\ge y(R)$ for every $y\in B$.
+\end{lemma}
+
+\begin{proof}
+This is the local optimality criterion for maximizing a linear function over an M-convex set~\cite{murota2003}. Suppose some $y\in B$ has $y(R)>x(R)$ and choose such $y$ with $\lVert y-x\rVert_1$ minimal. Some $i\in R$ has $y_i>x_i$. By the exchange axiom there is $j$ with $y_j<x_j$, $y-\e_i+\e_j\in B$ and $x+\e_i-\e_j\in B$. The hypothesis gives $j\in R$, so $y'=y-\e_i+\e_j$ has $y'(R)=y(R)$ and is closer to $x$, a contradiction.
+\end{proof}
+
+\paragraph{The main lemma.}
+Part~(a) and Lemma~\ref{lem:reversal} are classical~\cite{hakimi1965,frank1980,frank2011}: the in-degree vectors of orientations of a graph form an M-convex set, restated here in pair coordinates. Part~(b) states that deleting the single point $0$ preserves M-convexity when $K$ is connected and Eulerian. Deleting a point from an M-convex set does not preserve M-convexity in general: $\{(2,0),(1,1),(0,2)\}$ is M-convex, but $\{(2,0),(0,2)\}$ is not. To our knowledge, part~(b) is not stated in the standard orientation theory~\cite{frank1980,frank2011}. The submodular flow framework itself is standard~\cite{edmonds1977,franktardos1988,cunningham1985,fujishige2005}. The new ingredient is the handling of the dead state, whose proof also underlies the certificates below. Figures~\ref{fig:mconvex}(a),(b) illustrate the example above, and Figure~\ref{fig:mconvex}(c) illustrates the digon exchange.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics{Fig4}
+\caption{Exchange in M-convex sets and removal of the dead state. (a) The set $\{(2,0),(1,1),(0,2)\}$ is M-convex. Its extreme points exchange towards $(1,1)$. (b) After $(1,1)$ is deleted, no exchange remains. (c) For the digon of Example~\ref{ex:digon}, the exchange that would end at the dead state $0$ (dashed) is replaced by an exchange from $(-\e_u,\e_w)$ and $(-\e_w,\e_u)$ to the non-zero states $(-\e_u,\e_u)$ and $(-\e_w,\e_w)$.}
+\label{fig:mconvex}
+\end{figure}
+
+For $X\subseteq K$ let $\delta_K(X)$ be the set of edges of $K$ with exactly one end in $X$. The only possible failure after deleting $0$ is that an exchange guaranteed in $\Gamma_K$ makes one of the two states zero.
+
+\begin{lemma}\label{lem:gamma}
+\begin{enumerate}
+\item[(a)] $\Gamma_K$ is M-convex.
+\item[(b)] If $K$ is a (connected) even component, then $\Gamma'_K=\Gamma_K\setminus\{0\}$ is M-convex.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The statement is classical~\cite{hakimi1965,frank1980,frank2011}. We only reduce it to Lemma~\ref{lem:boundary}. Fix a reference orientation $R$ of $K$ with $d_R=\out-\inn$. Reversing the arc $x\to y$ moves one pair from $y$ to $x$, so every orientation gives $\beta-\alpha=\sigma+\partial\varphi$, where $\sigma(v)=(p^{\inn}_v-p^{\out}_v-d_R(v))/2\in\Z$ and $\varphi\in\{0,1\}$ is the indicator of the reversed arcs of the digraph $R^-$ obtained by reversing every arc of $R$. Build a network on $K$ with the arcs of $R^-$ at capacity $1$, fixed supply $\sigma(v)$ at every $v$, and for each $v$ terminals $v_{\inn}$ and $v_{\out}$ with uncapacitated arcs $v_{\inn}\to v\to v_{\out}$. Its terminal net-inflow vectors are exactly the points $(-\alpha,\beta)$ of $\Gamma_K$, which is M-convex by Lemma~\ref{lem:boundary}.
+
+(b) \emph{Idea.} By~(a) only an exchange that produces the point $0$ is a problem. We show that then another exchange index exists, using reachability in an orientation of $g$ and a strongly connected Euler orientation. All parities in an even component are $0$, so \eqref{eq:balance} reads $\inn_t-\out_t=2g$ with $g=\beta-\alpha$. We use two consequences. First, let $O$ realize $g$ and let $\emptyset\ne X\subsetneq K$. Since $2g(v)=\inn_t(v)-\out_t(v)$, summing over $X$ cancels internal edges and gives $2g(X)=|\{\text{cut edges entering }X\}|-|\{\text{cut edges leaving }X\}|$. Thus if every edge of $\delta_K(X)$ enters $X$, then $g(X)=|\delta_K(X)|/2>0$, and if every such edge leaves, then $g(X)=-|\delta_K(X)|/2<0$. Strictness follows from connectedness of $K$. Second, all degrees in $K$ are even, so $K$ has an Euler circuit~\cite{hierholzer1873}. The resulting orientation realizes $0$ and is strongly connected, so $\e_v-\e_w$ is realizable for all $v,w\in K$ by Lemma~\ref{lem:reversal}.
+
+Let $x,y\in\Gamma'_K$ and let $i$ be a coordinate with $x_i>y_i$. By~(a) there is $j$ with $x_j<y_j$ such that $x'=x-\e_i+\e_j\in\Gamma_K$ and $y'=y+\e_i-\e_j\in\Gamma_K$. If both are non-zero we are done. They cannot both be zero, since then $x=\e_i-\e_j=-y$, while incoming coordinates are non-positive and outgoing coordinates are non-negative, so $i$ would be both an outgoing coordinate ($x_i=1$) and an incoming coordinate ($y_i=-1$). Points of $\Gamma_K$ satisfy $\alpha(K)=\beta(K)$, so a point of $\Gamma'_K$ has $\alpha\ne0$ and $\beta\ne0$.
+
+\emph{Case $x'=0$.} Then $x=(-\e_u,\e_w)$, $i=w_{\out}$ and $j=u_{\inn}$. Write $y=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $y_i<1$, we have $\beta_w=0$. Let $M$ be the set of vertices reachable from $w$ in $O$. If $M\ne K$, every edge of $\delta_K(M)$ enters $M$, so $\beta(M)\ge g(M)>0$. If $M=K$, then $\beta(K)\ge1$. So there is $z\in M\setminus\{w\}$ with $\beta_z\ge1$, because $\beta_w=0$ and the positive total $\beta(M)$ must occur at another vertex. And $g+\e_w-\e_z$ is realizable by Lemma~\ref{lem:reversal}. Take $j=z_{\out}$ instead, which satisfies $x_j=0<y_j$. Then $x-\e_i+\e_j=(-\e_u,\e_z)\in\Gamma'_K$ by the second consequence, and $y+\e_i-\e_j\in\Gamma'_K$ because its difference is $g+\e_w-\e_z$ and $\alpha\ne0$.
+
+\emph{Case $y'=0$.} Then $y=(-\e_u,\e_w)$, $i=u_{\inn}$ and $j=w_{\out}$. Write $x=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $x_i>-1$, we have $\alpha_u=0$. Let $\Lambda$ be the set of vertices from which $u$ is reachable in $O$. If $\Lambda\ne K$, every edge of $\delta_K(\Lambda)$ leaves $\Lambda$, so $\alpha(\Lambda)\ge-g(\Lambda)>0$. If $\Lambda=K$, then $\alpha(K)\ge1$. So there is $v\in\Lambda\setminus\{u\}$ with $\alpha_v\ge1$, because $\alpha_u=0$ and the positive total $\alpha(\Lambda)$ must occur at another vertex. And $g+\e_v-\e_u$ is realizable by Lemma~\ref{lem:reversal}. Take $j=v_{\inn}$ instead, which satisfies $x_j=-\alpha_v<0=y_j$. Then $x-\e_i+\e_j$ moves one incoming pair from $v$ to $u$, its difference is $g+\e_v-\e_u$, and it lies in $\Gamma'_K$ (it is non-zero, since its coordinate at $u_{\inn}$ is $-1$). Finally $y+\e_i-\e_j=(-\e_v,\e_w)\in\Gamma'_K$ by the second consequence.
+\end{proof}
+
+\begin{remark}\label{rem:connected}
+Connectivity is necessary in Lemma~\ref{lem:gamma}(b): for two disjoint triangles treated as one component, the corresponding set is not M-convex. If $g=\beta-\alpha$ is fixed first and the point $0$ is then removed, the exchange axiom fails already for two vertices joined by two parallel edges, so the lemma is stated for $\Gamma'_K$ with $g$ free.
+\end{remark}
+
+\subsection{The port network}\label{sec:ports}
+
+Every vertex $v$ becomes a \emph{timeline} of ports. Let $K_1,\dots,K_{q_v}$ be the components that contain the occurrences of $v$. The ports of $v$ are $S_v$ (start), $\IN(K_j,v)$ and $\OUT(K_j,v)$ for $j=1,\dots,q_v$, and $Z_v$ (end). \emph{Waiting arcs} join them in time order, namely $S_v\to\IN(K_1,v)$, $\OUT(K_j,v)\to\IN(K_{j+1},v)$ and $\OUT(K_{q_v},v)\to Z_v$. A vertex without edges has only the arc $S_v\to Z_v$. A flow $\xi\ge0$ on a waiting arc is the number of pairs that wait at $v$ between two occurrences (Fig.~\ref{fig:ports}). For a port $P$ let $\partial\xi(P)$ be the flow out of $P$ minus the flow into $P$, the opposite sign to the net inflow $\partial\varphi$ in the proof of Lemma~\ref{lem:gamma}(a). At the ports of a component, $\partial\xi=(-\alpha,\beta)$.
+
+Let $p_{\mathrm{end}}(v)$ be the parity of $a_v+G_v$. The constraint set $\cB$ is the direct sum of the following sets.
+\begin{itemize}
+\item At $S_v$, the single point $\floor{a_v/2}$.
+\item At the ports of each component $K$, the set $\Gamma'_K$ if $K$ is even and $\Gamma_K$ otherwise.
+\item At the ports $Z_v$, for \FIX{}, the single point $-(z_v-p_{\mathrm{end}}(v))/2$ at every $v$, after checking $z_v\equiv a_v+G_v \pmod 2$ and $z_v\ge p_{\mathrm{end}}(v)$. For \FREE{}, the simplex $\{-\gamma:\gamma\in\N^V,\ \gamma(V)=(k-\sum_vp_{\mathrm{end}}(v))/2\}$, which fixes only the total number of final pairs.
+\end{itemize}
+The single points and the end simplex of \FREE{}, the integer points of the uniform base polytope $\{-\gamma:\gamma\ge0,\ \gamma(V)=c\}$, are M-convex~\cite{murota2003}. By Lemmas~\ref{lem:boundary} and~\ref{lem:gamma}, $\cB$, their direct sum, is M-convex. It is non-empty after the checks of line~1 of Algorithm~\ref{alg:pf}: arbitrary orientations give states in each $\Gamma_K$, and if an even component would have the zero state, adding one waiting pair at the same vertex on both sides gives a nonzero state in $\Gamma'_K$. The start and end sets are nonempty by the parity and total-count checks. Since $\sum_v(a_v+G_v)=k+2m$, the number $k-\sum_vp_{\mathrm{end}}(v)$ is always even.
+
+Running example. Take Fig.~\ref{fig:aaai}(a) with one walk starting at each of $x$ and $y$ and free ends. Figure~\ref{fig:overview} traces its three stages. Figure~\ref{fig:ports} shows the port network for this \FREE{} instance and an augmenting path (thick blue arrows $1$--$5$) that repairs its dead triangle; $+1$ and $-1$ mark nonzero deviations, and $\eta$ implements an exchange between end ports.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics{Fig5}
+\caption{Overview of the algorithm on the running example. The boxes show the number of walks at each vertex after time 1: $x:0$, $u:0$, $y:2$ in (a) and $x:0$, $u:2$, $y:0$ in (c). (a) After the maximum flow, the time-1 edges leave no walk at $u$, so the time-2 triangle is dead. (b) An augmenting path reverses the orientation of $u\to y$. (c) After augmentation, $u$ holds two walks: $x\to u\to v\to w\to u$ and $y\to u$.}
+\label{fig:overview}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics{Fig6}
+\caption{Port network and an augmenting path for the running \FREE{} example.}
+\label{fig:ports}
+\end{figure}
+
+\begin{theorem}\label{thm:reduction}
+An instance of \FREE{} or \FIX{} is feasible if and only if there is a pair flow $\xi\ge0$ on the waiting arcs with $\partial\xi\in\cB$.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) Take the orientation of the walks and let $\xi=q$ on every waiting arc. At $S_v$, $\partial\xi=\floor{a_v/2}$. At each component, $\partial\xi=(-\alpha,\beta)$ with $\beta\ge0$ by~(i), the difference $\beta-\alpha$ is realized by the orientation itself, and $(-\alpha,\beta)\ne0$ on even components by~(ii). At $Z_v$, the value $-\partial\xi$ is the number of final pairs at $v$. It equals $(z_v-p_{\mathrm{end}}(v))/2$ in \FIX{}, and in \FREE{} these values sum to $(k-\sum_vp_{\mathrm{end}}(v))/2$ because the number of walks is preserved.
+
+($\Leftarrow$) For each $K$ choose an orientation that realizes $\beta-\alpha$. By~\eqref{eq:balance}, the number of walks at $v$ between two occurrences under the combined orientation equals $2\xi+p$ on the corresponding waiting arc. Condition~(i) holds because $\beta\ge0$. Condition~(ii) holds on components that are not even by Lemma~\ref{lem:noneven} and on even components because $(-\alpha,\beta)\ne0$. In \FIX{} the final number of walks at $v$ is $z_v$. Theorem~\ref{thm:char} completes the proof.
+\end{proof}
+
+Equivalently, Theorem~\ref{thm:reduction} asks whether the M-convex set $\{\partial\xi:\xi\ge0\}$ of boundaries of non-negative waiting flows (M-convex by Lemma~\ref{lem:boundary}, up to sign) meets the M-convex set $\cB$. This is a feasibility instance of M-convex intersection~\cite{murota2003,edmonds1977,franktardos1988}.
+
+\subsection{The augmenting path algorithm}\label{sec:auxgraph}
+
+The algorithm initializes $\xi$ from the chain-flow orientation: on each waiting arc it puts the number of pairs (half the walk counter, an integer by the fixed parity). The IN and OUT coordinates of each component in $x$ are $-\alpha$ and $\beta$ from that orientation, $x(S_v)=\lfloor a_v/2\rfloor$, and the end coordinate is minus the final pair count. For each initially dead even component, line 3 replaces its zero state by one incoming and outgoing pair at a chosen vertex. The algorithm maintains a flow $\xi\ge0$ and a point $x\in\cB$. Their \emph{deviation} is $d=\partial\xi-x$. A solution is obtained when $d=0$. The \emph{auxiliary graph} has the ports as nodes and three kinds of arcs, each of which moves one unit of deviation from its tail to its head.
+\begin{enumerate}
+\item[(1)] The reverse of every waiting arc. Using it increases $\xi$ on that arc by one.
+\item[(2)] Every waiting arc with $\xi>0$. Using it decreases $\xi$ by one.
+\item[(3)] An exchange arc $i\to j$ whenever $x+\e_i-\e_j\in\cB$. Using it replaces $x$ by $x+\e_i-\e_j$.
+\end{enumerate}
+Let $i$ be a port of $v$ and $j$ a port of $w$ in the same component $K$. The exchange arc $i\to j$ exists if and only if $\alpha_v\ge1$ when $i$ is an incoming port, $\beta_w\ge1$ when $j$ is an outgoing port, $v=w$ or the current orientation of $K$ has a directed path from $v$ to $w$ (Lemma~\ref{lem:reversal}), and, if $K$ is even, the new point is non-zero. No availability condition is needed when $i$ is an outgoing port or $j$ is an incoming port, since those changes increase the corresponding pair count. In the simplex of \FREE{}, $x+\e_i-\e_j\in\cB$ whenever $\gamma_i\ge1$. Instead of these $\Theta(n^2)$ arcs the auxiliary graph has a node $\eta$ with arcs $Z_i\to\eta$ for every $i$ with $\gamma_i\ge1$ and $\eta\to Z_j$ for every $j$, and a path through $\eta$ performs one simplex exchange. Any shortest path and any vertex selected in line 3 may be used. Figure~\ref{fig:aux} illustrates the three kinds of arcs and the certificate used in Theorem~\ref{thm:correct}.
+
+\begin{figure}[!tb]
+\centering
+\includegraphics{Fig7}
+\caption{The auxiliary graph. (a) The three kinds of arcs at a waiting arc $P\to Q$ with flow $\xi$ and at two ports $i,j$ of one component, where kind~(3) requires $x+\e_i-\e_j\in\cB$; each arc moves one unit of deviation from its tail to its head. (b) The certificate of Theorem~\ref{thm:correct}: the set $R$ of ports reachable from $\{d>0\}$ contains no port with $d<0$, and no arc leaves $R$. Then $x(R)=-d(R)<0$, whereas Lemma~\ref{lem:localmax} would give $x(R)\ge x'(R)\ge0$ for any solution $(\xi',x')$.}
+\label{fig:aux}
+\end{figure}
+
+\begin{algorithm}[t]
+\caption{Augmenting path algorithm for \FIX{} and \FREE{}}\label{alg:pf}
+\begin{algorithmic}[1]
+\State Check the counting conditions ($\sum a=\sum z$ and $h_v\in\N$ for \FIX{}, $k\ge\sum_vp_{\mathrm{end}}(v)$ for \FREE{}). \textbf{if} a check fails \textbf{then return} \NO{}.
+\State Solve a maximum flow in the chain network. \textbf{if} its value is less than $m$ \textbf{then return} \NO{} with the minimum cut.
+\State Take the orientation of the maximum flow and the induced $\xi$ and $x$. For every dead even component $K$, pick $v\in K$, set $x=(-\e_v,\e_v)$ at $(\IN(K,v),\OUT(K,v))$, so that $d=+1$ at $\IN(K,v)$ and $d=-1$ at $\OUT(K,v)$.
+\While{some port has $d>0$}
+  \State Find a \emph{shortest} path from $\{d>0\}$ to $\{d<0\}$ in the auxiliary graph by breadth-first search.
+  \If{no such path exists}
+    \State \Return \NO{} together with the set $R$ of ports reachable from $\{d>0\}$.
+  \EndIf
+  \State Apply all arcs of the path to $\xi$ and $x$ at once and re-orient the components whose point changed (see below).
+\EndWhile
+\State \Return \YES{} and build the walks as in the proof of Theorem~\ref{thm:char}.
+\end{algorithmic}
+\end{algorithm}
+
+In the theorem-bound re-orientation, one repeatedly reverses a directed path from a vertex whose target in-degree exceeds its current in-degree to one whose current in-degree exceeds its target, which reduces the $L_1$ distance to the target by two; $O(|K|)$ paths of $O(m_K)$ time each suffice for a component $K$.
+
+\subsection{Correctness and infeasibility certificates}
+
+\begin{lemma}\label{lem:invariant}
+After every augmentation, $\xi\ge0$ and $x\in\cB$.
+\end{lemma}
+
+\begin{proof}
+All arcs of the path are evaluated before the augmentation and applied together. A shortest path is simple, so every waiting arc is used at most once and arcs of kind~(2) are used only when $\xi>0$. Hence $\xi\ge0$. A simple path visits $\eta$ at most once, so the simplex of \FREE{} undergoes at most one exchange, which is valid by the definition of the arcs. Consider any other summand $\Gamma$ of $\cB$ and its exchanges $(i_1,j_1),\dots,(i_r,j_r)$ in the order of the path. The nodes of a shortest path have pairwise distinct and increasing breadth-first distances from the set $\{d>0\}$, so the $i_l$ are pairwise distinct and the $j_l$ are pairwise distinct. If there were $l<l'$ with an arc $i_l\to j_{l'}$, then $\mathrm{dist}(j_{l'})\le\mathrm{dist}(i_l)+1<\mathrm{dist}(i_{l'})+1=\mathrm{dist}(j_{l'})$, a contradiction. So the hypothesis of Lemma~\ref{lem:exchange} holds. The argument uses only the order of distances, so it is unaffected when the path enters and leaves a component several times, and the lemma is applied to $\Gamma'_K$ itself, which is M-convex by Lemma~\ref{lem:gamma}. By Lemma~\ref{lem:exchange}, the new point stays in the set.
+\end{proof}
+
+\begin{theorem}\label{thm:correct}
+Algorithm~\ref{alg:pf} answers correctly. When it answers \YES{}, the returned walks form a solution. When it answers \NO{} in the loop, the set $R$ of ports reachable from $\{d>0\}$ certifies infeasibility.
+\end{theorem}
+
+\begin{proof}
+A \NO{} in line~2 is correct because~(i) is necessary. The sum of $d$ over all ports is $0$ after line~3 (the only non-zero entries are the $+1$ and $-1$ of the repaired dead components) and stays $0$, since every arc of the auxiliary graph moves one unit between two ports, so if the loop ends then $d=0$, $\partial\xi=x\in\cB$ with $\xi\ge0$ by Lemma~\ref{lem:invariant}, and the walks are built through Theorem~\ref{thm:reduction}. Suppose the algorithm stops with the set $R$. It contains every port with $d>0$ and no port with $d<0$, so $d(R)>0$. No arc of the auxiliary graph leaves $R$. By kind~(1), no waiting arc enters $R$, and by kind~(2), every waiting arc that leaves $R$ has $\xi=0$. Hence $\partial\xi(R)=0$ and $x(R)=-d(R)<0$. Since $x\in\cB$ and $\xi\ge0$ throughout (Lemma~\ref{lem:invariant}), assume a solution $(\xi',x')$ exists with $\xi'\ge0$ and $x'=\partial\xi'\in\cB$. Since no waiting arc enters $R$, $x'(R)$ is the total of $\xi'$ on the waiting arcs that leave $R$, so $x'(R)\ge0$. No exchange arc leaves $R$. For the simplex this holds because a port $Z_i\in R$ with $\gamma_i\ge1$ puts $\eta$ and every $Z_j$ into $R$. Lemma~\ref{lem:localmax}, applied to each summand of the direct sum, gives $x(R)\ge x'(R)\ge0$, a contradiction.
+\end{proof}
+
+For every \YES{} answer, the implementation constructs the walks and checks them against the problem definition. A \NO{} answer from line~2 has a chain-network cut certificate verifiable from the instance data alone. For a loop \NO{}, a checker verifies $\xi,x$, computes $d=\partial\xi-x$, checks $d(R)>0$ and confirms that no valid waiting or exchange arc leaves $R$. This does not depend on Lemma~\ref{lem:exchange}, since $x\in\cB$ is checked at run time, but it depends on Lemmas~\ref{lem:gamma} and~\ref{lem:localmax}, so its verification is theory dependent.
+
+\subsection{Complexity}
+
+\begin{theorem}\label{thm:time}
+Let $D$ be the number of dead even components after the maximum flow and $s$ the largest number of vertices of a snapshot component. Algorithm~\ref{alg:pf} performs at most $D$ augmentations and uses
+\[
+  O\bigl(n+m\log(m+1)+m^2+D\,(n+s\,m)\bigr)\subseteq O(n+n\,m^2)
+\]
+arithmetic operations, since $D\le m/2$ and $s\le n$.
+\end{theorem}
+
+\begin{proof}
+Each augmentation decreases the sum of positive deviations by exactly one, and that sum is $D$ after line~3. Distinct dead even components are edge-disjoint and each has at least two edges, so $D\le m/2$. Lines 1 to 3 take $O(n+m^2)$ arithmetic operations, dominated by the initial maximum flow: the chain network has $O(m)$ nodes and arcs and the flow value is at most $m$, so at most $m$ augmenting paths of $O(m)$ time each suffice. One augmentation costs $O(n+sm)$. The number of ports is $O(n+m)$, so the breadth-first search on the auxiliary graph takes $O(n+m)$ time apart from the exchange tests. For a component $K$ with $m_K$ edges, depth-first search from every vertex of $K$ takes $O(\abs{K}\,m_K)$ time, and the $O(\abs{K}^2)$ candidate exchange pairs cost the same, since $\abs{K}\le m_K+1$. Re-orienting a changed component $K$ needs $O(\abs{K})$ path reversals of $O(m_K)$ time each, because the exchanges inside $K$ use distinct ports and $K$ has $2\abs{K}$ ports: reversing a path from a surplus to a deficit lowers the $L_1$ distance to the target boundary by two (Lemma~\ref{lem:reversal}). Summing over components, $\sum_K\abs{K}\,m_K\le sm$.
+\end{proof}
+
+The bound does not depend on the magnitudes of $a$ and $z$: every number handled is an integer of absolute value $O(k+m)$, so it is also polynomial in the bit size of the input. When $D=0$ the algorithm is a single maximum flow. The value of $D$ depends on the initial maximum flow, since the orientation of any solution is itself a maximum flow with $D=0$.

@@ -1,0 +1,71 @@
+\section{Computational experiments}\label{sec:eval}
+
+We compare pair flow (\textbf{PF}, Algorithm~\ref{alg:pf}) with exhaustive oracles, an integer program (\textbf{ILP}), restart branch and bound (\textbf{BB}; it adds two walks at a dead even component and reruns maximum flow) and the reconstructed static rule of Section~\ref{sec:counterexample}.
+
+\subsection{Validation}\label{sec:exp-correct}
+
+PF \YES{} walks were checked against the definition. Python used scratch re-orientation (default, bound $O(D(n+m^2))$) or reversed directed paths (Theorem~\ref{thm:time}); the scaling runs and paired comparisons use both. BB limits were $10$~s or $2{,}000$ maximum flows per even-rich run ($5$~s at nominal $m=1{,}000$), $200$ maximum flows on census windows, $150$~s on Turku and $60$~s in the ILP comparison. The exhaustive oracle searches snapshot-edge traversals token by token, using neither orientations nor Theorem~\ref{thm:char}, so it tests the characterization against the operational definition. The ILP encodes Theorem~\ref{thm:char} directly, with binary orientation variables and non-negative counters. On the even-rich and shortage families every \NO{} came from augmentation, so its certificate rests on Lemma~\ref{lem:gamma}(b) and Lemma~\ref{lem:localmax} and is not verifiable from instance data.
+
+\begin{table}[!t]
+\caption{Validation checks.}
+\label{tab:validation}
+\footnotesize
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}p{0.25\textwidth}p{0.22\textwidth}p{0.40\textwidth}}
+\toprule
+Check & Instances/runs & Outcome \\
+\midrule
+Exhaustive oracle & $102{,}476$ instances; $204{,}952$ runs & All agreed with the operational definition \\
+PF--BB agreement & $105{,}182$ runs & Answers agreed \\
+Matched comparisons & $10{,}813$ pairs; $4{,}000$ random comparisons & Answers agreed \\
+Even-rich suite & $1{,}176$ oracle runs; $2{,}918$ completed BB runs ($42$ stopped) & Answers agreed \\
+Python--C++ & $8{,}000$ instances & Answers agreed \\
+Strict reduction & $1{,}967$ formulas & Feasibility matched satisfiability \\
+Lemma~\ref{lem:gamma} enumeration & $119{,}040$ labelled sets for~(a), $153$ for~(b) & No violation found for connected multigraphs with $n\le5$, $m\le6$ \\
+Certificate re-check & $13{,}028$ certificates & $78.85\%$--$99.27\%$ of \NO{} certificates verifiable from instance data in the three checked sets \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\paragraph{Limits of the validation.} The oracle and ILP were written by the authors with AI assistance (see Declarations). The ILP and PF share Theorem~\ref{thm:char}, so their agreement tests internal consistency, not independent validation. The Lemma~\ref{lem:gamma} enumeration covers $4{,}065$ labelled graphs for part~(a) but only the $153$ even ones, one set each, for part~(b); it is only a small-box sanity check.
+
+\subsection{Benchmarks and scaling}\label{sec:scope}
+
+The even-rich benchmark isolates augmentation. A graph with nominal edge count $m$ has $\max(1,\mathrm{round}(\sqrt m/2))$ \emph{pairs} of walks, each pair starting together at a random vertex, and $\max(8,\lfloor m/3\rfloor)$ (sparse) or $\max(8,\lfloor 2\sqrt m\rfloor)$ (dense) vertices. At each time $t=1,2,\dots$, until the graph has at least $m$ edges, each pair is skipped with probability $0.3$ or adds at its current vertex $u$ a double edge to a random vertex $v$ (probability $0.25$), a cycle of length $3$--$6$ through $u$ ($0.30$), or two internally disjoint $u$--$v$ paths of one to three edges each ($0.45$); the pair then moves to $v$, except after a cycle. Degrees, walk counters and components are therefore even in every snapshot, so counting alone accepts every \FREE{} instance. Labels and edge order are shuffled, and the end count is $2$ at each pair's final vertex. Each graph (seed $20261113$) yields planted \FIX{} and \FREE{} instances and versions with one start pair removed (and, for \FIX{}, the corresponding end pair): $3{,}056$ instances on $764$ graphs with $12\le m\le20{,}000$ (Table~\ref{tab:even}), run with Python~3.13.12 on an Intel Core i9-9980HK under Linux. Initial flow left dead even components in $1{,}349$ instances ($D$ up to $3{,}310$), and every \NO{} answer came from augmentation rather than counting. On the $1{,}480$ \FIX{} instances in the first eight rows of Table~\ref{tab:even}, PF accepted $1{,}229$ and rejected $251$; our reconstruction of the static rule wrongly accepted $250$ and rejected none that PF accepted.
+
+\begin{table}[!t]
+\caption{Even-rich benchmark (Python, default backend without SciPy, from scratch). $m$: nominal edge count. Even: mean number of even snapshot components over all times. Dead: mean/maximum number of dead even components after the initial flow. Cut: pair-removed instances answered \YES{}/\NO{} by PF. PF: median/maximum seconds. BB: stopped/all runs. Static: false \YES{} answers of the reconstructed static rule among PF-\NO{} \FIX{} instances. Dashes: not run.}
+\label{tab:even}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrr}
+\toprule
+Family & $m$ & Graphs & Even & Dead & Cut & PF & BB & Static \\
+\midrule
+sparse & $12$ & $200$ & $3.0$ & $0.3$/$4$ & $265$/$135$ & $<0.001$/$<0.001$ & $0$/$800$ & $77$/$78$ \\
+dense & $12$ & $200$ & $2.7$ & $0.3$/$4$ & $280$/$120$ & $<0.001$/$<0.001$ & $0$/$800$ & $72$/$72$ \\
+sparse & $50$ & $100$ & $7.4$ & $0.7$/$5$ & $165$/$35$ & $<0.001$/$0.002$ & $0$/$400$ & $23$/$23$ \\
+dense & $50$ & $100$ & $7.1$ & $0.6$/$4$ & $172$/$28$ & $<0.001$/$0.002$ & $0$/$400$ & $19$/$19$ \\
+sparse & $200$ & $50$ & $35.9$ & $10.0$/$24$ & $50$/$50$ & $0.007$/$0.014$ & $10$/$200$ & $28$/$28$ \\
+dense & $200$ & $50$ & $21.9$ & $3.4$/$12$ & $83$/$17$ & $0.004$/$0.011$ & $2$/$200$ & $11$/$11$ \\
+sparse & $1{,}000$ & $20$ & $218.8$ & $90.8$/$117$ & $3$/$37$ & $0.157$/$0.215$ & $30$/$80$ & $20$/$20$ \\
+dense & $1{,}000$ & $20$ & $78.4$ & $16.1$/$27$ & $40$/$0$ & $0.079$/$0.132$ & $0$/$80$ & $0$/$0$ \\
+sparse & $5{,}000$ & $10$ & $1242.1$ & $682.3$/$733$ & $0$/$20$ & $4.81$/$7.29$ & -- & -- \\
+dense & $5{,}000$ & $10$ & $305.1$ & $77.5$/$94$ & $19$/$1$ & $1.74$/$2.20$ & -- & -- \\
+sparse & $20{,}000$ & $2$ & $5183.5$ & $3277.6$/$3{,}310$ & $0$/$4$ & $154.8$/$170.5$ & -- & -- \\
+dense & $20{,}000$ & $2$ & $1098.5$ & $309.5$/$315$ & $2$/$2$ & $51.3$/$56.8$ & -- & -- \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+\paragraph{Scaling of the two re-orientations.}
+In the shortage family, a hub with $2(e-1)$ walks must serve $e$ gadgets that need $2e$, so every \FREE{} instance is \NO{}; here $m=7e$, component size is constant and $D$ grows proportionally to $m$ ($62$ to $499$ augmentations for $e=250$ to $2{,}000$). With the SciPy-assisted backend on a shared machine and two repetitions per size, scratch times grew from $0.84$--$1.08$~s at $m=1{,}750$ to $98.0$--$99.9$~s at $m=14{,}000$, and incremental times from $0.74$--$0.85$~s to $64.6$--$66.1$~s. Log-log slopes between consecutive sizes within a repetition were $1.81$--$2.84$, and $2.08$--$2.30$ from $e=250$ to $e=2{,}000$, consistent with the near-$m^2$ growth predicted by $O(D(n+sm))$; two repetitions do not verify Theorem~\ref{thm:time}. The incremental variant was faster in all eight paired repetitions ($1.04$ to $1.5$ times), and the mean ratio on paired even-rich instances was $1.03$--$1.17$.
+
+\paragraph{Integer programming baseline.} The ILP, solved by HiGHS~\cite{huangfu2018} (SciPy~1.16.3), agreed with PF and the oracle on $3{,}000$ random instances (at most $10$ edges, $484$ with an even component) and with PF on $82$ benchmark cases ($10$ shortage and $72$ even-rich), where BB stopped at its $60$~s limit in eight. With the SciPy-assisted backend on a shared machine (unlike Table~\ref{tab:even}), median ILP/PF/BB times on even-rich graphs with $m=1{,}000$ were $0.110/0.252/0.610$~s (sparse) and $0.373/0.154/0.220$~s (dense); the ILP was not run above $m=1{,}400$.
+
+\subsection{Real data}
+
+Contact data~\cite{sapiezynski2019,stehle2011,fournet2014,mastrandrea2015,vanhems2013} were treated as undirected, with duplicate and self-contacts removed (Copenhagen Bluetooth: $5$-minute bins, RSSI $\ge-75$). Start vectors are planted: the \emph{greedy} scheme scans snapshots in time order, and an endpoint walk takes each edge or is created if none is there; the \emph{tight} variants drop the end vector and remove one walk or ten percent of the starts to exercise \NO{} answers. In transit timetables~\cite{kujala2018}, each vehicle trip is a walk from first to last stop, with one edge per segment at departure time. We used $304$ one-hour windows (four cities, four schemes), $12$ whole-day instances (three cities) and $50$ larger \FIX{} and \FREE{} instances on $25$ cities, using the busiest three-hour block for the $12$ cities above $250{,}000$ daily trip segments.
+
+Dead even components occurred in $48$ of the $50$ larger and $6$ of the $12$ whole-day transit instances, and rarely elsewhere. Every \NO{} answer on real data came from counting maximum flow, so these runs test scalability, not the M-convex machinery. On the whole-day Turku timetable ($125{,}779$ edges, Python), PF solved \FIX{} in $70.3$ and \FREE{} in $33.7$ seconds, while BB did not finish within $150$ seconds. C++17 solved all $50$ larger instances; the largest, Paris \FIX{} with $387{,}467$ edges and $D=287$, took $68.7$ seconds in a single run. These runs used an Intel Core i5-10210U (four cores, Linux under WSL2) with two to four concurrent jobs, so times are indicative.
+
+\FloatBarrier

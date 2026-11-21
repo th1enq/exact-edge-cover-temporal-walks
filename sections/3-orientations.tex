@@ -1,0 +1,111 @@
+\section{Orientations, even components and a gap in the static reduction}\label{sec:char}
+
+\subsection{Orientations and walk counters}
+
+A walk that traverses the edge $\{u,v\}$ from $u$ to $v$ \emph{orients} it as $u\to v$, and $u$ is called the \emph{tail}. A solution thus induces an orientation of all edges. For an orientation, let $\out_t(v)$ and $\inn_t(v)$ be the numbers of arcs of $E_t$ with tail $v$ and with head $v$. The \emph{walk counter} $c_t(v)$ is the number of walks at $v$ just before time $t$. It starts at $a_v$ and evolves as
+\[
+  c_{t^+}(v)=c_t(v)-\out_t(v)+\inn_t(v),
+\]
+where $t^+$ denotes the moment just after $t$. Its parity is fixed by $a_v$ plus the number of edges incident to $v$ before $t$, independently of the orientation. A walk is counted once at its current vertex. At one time label it may traverse several successive edges.
+
+Let $t_{v,1}<\dots<t_{v,q_v}$ be the time labels at which $v$ has an incident edge (the \emph{occurrences} of $v$), let $g_{v,j}$ be the degree of $v$ in $E_{t_{v,j}}$, and let $G_{v,j}=\sum_{i\le j}g_{v,i}$ and $G_v=G_{v,q_v}$. For an orientation, let $b_{v,j}$ be the number of arcs of $E_{t_{v,j}}$ with tail $v$ and $B_{v,j}=\sum_{i\le j}b_{v,i}$, where empty sums are zero. In \FIX{} we set $h_v=(a_v+G_v-z_v)/2$, the number of arcs with tail $v$ in every solution, as determined by the final count $z_v$.
+
+\begin{theorem}\label{thm:char}
+An orientation is realizable by walks that start according to $a$ (problem \FREE{}) if and only if, at every time $t$,
+\begin{enumerate}
+\item[(i)] $\out_t(v)-\inn_t(v)\le c_t(v)$ for every vertex $v$, and
+\item[(ii)] every snapshot component $K$ of $E_t$ contains a walk, that is, $\sum_{v\in K}c_t(v)\ge 1$.
+\end{enumerate}
+For \FIX{} the additional condition is that the final number of walks at $v$ equals $z_v$ for every $v$, that is, $B_{v,q_v}=h_v$.
+\end{theorem}
+
+\begin{proof}
+\emph{Necessity.} At time $t$, each edge that leaves $v$ is either the first edge that a walk uses at time $t$, and then the walk was at $v$ before $t$, so there are at most $c_t(v)$ such edges, or it follows an edge that enters $v$ at time $t$ on the same walk, and each entering edge has at most one successor. Hence $\out_t(v)\le c_t(v)+\inn_t(v)$, which is~(i). The edges that one walk uses at time $t$ form a trail inside one component $K$ of $E_t$, and the walk is located at the first vertex of this trail just before $t$. Hence every component that has edges contains a walk. In \FIX{} the final number of walks at $v$ is $a_v+G_v-2B_{v,q_v}=z_v$.
+
+\emph{Sufficiency.} We process the times in increasing order and the components of $E_t$ independently. Let $\vec K$ be the directed graph of $K$ and let $r=\sum_{v\in K}\max(0,\out_t(v)-\inn_t(v))$. If $r>0$, add $r$ dummy arcs from vertices with $\inn>\out$ to vertices with $\out>\inn$, pairing each unit of deficit with one unit of surplus. The totals agree because the sum of $\out_t-\inn_t$ on $K$ is zero. This makes each vertex balanced. The augmented graph is weakly connected because $K$ is connected and the added arcs join vertices of $K$. Hence it has an Euler circuit. In cyclic order, deleting the $r$ dummy arcs leaves exactly $r$ trails (Fig.~\ref{fig:dummy}), each starting at the head of a dummy arc (a surplus vertex) and ending at the tail of the next dummy arc. A vertex $v$ with surplus is the head of exactly $\out_t(v)-\inn_t(v)$ dummy arcs, so that many trails start there. By~(i), $v$ holds enough walks to take these trails. If $r=0$, then $\vec K$ is Eulerian. By~(ii) some vertex of $K$ holds a walk, and this walk follows an Euler circuit that starts at that vertex. All other walks wait. The number of walks at every vertex after $t$ equals $c_{t^+}$, so the induction continues. In \FIX{} the final numbers are $z$.
+\end{proof}
+
+The proof of sufficiency yields an $O(n+m)$ algorithm (after sorting the edges) that constructs the walks from an orientation satisfying (i) and (ii) using Hierholzer's algorithm~\cite{hierholzer1873}. Given edge directions, \FREE{} and \FIX{} are thus decided in $O(n+m\log(m+1))$ time.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics{Fig1}
+\caption{Dummy arcs in the proof of Theorem~\ref{thm:char}, illustrated on a component with two surplus vertices $u_1,u_2$ and two deficit vertices $w_1,w_2$. (a) The oriented component, with $\out_t-\inn_t$ shown at each vertex. (b) Dashed dummy arcs join each deficit vertex to a surplus vertex. The numbers 1--6 indicate an Euler circuit. (c) Deleting the dummy arcs leaves two trails, from $u_1$ to $w_2$ and from $u_2$ to $w_1$.}
+\label{fig:dummy}
+\end{figure}
+
+\subsection{Even components and the chain network}
+
+\begin{definition}\label{def:even}
+A snapshot component $K$ of $E_t$ is \emph{even} if every vertex of $K$ has even degree in $E_t$ and even walk counter $c_t$. An even component is \emph{dead} under an orientation if $c_t(v)=0$ for all $v\in K$.
+\end{definition}
+
+A pair of parallel edges and a triangle with even walk counters are even components. A path is not.
+
+\begin{lemma}\label{lem:noneven}
+If an orientation satisfies~(i) and the snapshot component $K$ of $E_t$ is not even, then $K$ satisfies~(ii).
+\end{lemma}
+
+\begin{proof}
+If some vertex of $K$ has odd degree in $E_t$, then $\out_t-\inn_t$ is odd and therefore non-zero at that vertex. Since $\out_t-\inn_t$ sums to $0$ over $K$, some vertex has $\out_t-\inn_t>0$, and by~(i) it has $c_t\ge1$. If some counter $c_t(v)$ is odd, then it is a nonnegative odd integer, and hence is at least one: $c_t(v)$ equals $a_v\ge0$ at the first occurrence of $v$ and otherwise the counter $c_{t'^+}(v)$ after the previous occurrence $t'$, which is nonnegative by~(i) at $t'$.
+\end{proof}
+
+Condition~(i) requires the walk counter after the $j$-th occurrence of $v$, namely $a_v+G_{v,j}-2B_{v,j}$, to be non-negative, which is equivalent to $B_{v,j}\le\floor{(a_v+G_{v,j})/2}$.
+
+We impose these bounds as capacities in a \emph{chain network} with a source and a sink $r$. For every occurrence $(v,j)$ there is a node $s_{v,j}$, and these nodes form a chain $s_{v,1}\to\dots\to s_{v,q_v}\to r$. The arc that leaves $s_{v,j}$ has capacity $C_{v,j}=\floor{(a_v+G_{v,j})/2}$ in \FREE{} and $C_{v,j}=\min(\floor{(a_v+G_{v,j})/2},h_v)$ in \FIX{}. For every edge $e=\{u,v\}$ with time label $t$ there is a node that receives one unit from the source and has two arcs of capacity $1$ to the occurrence nodes of $u$ and $v$ at time $t$.
+
+The unit of $e$ goes to the endpoint chosen as its tail, so the flow on the arc that leaves $s_{v,j}$ equals $B_{v,j}$. The network has $O(m)$ nodes and arcs and, for \FREE{}, a flow of value $m$ corresponds exactly to an orientation that satisfies~(i). The counter after occurrence $j$ is $a_v+G_{v,j}-2B_{v,j}$, so the capacity on each outgoing chain arc enforces its nonnegativity.
+
+Figure~\ref{fig:chain} shows $e=\{u,v\}$ followed by $f=\{v,w\}$: units from $\sigma$ choose edge tails, and the thick chain arcs have capacities $C_{v,j}$.
+
+\begin{figure}[t]
+\centering
+\includegraphics{Fig2}
+\caption{Chain network for two successive temporal edges.}
+\label{fig:chain}
+\end{figure}
+
+\begin{corollary}\label{cor:flow}
+If no snapshot has an even component, then \FREE{} and \FIX{} are decided by one maximum flow in the chain network. On every instance, a maximum flow of value less than $m$ certifies infeasibility.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:char} and Lemma~\ref{lem:noneven}, an orientation is realizable when there is no even component if and only if it satisfies~(i). For \FIX{}, after checking $\sum_va_v=\sum_vz_v$ and $h_v\in\N$ for all $v$, we have $\sum_vh_v=m$, so a flow of value $m$ saturates every last chain arc, which gives $B_{v,q_v}=h_v$. The second claim holds because~(i) is necessary.
+\end{proof}
+
+Proper temporal graphs have no even components, and strict and non-strict walks coincide on them, so Corollary~\ref{cor:flow} recovers Corollary~6.4 of~\cite{deligkas2025} with one maximum flow and extends it to \FREE{}.
+
+\subsection{A gap in the static reduction}\label{sec:counterexample}
+
+\paragraph{The reduction.} For a vertex $v$, let $\delta_{\le t}(v)$ and $\delta_{>t}(v)$ count its incident edges with time labels at most $t$ and greater than $t$, respectively. A superscript $G$ restricts these counts to edges of the temporal graph $G$, without terminal edges. Deligkas et al.\ expand every vertex $v$ into copies $v_t$, one for each time at which $v$ has an edge, with a start terminal $s$ and an end terminal $e$. Under the end-terminal construction shown in Figure~3 of~\cite{deligkas2025}, the start-terminal edges attach to an additional copy at time $0$ and the end-terminal edges to an additional copy after the last time label (the copies $x_0$ and $y_3$ in Fig.~\ref{fig:aaai}(b)). Consecutive copies are joined by $\alpha=\min(\delta_{\le t}(v),\delta_{>t}(v))$ edges, where, for the end-terminal construction shown in the proof of Theorem~6.3 of~\cite{deligkas2025}, $\delta$ counts the edges of the static graph $S$ including the $a_v$ start-terminal and $z_v$ end-terminal edges at $v$ (so $\alpha=\min(a_v+\delta^G_{\le t}(v),\,z_v+\delta^G_{>t}(v))$ in the notation below), of which $\lceil\alpha/2\rceil$ are directed towards the later copy and the rest are undirected~\cite[p.~26503]{deligkas2025}. The undirected edges allow a static walk to \emph{go back in time}. The proof sketch repairs a walk $W_1$ that goes back in time by exchanging suffixes with another walk $W_2$ that ``entered to the left of $v_{t_i}$ and exits to the right''~\cite[p.~26503]{deligkas2025}. The argument assumes $W_2\ne W_1$.
+
+In Fig.~\ref{fig:aaai}(a), the prescribed walk starts at $x$ and ends at $y$. Green solid edges have time $1$ and orange dashed edges time $2$. In panel~(b), numbers give the step order of a static covering walk. The orange dashed step~8 goes back in time.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics{Fig3}
+\caption{A temporal instance (a) and a covering walk of its static reduction (b).}
+\label{fig:aaai}
+\end{figure}
+
+\begin{proposition}\label{prop:aaai}
+The instance of Fig.~\ref{fig:aaai}(a) is infeasible, but the static graph $S$ of the reduction has an exact edge cover with the same number of walks and the same terminals.
+\end{proposition}
+
+\begin{proof}
+The single walk starts at $x$ and ends at $y$, so it traverses $x\to u\to y$ at time $1$. Afterwards no walk is located at $u$, $v$ or $w$, and the triangle violates~(ii) of Theorem~\ref{thm:char}. In $S$, built as in the proof sketch of Theorem~6.3 of~\cite{deligkas2025} with the terminal $s$ attached to $x$ at time $0$ and $e$ attached to $y$ at time $3$ (Fig.~\ref{fig:aaai}(b)), the gadget of $u$ has $\alpha=\min(2,2)=2$ edges between $u_1$ and $u_2$, one directed edge $(u_1,u_2)$ and one undirected edge. The gadgets of $x$ and $y$ have one directed edge each. The static walk
+\[
+  s\to x_0\to x_1\to u_1\to u_2\to v_2\to w_2\to u_2\to u_1\to y_1\to y_3\to e
+\]
+covers every edge of $S$ exactly once, and its step $u_2\to u_1$ (step~8 in Fig.~\ref{fig:aaai}(b)) goes back from time $2$ to time $1$. It is the only walk, so the walk that uses the directed edge $(u_1,u_2)$ is $W_1$ itself, and exchanging suffixes with itself only splits off the triangle as a cycle without a walk.
+\end{proof}
+
+\begin{lemma}\label{lem:aaai}
+In \FIX{}, the undirected edges of $S$ can be oriented so that every non-terminal node is balanced, with start terminal edges directed outwards and end terminal edges directed inwards, if and only if some orientation of $G$ satisfies condition~(i) of Theorem~\ref{thm:char} together with the end condition $B_{v,q_v}=h_v$.
+\end{lemma}
+
+\begin{proof}
+Fix an orientation of $G$. It also orients the edges $\{u_t,v_t\}$ of $S$. At a vertex $v$, the start terminal edge contributes $a_v$ incoming edges before the first time label and the end terminal edge contributes $z_v$ outgoing edges after the last time label. Let $n_t$ be the net flow to the right on the chain edges after the copy $v_t$. Balance at $v_t$ gives $n_t=n_{t^-}+\inn_t(v)-\out_t(v)$, where $n_{t^-}=a_v$ at the first copy because the $a_v$ start-terminal edges enter the chain there, so by induction $n_t=c_{t^+}(v)$, and balance at the last copy gives the final counter $z_v$. Between two consecutive time labels there are $\alpha_t=\min(\mathrm{before}_t,\mathrm{after}_t)$ edges with $\mathrm{before}_t=a_v+\delta^G_{\le t}(v)$ and $\mathrm{after}_t=z_v+\delta^G_{>t}(v)$, of which $\lceil\alpha_t/2\rceil$ point to the right and each of the other $\lfloor\alpha_t/2\rfloor$ changes the net flow by $\pm1$. The achievable net flows are exactly the integers $n$ with $n\equiv\alpha_t\pmod 2$ and $\alpha_t\bmod 2\le n\le\alpha_t$. For $n=c_{t^+}(v)$ the parity condition always holds, because $c_{t^+}(v)$ has the parity of both $\mathrm{before}_t$ and $\mathrm{after}_t$ (end condition). The upper bound always holds, because $c_{t^+}(v)$ is at most the number of incoming edges up to $t$ and of outgoing edges after $t$. The lower bound is condition~(i). Conversely, from an orientation that satisfies~(i), choose how many free edges point to the right so that $n_t=c_{t^+}(v)$, which is possible because this value lies in the admissible range.
+\end{proof}
+
+Thus, for \FIX{}, balanced orientability of $S$ matches condition~(i) and the end condition (Lemma~\ref{lem:aaai}). In addition $S$ requires static connectivity (every component with edges contains a terminal), which does not depend on the orientation and is weaker than~(ii). A temporal solution yields a cover of $S$, but the converse can fail (Proposition~\ref{prop:aaai}). With the end count dropped (\FREE{}, $a_x=1$, $k=1$), the instance of Fig.~\ref{fig:aaai}(a) is also infeasible, since the single walk must traverse $x\to u\to y$ at time $1$. The static graph $S$ of Proposition~\ref{prop:aaai} attaches the end terminal after the last time label, as in the end-terminal construction shown in the proof sketch and Figure~3 of~\cite{deligkas2025}. The variant with start terminals only is not addressed by this instance, and the solvability claim of Theorem~6.3 of~\cite{deligkas2025} follows by a different argument (Theorem~\ref{thm:reduction}).

@@ -1,0 +1,87 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,backgrounds}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\inn}{\mathrm{in}}
+\newcommand{\IN}{\mathrm{IN}}
+\newcommand{\OUT}{\mathrm{OUT}}
+\newcommand{\FIX}{\textup{\textsc{Fix}}}
+\newcommand{\FREE}{\textup{\textsc{Free}}}
+\newcommand{\SFIX}{\textup{\textsc{Strict-Fix}}}
+\newcommand{\SFREE}{\textup{\textsc{Strict-Free}}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
+\newcommand{\YES}{\texttt{YES}}
+\newcommand{\NO}{\texttt{NO}}
+
+\definecolor{cA}{HTML}{0072B2}
+\definecolor{cB}{HTML}{D55E00}
+\definecolor{cTa}{HTML}{009E73}
+\definecolor{cTb}{HTML}{E69F00}
+\tikzset{
+  >={Stealth[length=4.5pt,width=3.6pt]},
+  vtx/.style={circle,draw,semithick,fill=white,minimum size=5.6mm,inner sep=0pt,font=\small},
+  svtx/.style={circle,draw,semithick,fill=white,minimum size=5.4mm,inner sep=0pt,font=\footnotesize},
+  port/.style={circle,draw,semithick,fill=white,minimum size=2.4mm,inner sep=0pt},
+  tlab/.style={fill=white,inner sep=1pt,font=\scriptsize,text=black},
+  cnt/.style={rectangle,rounded corners=1pt,draw,thin,fill=white,inner sep=1.5pt,font=\scriptsize},
+  sub/.style={font=\footnotesize},
+  note/.style={font=\scriptsize,text=black!70,align=left},
+  t1/.style={cTa,very thick},
+  t2/.style={cTb,very thick,densely dashed},
+  walkA/.style={cA,very thick,->},
+  walkB/.style={cB,very thick,->,densely dashed},
+}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.85,transform shape,
+  el/.style={font=\scriptsize,inner sep=1.5pt},
+  old/.style={->,semithick,densely dotted,black!55},
+  hl/.style={->,very thick,cA}]
+  \foreach \o/\p in {0/a,4.5/b,9.0/c} {
+    \node[vtx] (x\p) at (\o,0)     {$x$};
+    \node[vtx] (u\p) at (\o+1.5,0) {$u$};
+    \node[vtx] (y\p) at (\o+3,0)   {$y$};
+    \node[vtx] (v\p) at (\o+0.75,1.4) {$v$};
+    \node[vtx] (w\p) at (\o+2.25,1.4) {$w$};
+  }
+  \draw[t1,->] (xa) -- node[el,above] {1} (ua);
+  \draw[t1,->] (ua) -- node[el,above] {1} (ya);
+  \draw[t2] (ua) -- (va);
+  \draw[t2] (va) -- node[el,above] {2} (wa);
+  \draw[t2] (wa) -- (ua);
+  \node[cnt,below=3pt of xa] {0};
+  \node[cnt,below=3pt of ua] {0};
+  \node[cnt,below=3pt of ya] {2};
+  \node[note,text=cB] at (1.5,2.25) {no walk in the triangle};
+  \draw[t1,->] (xb) -- node[el,above] {1} (ub);
+  \draw[old] (ub) to[bend right=35] (yb);
+  \draw[hl] (yb) to[bend right=35] (ub);
+  \draw[t2] (ub) -- (vb);
+  \draw[t2] (vb) -- node[el,above] {2} (wb);
+  \draw[t2] (wb) -- (ub);
+  \node[note,text=cA] at (6.0,-1.15) {reverse $u\to y$};
+  \draw[t1,->] (xc) -- node[el,above] {1} (uc);
+  \draw[t1,->] (yc) -- node[el,above] {1} (uc);
+  \draw[walkA] (uc) -- (vc);
+  \draw[walkA] (vc) -- node[el,above] {2} (wc);
+  \draw[walkA] (wc) -- (uc);
+  \node[cnt,below=3pt of xc] {0};
+  \node[cnt,below=3pt of uc] {2};
+  \node[cnt,below=3pt of yc] {0};
+  \node[font=\footnotesize] at (1.5,-1.75) {(a)};
+  \node[font=\footnotesize] at (6.0,-1.75) {(b)};
+  \node[font=\footnotesize] at (10.5,-1.75) {(c)};
+\end{tikzpicture}
+\end{document}

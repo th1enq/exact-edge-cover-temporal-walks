@@ -1,0 +1,86 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,backgrounds}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\inn}{\mathrm{in}}
+\newcommand{\IN}{\mathrm{IN}}
+\newcommand{\OUT}{\mathrm{OUT}}
+\newcommand{\FIX}{\textup{\textsc{Fix}}}
+\newcommand{\FREE}{\textup{\textsc{Free}}}
+\newcommand{\SFIX}{\textup{\textsc{Strict-Fix}}}
+\newcommand{\SFREE}{\textup{\textsc{Strict-Free}}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
+\newcommand{\YES}{\texttt{YES}}
+\newcommand{\NO}{\texttt{NO}}
+
+\definecolor{cA}{HTML}{0072B2}
+\definecolor{cB}{HTML}{D55E00}
+\definecolor{cTa}{HTML}{009E73}
+\definecolor{cTb}{HTML}{E69F00}
+\tikzset{
+  >={Stealth[length=4.5pt,width=3.6pt]},
+  vtx/.style={circle,draw,semithick,fill=white,minimum size=5.6mm,inner sep=0pt,font=\small},
+  svtx/.style={circle,draw,semithick,fill=white,minimum size=5.4mm,inner sep=0pt,font=\footnotesize},
+  port/.style={circle,draw,semithick,fill=white,minimum size=2.4mm,inner sep=0pt},
+  tlab/.style={fill=white,inner sep=1pt,font=\scriptsize,text=black},
+  cnt/.style={rectangle,rounded corners=1pt,draw,thin,fill=white,inner sep=1.5pt,font=\scriptsize},
+  sub/.style={font=\footnotesize},
+  note/.style={font=\scriptsize,text=black!70,align=left},
+  t1/.style={cTa,very thick},
+  t2/.style={cTb,very thick,densely dashed},
+  walkA/.style={cA,very thick,->},
+  walkB/.style={cB,very thick,->,densely dashed},
+}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.9,transform shape,
+  vx/.style={circle,draw,semithick,fill=white,minimum size=5.6mm,inner sep=0pt,font=\footnotesize},
+  arc/.style={->,semithick,black!70},
+  dum/.style={->,semithick,densely dashed,black!55},
+  tA/.style={->,very thick,cA},
+  tB/.style={->,very thick,cB},
+  num/.style={font=\scriptsize,inner sep=1.5pt},
+  imb/.style={font=\scriptsize,text=black!75}]
+  \foreach \o/\p in {0/a,4.4/b,8.8/c} {
+    \node[vx] (u1\p) at (\o,1) {$u_1$};
+    \node[vx] (u2\p) at (\o,-1) {$u_2$};
+    \node[vx] (x\p)  at (\o+1.7,0) {$x$};
+    \node[vx] (w1\p) at (\o+3.4,1) {$w_1$};
+    \node[vx] (w2\p) at (\o+3.4,-1) {$w_2$};
+  }
+  \draw[arc] (u1a) -- (xa);
+  \draw[arc] (u2a) -- (xa);
+  \draw[arc] (xa) -- (w1a);
+  \draw[arc] (xa) -- (w2a);
+  \node[imb,above=1pt] at (u1a.north) {$+1$};
+  \node[imb,below=1pt] at (u2a.south) {$+1$};
+  \node[imb,above=1pt] at (w1a.north) {$-1$};
+  \node[imb,below=1pt] at (w2a.south) {$-1$};
+  \node[imb,below=1pt] at (xa.south) {$0$};
+  \draw[arc] (u1b) -- node[num,above,sloped] {1} (xb);
+  \draw[arc] (xb) -- node[num,above,sloped] {2} (w2b);
+  \draw[arc] (u2b) -- node[num,below,sloped] {4} (xb);
+  \draw[arc] (xb) -- node[num,below,sloped] {5} (w1b);
+  \draw[dum] (w2b) -- node[num,below] {3} (u2b);
+  \draw[dum] (w1b) -- node[num,above] {6} (u1b);
+  \draw[tA] (u1c) -- (xc);
+  \draw[tA] (xc) -- (w2c);
+  \draw[tB] (u2c) -- (xc);
+  \draw[tB] (xc) -- (w1c);
+  \node[font=\footnotesize] at (1.7,-2.3) {(a)};
+  \node[font=\footnotesize] at (6.1,-2.3) {(b)};
+  \node[font=\footnotesize] at (10.5,-2.3) {(c)};
+\end{tikzpicture}
+\end{document}

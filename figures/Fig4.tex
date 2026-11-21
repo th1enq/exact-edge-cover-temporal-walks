@@ -1,0 +1,97 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,backgrounds}
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{0pt}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\out}{\mathrm{out}}
+\newcommand{\inn}{\mathrm{in}}
+\newcommand{\IN}{\mathrm{IN}}
+\newcommand{\OUT}{\mathrm{OUT}}
+\newcommand{\FIX}{\textup{\textsc{Fix}}}
+\newcommand{\FREE}{\textup{\textsc{Free}}}
+\newcommand{\SFIX}{\textup{\textsc{Strict-Fix}}}
+\newcommand{\SFREE}{\textup{\textsc{Strict-Free}}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
+\newcommand{\YES}{\texttt{YES}}
+\newcommand{\NO}{\texttt{NO}}
+
+\definecolor{cA}{HTML}{0072B2}
+\definecolor{cB}{HTML}{D55E00}
+\definecolor{cTa}{HTML}{009E73}
+\definecolor{cTb}{HTML}{E69F00}
+\tikzset{
+  >={Stealth[length=4.5pt,width=3.6pt]},
+  vtx/.style={circle,draw,semithick,fill=white,minimum size=5.6mm,inner sep=0pt,font=\small},
+  svtx/.style={circle,draw,semithick,fill=white,minimum size=5.4mm,inner sep=0pt,font=\footnotesize},
+  port/.style={circle,draw,semithick,fill=white,minimum size=2.4mm,inner sep=0pt},
+  tlab/.style={fill=white,inner sep=1pt,font=\scriptsize,text=black},
+  cnt/.style={rectangle,rounded corners=1pt,draw,thin,fill=white,inner sep=1.5pt,font=\scriptsize},
+  sub/.style={font=\footnotesize},
+  note/.style={font=\scriptsize,text=black!70,align=left},
+  t1/.style={cTa,very thick},
+  t2/.style={cTb,very thick,densely dashed},
+  walkA/.style={cA,very thick,->},
+  walkB/.style={cB,very thick,->,densely dashed},
+}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.9,transform shape,
+  pt/.style={circle,fill=black,inner sep=1.7pt},
+  hol/.style={circle,draw,dashed,black!60,inner sep=1.7pt},
+  ax/.style={->,black!50},
+  ex/.style={->,very thick,cA},
+  bad/.style={->,thick,densely dashed,cB},
+  st/.style={rectangle,draw,semithick,fill=white,inner sep=2.5pt,font=\scriptsize},
+  lb/.style={font=\scriptsize}]
+  \draw[ax] (-0.2,0) -- (2.6,0) node[right,lb] {$x_1$};
+  \draw[ax] (0,-0.2) -- (0,2.6) node[above,lb] {$x_2$};
+  \draw[black!35,densely dotted] (2,0) -- (0,2);
+  \node[pt] (P) at (2,0) {};
+  \node[pt] (Q) at (1,1) {};
+  \node[pt] (R) at (0,2) {};
+  \node[lb,below right=-1pt] at (P) {$(2,0)$};
+  \node[lb,above right=-1pt] at (Q) {$(1,1)$};
+  \node[lb,above right=-1pt] at (R) {$(0,2)$};
+  \draw[ex] (P) -- (1.12,0.88);
+  \draw[ex] (R) -- (0.88,1.12);
+  \node[font=\footnotesize] at (1.2,-0.9) {(a)};
+  \begin{scope}[xshift=3.9cm]
+    \draw[ax] (-0.2,0) -- (2.6,0) node[right,lb] {$x_1$};
+    \draw[ax] (0,-0.2) -- (0,2.6) node[above,lb] {$x_2$};
+    \draw[black!35,densely dotted] (2,0) -- (0,2);
+    \node[pt] (P2) at (2,0) {};
+    \node[hol,minimum size=3.6mm] (Q2) at (1,1) {};
+    \node[pt] (R2) at (0,2) {};
+    \node[lb,below right=-1pt] at (P2) {$(2,0)$};
+    \node[lb,above right=-1pt] at (R2) {$(0,2)$};
+    \draw[bad] (P2) -- (1.5,0.5);
+    \draw[bad] (R2) -- (0.5,1.5);
+    \node[cB,font=\scriptsize] at (Q2) {$\times$};
+    \node[font=\footnotesize] at (1.2,-0.9) {(b)};
+  \end{scope}
+  \begin{scope}[xshift=7.9cm]
+    \node[st] (A) at (0,2.2) {$(-\e_u,\e_w)$};
+    \node[st] (B) at (3.4,2.2) {$(-\e_w,\e_u)$};
+    \node[st] (C) at (0,0) {$(-\e_u,\e_u)$};
+    \node[st] (D) at (3.4,0) {$(-\e_w,\e_w)$};
+    \node[hol,minimum size=6mm,font=\scriptsize] (O) at (1.7,0.4) {$0$};
+    \draw[ex] (A) -- (C);
+    \draw[ex] (B) -- (D);
+    \draw[bad] (A.south east) -- (O.north west);
+    \draw[bad] (B.south west) -- (O.north east);
+    \node[cB,font=\small] at (1.12,1.28) {$\times$};
+    \node[cB,font=\small] at (2.28,1.28) {$\times$};
+    \node[font=\footnotesize] at (1.7,-0.9) {(c)};
+  \end{scope}
+\end{tikzpicture}
+\end{document}
