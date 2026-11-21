@@ -1,6 +1,6 @@
 # Cận số walk tối thiểu trên dữ liệu giao thông
 
-Thực hiện từ thư mục `ns-thesis`, không cần cài thêm thư viện:
+Thực hiện từ thư mục gốc của kho, không cần cài thêm thư viện:
 
 ```sh
 cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release

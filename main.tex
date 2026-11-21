@@ -1,30 +1,18 @@
-%% Manuscript for Optimization Letters (Springer Nature LaTeX template, sn-jnl v3.1).
-%% Build: pdflatex main && bibtex main && pdflatex main && pdflatex main
 
 \documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd{\@maketitle}{Contributing authors:}{E-mail(s):}{}{\PackageWarning{main}{author label patch failed}}
-\makeatother
 
-%% \k is needed for the name Gasieniec; switch to T1 only inside that command.
 \DeclareTextCommandDefault{\k}[1]{{\fontencoding{T1}\selectfont\k{#1}}}%
 \usepackage{graphicx}%
-\usepackage{multirow}%
 \usepackage{amsmath,amssymb,amsfonts}%
 \usepackage{amsthm}%
-\usepackage{mathrsfs}%
-\usepackage[title]{appendix}%
 \usepackage{xcolor}%
 \usepackage{textcomp}%
 \usepackage{manyfoot}%
 \usepackage{booktabs}%
 \usepackage{algorithm}%
-\usepackage{algorithmicx}%
 \usepackage{algpseudocode}%
 \usepackage{tikz}%
-\usepackage{pgfplots}%
-\pgfplotsset{compat=1.18}%
+\usepackage{placeins}%
 \usetikzlibrary{arrows.meta,calc,positioning,backgrounds}%
 
 \theoremstyle{thmstyleone}%
@@ -49,7 +37,6 @@
 \newcommand{\OUT}{\mathrm{OUT}}
 \newcommand{\FIX}{\textup{\textsc{Fix}}}
 \newcommand{\FREE}{\textup{\textsc{Free}}}
-\newcommand{\ENDSET}{\textup{\textsc{EndSet}}}
 \newcommand{\SFIX}{\textup{\textsc{Strict-Fix}}}
 \newcommand{\SFREE}{\textup{\textsc{Strict-Free}}}
 \newcommand{\abs}[1]{\lvert #1\rvert}
@@ -57,8 +44,6 @@
 \newcommand{\YES}{\texttt{YES}}
 \newcommand{\NO}{\texttt{NO}}
 
-%% Colour-blind safe palette (Okabe--Ito). Every colour is paired with a line style,
-%% so the figures remain readable in greyscale.
 \definecolor{cA}{HTML}{0072B2}
 \definecolor{cB}{HTML}{D55E00}
 \definecolor{cTa}{HTML}{009E73}
@@ -77,26 +62,19 @@
   walkA/.style={cA,very thick,->},
   walkB/.style={cB,very thick,->,densely dashed},
 }
-\newcommand{\RunningVertices}{%
-  \node[vtx] (x) at (0,0) {$x$};
-  \node[vtx] (u) at (1.45,0) {$u$};
-  \node[vtx] (y) at (2.9,0) {$y$};
-  \node[vtx] (v) at (0.8,1.3) {$v$};
-  \node[vtx] (w) at (2.1,1.3) {$w$};}
-
 \raggedbottom
 
 \begin{document}
 
 \title[Exact edge cover by temporal walks]{Exact edge cover by strict and non-strict temporal walks}
 
-\author[1]{\fnm{Duc Thien} \sur{Quach}}\email{thienchy3305@gmail.com}
+\author[1]{\fnm{Duc Thien} \sur{Quach}}\email{23020161@vnu.edu.vn}
 
 \author*[1]{\fnm{Manh Cuong} \sur{Tran}}\email{tranmanhcuong@vnu.edu.vn}
 
 \affil[1]{\orgdiv{Faculty of Information Technology}, \orgname{VNU University of Engineering and Technology}, \orgaddress{\city{Hanoi}, \country{Vietnam}}}
 
-\abstract{Given an undirected temporal graph and the number of walks that start at each vertex, exact edge cover asks whether the edges can be partitioned into temporal walks with prescribed or free end vertices. For non-strict walks, whose time labels never decrease, Deligkas et al.\ claimed polynomial solvability at AAAI 2025 through a reduction to a static graph; a five-vertex counterexample shows that this reduction, as built in its Figure~3, misses a condition. We give a complete proof of polynomial solvability by a different route, based on M-convex submodular flow. An orientation is realizable if and only if a counting condition holds and every snapshot component contains a walk, and only components with even degrees and even walk counters can violate the second condition. Counting walks in pairs, we prove that the state set of such a component remains M-convex after its dead state is removed, which yields an M-convex submodular flow formulation and an augmenting path algorithm that returns the walks or an infeasibility certificate. For strict walks, whose time labels strictly increase, we prove NP-completeness even with prescribed end vertices and six time labels, which settles a case left open by Deligkas et al. Experiments on instances with up to $387{,}467$ edges are consistent with the correctness of the implementation and show its performance on the tested benchmarks.}
+\abstract{Exact edge cover asks whether the edges of a temporal graph with $n$ vertices and $m$ edges can be partitioned into time-respecting walks with a prescribed number of walks starting at each vertex and, in the fixed-end variant, ending at each vertex. For non-strict walks, we prove that the problem is polynomially solvable by a new approach based on M-convexity, which also closes a gap in the proof sketch of an earlier static reduction. An orientation of the edges is realizable by walks exactly when walk counters stay non-negative and every snapshot component contains a walk, and only components with all degrees and counters even can violate the latter condition. Once a dead state is removed, the states of each such component form an M-convex set. This yields an augmenting path algorithm that returns walks or an infeasibility certificate, using at most $m/2$ augmentations and $O(n+nm^2)$ arithmetic operations with path-reversing re-orientation. The implementation was validated on small instances. For strict walks, we prove that the problem is NP-complete, already with six time labels for prescribed ends and two for free ends.}
 
 \keywords{Temporal graph, Exact edge cover, Temporal walk, M-convex set, Submodular flow, NP-completeness}
 
@@ -104,73 +82,56 @@
 
 \maketitle
 
-%% =====================================================================
 \section{Introduction}\label{sec:intro}
 
-Temporal graphs model time-dependent connections in contact, communication and transportation networks~\cite{kempe2002,holme2012,casteigts2012,michail2016}. Covering network edges by routes is central to the Chinese postman problem and arc routing~\cite{edmonds1973,corberan2015}, while assigning scheduled trips to vehicles adds temporal constraints~\cite{dantzig1954,bunte2009,kliewer2006}. Exact edge cover by temporal walks asks whether time-labeled edges can be partitioned into time-respecting walks with a prescribed number of walks starting at each vertex.
+Temporal graphs model connections whose availability changes with time~\cite{holme2012,michail2016}. In arc routing, edges are tasks, while vehicle scheduling assembles time-ordered trips into duties~\cite{edmonds1973,corberan2015,bunte2009}. These settings motivate covering edges by walks that respect their time labels. We consider undirected edges, choosing their traversal direction together with the walks. Experiments ignore recorded directions and travel times, testing correctness and scalability rather than a routing application.
 
-Deligkas et al.~\cite{deligkas2025} introduced the exact edge cover problem in temporal graphs (arXiv 2024; AAAI 2025). We study the undirected case with prescribed start vertices and either prescribed or free end vertices. The direction of each traversal is part of the solution. We consider both \emph{non-strict} walks, whose time labels are non-decreasing, and \emph{strict} walks, whose time labels are strictly increasing. The non-strict model permits consecutive edges to share a time label when events are recorded at a finite time resolution. This distinction can change the complexity of temporal graph problems~\cite{casteigts2024}. Deligkas et al.\ proved NP-completeness for walks without prescribed start vertices, which corresponds to minimizing the number of walks rather than to our problems with prescribed start counts, and left open the general case of strict walks with prescribed terminals~\cite{deligkas2025}.
+An exact edge cover partitions temporal edges among walks, traversing each edge once. The input prescribes start counts and, in \FIX{}, end counts without pairing individual starts and ends. In \FREE{}, the solution chooses the end vertices. Empty walks are allowed. A non-strict walk uses non-decreasing time labels and may traverse several edges of one snapshot, whereas a strict walk uses strictly increasing labels and at most one edge per snapshot. Equal time stamps occur in coarsely recorded contact data, and the strict/non-strict distinction can change complexity~\cite{casteigts2024,erlebach2023}, including for temporal exploration.
 
-The static reduction used by Deligkas et al.\ to argue polynomial solvability for non-strict walks misses a necessary condition: every connected component containing an edge in a \emph{snapshot}, the subgraph formed by edges with the same time label, must contain a walk immediately before that time. Our counterexample is temporally infeasible, yet its static graph admits an exact edge cover. Section~\ref{sec:counterexample} gives the construction.
+Deligkas et al.~\cite{deligkas2025} introduced temporal exact edge cover at AAAI 2025, establishing the problem and its complexity results. This paper builds on their problem and notation. They claimed polynomial solvability for non-strict walks through a static reduction. Their NP-completeness result without prescribed starts concerns minimizing walk count. Strict walks with prescribed terminals were left open. The proof sketch of their Theorem~6.3 misses a temporal availability condition: every snapshot component containing an edge must contain a walk immediately before its time, which static connectivity to a terminal does not ensure. Section~\ref{sec:counterexample} gives a five-vertex instance whose static graph has an exact edge cover but whose temporal graph does not, under the end-terminal construction in Figure~3 of~\cite{deligkas2025}. This gap does not refute their claim. We prove the non-strict polynomial result differently and settle the strict variants.
 
-\paragraph{Contributions.} Our contributions, together with the results that prove them, are as follows.
+Our method characterizes realizable orientations by non-negative walk counts and a walk in every snapshot component. Only components with even degrees and counters can violate the latter. Pair counting exposes M-convex component states, and removing the dead state preserves M-convexity. This yields an M-convex intersection formulation and an augmenting path algorithm that repairs dead components or certifies infeasibility. To our knowledge, dead-state treatment is new. 
+
+\paragraph{Contributions.}
 \begin{enumerate}
-\item \emph{Characterization.} An orientation of the edges is realizable by walks if and only if a counting condition holds and every snapshot component contains a walk (Theorem~\ref{thm:char}). Only even components can violate the second condition (Lemma~\ref{lem:noneven}), so instances without them are decided by one maximum flow (Corollary~\ref{cor:flow}).
-\item \emph{M-convexity of even components.} Counting walks in pairs, we prove that the state set of an even component remains M-convex after its dead state is removed (Lemma~\ref{lem:gamma}(b)). This is the key new structural result.
-\item \emph{Complete proof for non-strict walks.} Deligkas et al.\ claimed polynomial solvability; their static reduction does not capture the walk-existence condition (Section~\ref{sec:counterexample}), so we give an independent proof: the problem is an M-convex submodular flow problem (Theorem~\ref{thm:reduction}). Our augmenting path algorithm returns the walks or an infeasibility certificate (Theorem~\ref{thm:correct}) in polynomial time (Theorem~\ref{thm:time}) and extends to end vertices restricted to a given set (Theorem~\ref{thm:endset}).
-\item \emph{NP-completeness for strict walks.} The strict problem is NP-complete even with prescribed end vertices and six time labels (Theorem~\ref{thm:strict}), which resolves the case left open in~\cite{deligkas2025}.
-\item \emph{The static reduction.} We give the five-vertex counterexample (Proposition~\ref{prop:aaai}) and show exactly which orientation constraints the static graph represents (Lemma~\ref{lem:aaai}).
+\item \emph{Characterization and gap.} An orientation is realizable if and only if the counting condition holds and every snapshot component contains a walk (Theorem~\ref{thm:char}). Only even components can violate the latter (Lemma~\ref{lem:noneven}), and instances without them reduce to one maximum flow (Corollary~\ref{cor:flow}). Under the end-terminal construction shown in Figure~3 of~\cite{deligkas2025}, a five-vertex instance shows a gap in the static reduction (Proposition~\ref{prop:aaai}, Lemma~\ref{lem:aaai}).
+\item \emph{M-convex feasibility algorithm.} We prove that removing the dead state preserves M-convexity for even-component states (Lemma~\ref{lem:gamma}(b)), yielding a polynomial algorithm via feasibility of an M-convex intersection (Theorem~\ref{thm:reduction}). It returns walks or an infeasibility certificate (Theorem~\ref{thm:correct}) and has the bound of Theorem~\ref{thm:time}.
+\item \emph{Strict-walk hardness.} The strict problem is NP-complete with prescribed ends and six time labels, and with free ends and two time labels, empty walks allowed (Theorem~\ref{thm:strict}).
 \end{enumerate}
-Computational experiments (Section~\ref{sec:eval}) are consistent with the correctness of the implementation and show its performance on synthetic instances, contact data and transit timetables with up to $387{,}467$ edges.
 
-Section~\ref{sec:prelim} defines the problems and reviews related work. Sections~\ref{sec:char} and~\ref{sec:counterexample} establish the orientation characterization and analyze the static reduction. Sections~\ref{sec:mconvex} and~\ref{sec:method} develop the M-convex formulation and the algorithm. Section~\ref{sec:strict} proves NP-completeness for strict walks, Section~\ref{sec:eval} reports the experiments, and Section~\ref{sec:conclusion} concludes.
-
-%% =====================================================================
 \section{Problem formulation and related work}\label{sec:prelim}
 
 \subsection{Problem formulation}\label{sec:problem}
 
-We write $\N=\{0,1,2,\ldots\}$ and use $\Z$ for the integers. An undirected temporal graph is a triple $G=(V,\cE,\tau)$, where $V$ is the vertex set, $\cE$ is the edge set and $\tau:\cE\to\N$ assigns a time label to each edge. We write $n=\abs{V}$ and $m=\abs{\cE}$. Parallel edges are allowed and are treated as distinct elements of $\cE$, but loops are not allowed. For each time $t$, let $E_t=\{e\in\cE:\tau(e)=t\}$ and let $G_t=(V,E_t)$ be the corresponding \emph{snapshot}. Throughout the paper, a snapshot component means a connected component containing at least one edge.
+We write $\N=\{0,1,2,\ldots\}$ and use $\Z$ for the integers. An undirected temporal graph is $G=(V,\cE,\tau)$, with edge labels $\tau:\cE\to\N$, $n=\abs{V}$ and $m=\abs{\cE}$. Parallel edges are distinct. Loops are excluded. At time $t$, $G_t=(V,E_t)$, where $E_t=\{e\in\cE:\tau(e)=t\}$, is the \emph{snapshot}. A snapshot component contains at least one edge.
 
-A \emph{non-strict temporal walk} is an alternating sequence
-\[
-  W=(v_0,e_1,v_1,\ldots,e_\ell,v_\ell)
-\]
-in which $e_i$ has endpoints $v_{i-1}$ and $v_i$ for $i=1,\ldots,\ell$, and $\tau(e_1)\le\cdots\le\tau(e_\ell)$. Its start and end vertices are $v_0$ and $v_\ell$. An empty walk has $\ell=0$ and consists of a single vertex. Although a walk may in general repeat edges, exact edge cover requires every edge to be traversed exactly once across all walks.
+A \emph{non-strict temporal walk} is $W=(v_0,e_1,v_1,\ldots,e_\ell,v_\ell)$, where $e_i$ joins $v_{i-1}$ to $v_i$ and $\tau(e_1)\le\cdots\le\tau(e_\ell)$. Its start and end are $v_0,v_\ell$. An empty walk has $\ell=0$. Exact edge cover traverses each edge once across all walks.
 
-The two main decision problems prescribe a vector $a\in\N^V$ of start counts, with $k=\sum_v a_v$. We also consider an end-set restriction.
+The decision problems prescribe a vector $a\in\N^V$ of start counts, with $k=\sum_v a_v$.
 
 \begin{definition}\label{def:problems}
 \begin{itemize}
 \item \FREE{}: decide whether there exist $k$ non-strict temporal walks that collectively traverse every edge of $\cE$ exactly once, with exactly $a_v$ walks starting at each vertex $v$.
 \item \FIX{}: given an additional vector $z\in\N^V$, decide whether there exist walks satisfying \FREE{} with exactly $z_v$ walks ending at each vertex $v$.
-\item \ENDSET{}: as \FREE{}, with every walk required to end in a given set $T\subseteq V$.
 \end{itemize}
 \end{definition}
 
-In \FIX{}, the vectors $a$ and $z$ prescribe start and end counts, without specifying which start vertex is paired with which end vertex. Unless stated otherwise, walks are non-strict.
+In \FIX{}, $a$ and $z$ prescribe endpoint counts without pairing starts to ends. Walks are non-strict unless stated otherwise.
 
-Running-time bounds count arithmetic operations under a unit-cost model for machine-word integers, including the input counts $a_v$ and $z_v$. They are not bit-complexity bounds. With binary-encoded multiplicities, explicitly listing all empty walks may require output exponential in the input length. We therefore return a \emph{compressed} solution: a list of the non-empty walks and the number of empty walks at each vertex.
+Running times count unit-cost arithmetic operations on machine-word integers, including $a_v,z_v$. We return a \emph{compressed} solution (non-empty walks and each vertex's empty-walk count), since binary multiplicities can require exponentially many listed empty walks.
 
 \subsection{Related work}\label{sec:related}
 
 \paragraph{Exact edge cover in temporal graphs.}
-Deligkas et al.~\cite{deligkas2025} study exact edge cover by temporal paths, trails and walks. For strict walks with fixed terminals, their Corollary~6.4 handles proper temporal graphs, in which every snapshot is a matching. Their Theorem~6.5 gives an $O(2^k k\,t_{\max})$ algorithm when $\abs{E_t}\in\{0,k\}$ at every time, where $k$ is the prescribed number of walks and $t_{\max}$ is the largest time label. For directed temporal graphs, their Theorem~6.1 gives polynomial solvability for non-strict walks with prescribed start terminals, while Theorem~5.2 gives a linear-time algorithm for strict walks when the edge stream is supplied in time order. Proposition~5.1 gives an $n^{O(k)}$ algorithm for $k$ walks.
-
-Their non-strict polynomial result, Theorem~6.3, mentions only start terminals, whereas its proof sketch and Figure~3 also use end terminals. The extended version~\cite{deligkas2024arxiv} states the result for prescribed start and end terminals. Section~\ref{sec:counterexample} analyzes the construction under these terminal readings.
-
-The counterexample of Section~\ref{sec:counterexample} is a simple graph, and the hardness construction of Section~\ref{sec:strict} has no parallel edges within a snapshot.
+Deligkas et al.~\cite{deligkas2025} study temporal paths, trails and walks (theorem and page numbers refer to the AAAI version, while the extended version is cited as arXiv v1). For strict walks with fixed terminals, Corollary~6.4 handles proper temporal graphs (each snapshot is a matching), and Theorem~6.5 gives an $O(2^k k\,t_{\max})$ algorithm when $|E_t|\in\{0,k\}$ ($t_{\max}$ is the largest time label). Directed cases are polynomial (Theorems~6.1 and~5.2). Their Theorem~6.3 mentions start terminals, while its proof and Figure~3 use end terminals. The extended version~\cite{deligkas2024arxiv} states both. Section~\ref{sec:counterexample} analyses in detail only the end-terminal construction shown in the proof and Figure~3. The variant with start terminals only is not addressed here.
 
 \paragraph{Temporal networks and covering problems.}
-Time-copy representations are standard in temporal graphs~\cite{kostakos2009} and temporal flow problems~\cite{akrida2019}. Our chain and port networks add constraints governing the orientation and coverage of snapshot edges. Related temporal covering problems ask for a single walk through every static edge~\cite{marino2023}, exploration of all edges~\cite{bumpus2023}, or path covers of the vertices of a temporal directed acyclic graph (DAG)~\cite{chakraborty2024}.
+Time-copy representations appear in~\cite{akrida2019}. Marino and Silva study a single walk that traverses every edge once in a temporal graph~\cite{marino2023}. For $k=1$ with a prescribed start and one label per edge, non-strict feasibility reduces, by Theorem~\ref{thm:char}, to a snapshot-by-snapshot Euler trail check, so we do not compare complexity results across the two models. Other related problems explore all edges~\cite{bumpus2023} or cover vertices of a temporal DAG~\cite{chakraborty2024}.
 
 \paragraph{Discrete convexity and orientations.}
-Our formulation builds on M-convex sets, M-convex submodular flows~\cite{edmonds1977,murota1999,murota2003,fujishige2005} and orientations with degree constraints~\cite{hakimi1965,frank2011}. General submodular flow algorithms give polynomial solvability. We use a standard augmenting path scheme~\cite{fujishige2005} with combinatorial exchange tests. Related background includes parity-constrained orientations~\cite{frank2011}, strongly connected orientations and integer lattices~\cite{abdi2025}, and jump systems~\cite{bouchet1995}.
+We use M-convex sets~\cite{murota1996,murota2003}, submodular flows~\cite{edmonds1977,franktardos1988,murota2003,fujishige2005}, degree-constrained orientations~\cite{hakimi1965,frank1980,frank2011} and augmenting paths~\cite{cunningham1985,fujishige2005}. Our additional constraint removes an even component's dead state. Related structures include strongly connected orientations~\cite{abdi2025}.
 
-%% =====================================================================
-\section{Characterization of realizable orientations}\label{sec:char}
-
-We characterize realizable orientations and reduce the remaining difficulty to even snapshot components.
+\section{Orientations, even components and a gap in the static reduction}\label{sec:char}
 
 \subsection{Orientations and walk counters}
 
@@ -178,7 +139,7 @@ A walk that traverses the edge $\{u,v\}$ from $u$ to $v$ \emph{orients} it as $u
 \[
   c_{t^+}(v)=c_t(v)-\out_t(v)+\inn_t(v),
 \]
-where $t^+$ denotes the moment just after $t$. Its parity is fixed by $a_v$ plus the number of edges incident to $v$ before $t$, independently of the orientation.
+where $t^+$ denotes the moment just after $t$. Its parity is fixed by $a_v$ plus the number of edges incident to $v$ before $t$, independently of the orientation. A walk is counted once at its current vertex. At one time label it may traverse several successive edges.
 
 Let $t_{v,1}<\dots<t_{v,q_v}$ be the time labels at which $v$ has an incident edge (the \emph{occurrences} of $v$), let $g_{v,j}$ be the degree of $v$ in $E_{t_{v,j}}$, and let $G_{v,j}=\sum_{i\le j}g_{v,i}$ and $G_v=G_{v,q_v}$. For an orientation, let $b_{v,j}$ be the number of arcs of $E_{t_{v,j}}$ with tail $v$ and $B_{v,j}=\sum_{i\le j}b_{v,i}$, where empty sums are zero. In \FIX{} we set $h_v=(a_v+G_v-z_v)/2$, the number of arcs with tail $v$ in every solution, as determined by the final count $z_v$.
 
@@ -192,22 +153,56 @@ For \FIX{} the additional condition is that the final number of walks at $v$ equ
 \end{theorem}
 
 \begin{proof}
-\emph{Necessity.} At time $t$, every walk that leaves $v$ either was at $v$ before $t$ or arrived at $v$ during $t$, so $\out_t(v)\le c_t(v)+\inn_t(v)$, which is~(i). The edges that one walk uses at time $t$ form a trail inside one component $K$ of $E_t$, and the walk is located at the first vertex of this trail just before $t$. Hence every component that has edges contains a walk. In \FIX{} the final number of walks at $v$ is $a_v+G_v-2B_{v,q_v}=z_v$.
+\emph{Necessity.} At time $t$, each edge that leaves $v$ is either the first edge that a walk uses at time $t$, and then the walk was at $v$ before $t$, so there are at most $c_t(v)$ such edges, or it follows an edge that enters $v$ at time $t$ on the same walk, and each entering edge has at most one successor. Hence $\out_t(v)\le c_t(v)+\inn_t(v)$, which is~(i). The edges that one walk uses at time $t$ form a trail inside one component $K$ of $E_t$, and the walk is located at the first vertex of this trail just before $t$. Hence every component that has edges contains a walk. In \FIX{} the final number of walks at $v$ is $a_v+G_v-2B_{v,q_v}=z_v$.
 
-\emph{Sufficiency.} We process the times in increasing order and the components of $E_t$ independently. Let $\vec K$ be the directed graph of $K$ and let $r=\sum_{v\in K}\max(0,\out_t(v)-\inn_t(v))$. If $r>0$, add $r$ dummy arcs from the vertices with $\inn>\out$ to the vertices with $\out>\inn$ so that every vertex is balanced. The resulting graph is weakly connected and balanced, so it has an Euler circuit. Deleting the dummy arcs cuts the circuit into $r$ trails, and exactly $\out_t(v)-\inn_t(v)$ of them start at each vertex $v$ with a surplus. By~(i), $v$ holds enough walks to take these trails. If $r=0$, then $\vec K$ is Eulerian. By~(ii) some vertex of $K$ holds a walk, and this walk follows an Euler circuit that starts at that vertex. All other walks wait. The number of walks at every vertex after $t$ equals $c_{t^+}$, so the induction continues. In \FIX{} the final numbers are $z$.
+\emph{Sufficiency.} We process the times in increasing order and the components of $E_t$ independently. Let $\vec K$ be the directed graph of $K$ and let $r=\sum_{v\in K}\max(0,\out_t(v)-\inn_t(v))$. If $r>0$, add $r$ dummy arcs from vertices with $\inn>\out$ to vertices with $\out>\inn$, pairing each unit of deficit with one unit of surplus. The totals agree because the sum of $\out_t-\inn_t$ on $K$ is zero. This makes each vertex balanced. The augmented graph is weakly connected because $K$ is connected and the added arcs join vertices of $K$. Hence it has an Euler circuit. In cyclic order, deleting the $r$ dummy arcs leaves exactly $r$ trails (Fig.~\ref{fig:dummy}), each starting at the head of a dummy arc (a surplus vertex) and ending at the tail of the next dummy arc. A vertex $v$ with surplus is the head of exactly $\out_t(v)-\inn_t(v)$ dummy arcs, so that many trails start there. By~(i), $v$ holds enough walks to take these trails. If $r=0$, then $\vec K$ is Eulerian. By~(ii) some vertex of $K$ holds a walk, and this walk follows an Euler circuit that starts at that vertex. All other walks wait. The number of walks at every vertex after $t$ equals $c_{t^+}$, so the induction continues. In \FIX{} the final numbers are $z$.
 \end{proof}
 
-The proof of sufficiency yields an $O(n+m)$ algorithm, after sorting the edges, that constructs the walks from an orientation satisfying (i) and (ii) using Hierholzer's algorithm~\cite{hierholzer1873}.
+The proof of sufficiency yields an $O(n+m)$ algorithm (after sorting the edges) that constructs the walks from an orientation satisfying (i) and (ii) using Hierholzer's algorithm~\cite{hierholzer1873}. Given edge directions, \FREE{} and \FIX{} are thus decided in $O(n+m\log(m+1))$ time.
 
-\begin{corollary}\label{cor:directed}
-If the direction of every edge is given and walks must follow it, then \FREE{} and \FIX{} are decided in $O(n+m\log(m+1))$ time.
-\end{corollary}
-
-\begin{proof}
-The orientation is fixed, so by Theorem~\ref{thm:char} it suffices to check (i), (ii) and, for \FIX{}, the end condition. After sorting the edges by time, one pass over the snapshots computes all counters and components.
-\end{proof}
-
-Corollary~\ref{cor:directed} covers instances with given directions, such as transit timetables. The remaining difficulty lies in choosing the directions.
+\begin{figure}[!htb]
+\centering
+\begin{tikzpicture}[scale=0.9,transform shape,
+  vx/.style={circle,draw,semithick,fill=white,minimum size=5.6mm,inner sep=0pt,font=\footnotesize},
+  arc/.style={->,semithick,black!70},
+  dum/.style={->,semithick,densely dashed,black!55},
+  tA/.style={->,very thick,cA},
+  tB/.style={->,very thick,cB},
+  num/.style={font=\scriptsize,inner sep=1.5pt},
+  imb/.style={font=\scriptsize,text=black!75}]
+  \foreach \o/\p in {0/a,4.4/b,8.8/c} {
+    \node[vx] (u1\p) at (\o,1) {$u_1$};
+    \node[vx] (u2\p) at (\o,-1) {$u_2$};
+    \node[vx] (x\p)  at (\o+1.7,0) {$x$};
+    \node[vx] (w1\p) at (\o+3.4,1) {$w_1$};
+    \node[vx] (w2\p) at (\o+3.4,-1) {$w_2$};
+  }
+  \draw[arc] (u1a) -- (xa);
+  \draw[arc] (u2a) -- (xa);
+  \draw[arc] (xa) -- (w1a);
+  \draw[arc] (xa) -- (w2a);
+  \node[imb,above=1pt] at (u1a.north) {$+1$};
+  \node[imb,below=1pt] at (u2a.south) {$+1$};
+  \node[imb,above=1pt] at (w1a.north) {$-1$};
+  \node[imb,below=1pt] at (w2a.south) {$-1$};
+  \node[imb,below=1pt] at (xa.south) {$0$};
+  \draw[arc] (u1b) -- node[num,above,sloped] {1} (xb);
+  \draw[arc] (xb) -- node[num,above,sloped] {2} (w2b);
+  \draw[arc] (u2b) -- node[num,below,sloped] {4} (xb);
+  \draw[arc] (xb) -- node[num,below,sloped] {5} (w1b);
+  \draw[dum] (w2b) -- node[num,below] {3} (u2b);
+  \draw[dum] (w1b) -- node[num,above] {6} (u1b);
+  \draw[tA] (u1c) -- (xc);
+  \draw[tA] (xc) -- (w2c);
+  \draw[tB] (u2c) -- (xc);
+  \draw[tB] (xc) -- (w1c);
+  \node[font=\footnotesize] at (1.7,-2.3) {(a)};
+  \node[font=\footnotesize] at (6.1,-2.3) {(b)};
+  \node[font=\footnotesize] at (10.5,-2.3) {(c)};
+\end{tikzpicture}
+\caption{Dummy arcs in the proof of Theorem~\ref{thm:char}, illustrated on a component with two surplus vertices $u_1,u_2$ and two deficit vertices $w_1,w_2$. (a) The oriented component, with $\out_t-\inn_t$ shown at each vertex. (b) Dashed dummy arcs join each deficit vertex to a surplus vertex. The numbers 1--6 indicate an Euler circuit. (c) Deleting the dummy arcs leaves two trails, from $u_1$ to $w_2$ and from $u_2$ to $w_1$.}
+\label{fig:dummy}
+\end{figure}
 
 \subsection{Even components and the chain network}
 
@@ -215,28 +210,28 @@ Corollary~\ref{cor:directed} covers instances with given directions, such as tra
 A snapshot component $K$ of $E_t$ is \emph{even} if every vertex of $K$ has even degree in $E_t$ and even walk counter $c_t$. An even component is \emph{dead} under an orientation if $c_t(v)=0$ for all $v\in K$.
 \end{definition}
 
-A pair of parallel edges and a triangle with even walk counters are even components. A path is not even because its two ends have odd degree.
+A pair of parallel edges and a triangle with even walk counters are even components. A path is not.
 
 \begin{lemma}\label{lem:noneven}
 If an orientation satisfies~(i) and the snapshot component $K$ of $E_t$ is not even, then $K$ satisfies~(ii).
 \end{lemma}
 
 \begin{proof}
-If some vertex of $K$ has odd degree in $E_t$, then $\out_t-\inn_t$ is odd and therefore non-zero at that vertex. Since $\out_t-\inn_t$ sums to $0$ over $K$, some vertex has $\out_t-\inn_t>0$, and by~(i) it has $c_t\ge1$. If some counter $c_t(v)$ is odd, then $c_t(v)\ge1$.
+If some vertex of $K$ has odd degree in $E_t$, then $\out_t-\inn_t$ is odd and therefore non-zero at that vertex. Since $\out_t-\inn_t$ sums to $0$ over $K$, some vertex has $\out_t-\inn_t>0$, and by~(i) it has $c_t\ge1$. If some counter $c_t(v)$ is odd, then it is a nonnegative odd integer, and hence is at least one: $c_t(v)$ equals $a_v\ge0$ at the first occurrence of $v$ and otherwise the counter $c_{t'^+}(v)$ after the previous occurrence $t'$, which is nonnegative by~(i) at $t'$.
 \end{proof}
 
-Condition~(i) requires the walk counter after the $j$-th occurrence of $v$, namely $a_v+G_{v,j}-2B_{v,j}$, to be non-negative. Since $B_{v,j}$ is integral, this is equivalent to $B_{v,j}\le\floor{(a_v+G_{v,j})/2}$ for all $v$ and $j$.
+Condition~(i) requires the walk counter after the $j$-th occurrence of $v$, namely $a_v+G_{v,j}-2B_{v,j}$, to be non-negative, which is equivalent to $B_{v,j}\le\floor{(a_v+G_{v,j})/2}$.
 
 We impose these bounds as capacities in a \emph{chain network} with a source and a sink $r$. For every occurrence $(v,j)$ there is a node $s_{v,j}$, and these nodes form a chain $s_{v,1}\to\dots\to s_{v,q_v}\to r$. The arc that leaves $s_{v,j}$ has capacity $C_{v,j}=\floor{(a_v+G_{v,j})/2}$ in \FREE{} and $C_{v,j}=\min(\floor{(a_v+G_{v,j})/2},h_v)$ in \FIX{}. For every edge $e=\{u,v\}$ with time label $t$ there is a node that receives one unit from the source and has two arcs of capacity $1$ to the occurrence nodes of $u$ and $v$ at time $t$.
 
-The unit of $e$ goes to the endpoint chosen as its tail, so the flow on the arc that leaves $s_{v,j}$ equals $B_{v,j}$. The network has $O(m)$ nodes and arcs, and, for \FREE{}, a flow of value $m$ corresponds exactly to an orientation that satisfies~(i).
+The unit of $e$ goes to the endpoint chosen as its tail, so the flow on the arc that leaves $s_{v,j}$ equals $B_{v,j}$. The network has $O(m)$ nodes and arcs and, for \FREE{}, a flow of value $m$ corresponds exactly to an orientation that satisfies~(i). The counter after occurrence $j$ is $a_v+G_{v,j}-2B_{v,j}$, so the capacity on each outgoing chain arc enforces its nonnegativity.
 
-Figure~\ref{fig:chain} shows the network on a small example.
+Figure~\ref{fig:chain} shows $e=\{u,v\}$ followed by $f=\{v,w\}$: units from $\sigma$ choose edge tails, and the thick chain arcs have capacities $C_{v,j}$.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[x=1cm,y=1cm,
-  lbl/.style={font=\scriptsize,fill=white,inner sep=1pt},
+\begin{tikzpicture}[scale=0.85,transform shape,x=1cm,y=1cm,
+  lbl/.style={font=\scriptsize,inner sep=1.5pt},
   occ/.style={circle,draw,semithick,fill=white,minimum size=7mm,inner sep=0pt,font=\footnotesize},
   edg/.style={rectangle,draw,semithick,fill=white,minimum size=6mm,inner sep=0pt,font=\footnotesize},
   flow/.style={->,semithick,black!70},
@@ -249,21 +244,20 @@ Figure~\ref{fig:chain} shows the network on a small example.
   \node[occ] (sv2) at (5.4,-1.0) {$s_{v,2}$};
   \node[occ] (sw1) at (5.4,-2.6) {$s_{w,1}$};
   \node[occ] (r) at (8.6,0) {$r$};
-  \draw[flow] (src) -- node[lbl,pos=0.45,yshift=4pt] {$1$} (e);
-  \draw[flow] (src) -- node[lbl,pos=0.45,yshift=-4pt] {$1$} (f);
-  \draw[flow] (e) -- node[lbl,pos=0.5,above=1pt] {$1$} (su1);
-  \draw[flow] (e) -- node[lbl,pos=0.5] {$1$} (sv1);
-  \draw[flow] (f) -- node[lbl,pos=0.5] {$1$} (sv2);
-  \draw[flow] (f) -- node[lbl,pos=0.5,below=1pt] {$1$} (sw1);
-  \draw[chain] (sv1) -- node[lbl,pos=0.5,right=3pt] {$C_{v,1}$} (sv2);
-  \draw[chain] (sv2) -- node[lbl,pos=0.45,above=2pt] {$C_{v,2}$} (r);
-  \draw[chain] (su1) -- node[lbl,pos=0.5,above=0pt] {$C_{u,1}$} (r);
-  \draw[chain] (sw1) -- node[lbl,pos=0.5,below=0pt] {$C_{w,1}$} (r);
+  \draw[flow] (src) -- node[lbl,pos=0.5,above,sloped] {$1$} (e);
+  \draw[flow] (src) -- node[lbl,pos=0.5,below,sloped] {$1$} (f);
+  \draw[flow] (e) -- node[lbl,pos=0.5,above,sloped] {$1$} (su1);
+  \draw[flow] (e) -- node[lbl,pos=0.5,below,sloped] {$1$} (sv1);
+  \draw[flow] (f) -- node[lbl,pos=0.5,above,sloped] {$1$} (sv2);
+  \draw[flow] (f) -- node[lbl,pos=0.5,below,sloped] {$1$} (sw1);
+  \draw[chain] (sv1) -- node[lbl,pos=0.5,right=2pt] {$C_{v,1}$} (sv2);
+  \draw[chain] (sv2) -- node[lbl,pos=0.5,above,sloped] {$C_{v,2}$} (r);
+  \draw[chain] (su1) -- node[lbl,pos=0.5,above,sloped] {$C_{u,1}$} (r);
+  \draw[chain] (sw1) -- node[lbl,pos=0.5,below,sloped] {$C_{w,1}$} (r);
 \end{tikzpicture}
-\caption{The chain network on a small example. The vertex $v$ has two occurrences, at the time of $e=\{u,v\}$ and at the time of $f=\{v,w\}$, where $f$ is the later edge. Each edge node receives one unit from the source $\sigma$ and sends it to the occurrence node of the endpoint chosen as its tail. The arc that leaves $s_{v,j}$ has capacity $C_{v,j}$, and every chain ends at the sink $r$.}
+\caption{Chain network for two successive temporal edges.}
 \label{fig:chain}
 \end{figure}
-
 
 \begin{corollary}\label{cor:flow}
 If no snapshot has an even component, then \FREE{} and \FIX{} are decided by one maximum flow in the chain network. On every instance, a maximum flow of value less than $m$ certifies infeasibility.
@@ -273,62 +267,17 @@ If no snapshot has an even component, then \FREE{} and \FIX{} are decided by one
 By Theorem~\ref{thm:char} and Lemma~\ref{lem:noneven}, an orientation is realizable when there is no even component if and only if it satisfies~(i). For \FIX{}, after checking $\sum_va_v=\sum_vz_v$ and $h_v\in\N$ for all $v$, we have $\sum_vh_v=m$, so a flow of value $m$ saturates every last chain arc, which gives $B_{v,q_v}=h_v$. The second claim holds because~(i) is necessary.
 \end{proof}
 
-Proper temporal graphs have no even components, and strict and non-strict walks coincide on them. Thus Corollary~\ref{cor:flow} recovers Corollary~6.4 of Deligkas et al.~\cite{deligkas2025} with one maximum flow and extends it to \FREE{}.
+Proper temporal graphs have no even components, and strict and non-strict walks coincide on them, so Corollary~\ref{cor:flow} recovers Corollary~6.4 of~\cite{deligkas2025} with one maximum flow and extends it to \FREE{}.
 
-Figure~\ref{fig:running} illustrates a dead even component. Two walks start at $x$ and $y$. The orientation $x\to u\to y$ in Fig.~\ref{fig:running}(b) satisfies~(i) but leaves no walk in the triangle $u,v,w$ at time~$2$, which violates~(ii). The repair reverses $u\to y$ at the \emph{earlier} time~$1$ (Fig.~\ref{fig:running}(c)).
+\subsection{A gap in the static reduction}\label{sec:counterexample}
 
-\begin{figure}[htb]
+\paragraph{The reduction.} For a vertex $v$, let $\delta_{\le t}(v)$ and $\delta_{>t}(v)$ count its incident edges with time labels at most $t$ and greater than $t$, respectively. A superscript $G$ restricts these counts to edges of the temporal graph $G$, without terminal edges. Deligkas et al.\ expand every vertex $v$ into copies $v_t$, one for each time at which $v$ has an edge, with a start terminal $s$ and an end terminal $e$. Under the end-terminal construction shown in Figure~3 of~\cite{deligkas2025}, the start-terminal edges attach to an additional copy at time $0$ and the end-terminal edges to an additional copy after the last time label (the copies $x_0$ and $y_3$ in Fig.~\ref{fig:aaai}(b)). Consecutive copies are joined by $\alpha=\min(\delta_{\le t}(v),\delta_{>t}(v))$ edges, where, for the end-terminal construction shown in the proof of Theorem~6.3 of~\cite{deligkas2025}, $\delta$ counts the edges of the static graph $S$ including the $a_v$ start-terminal and $z_v$ end-terminal edges at $v$ (so $\alpha=\min(a_v+\delta^G_{\le t}(v),\,z_v+\delta^G_{>t}(v))$ in the notation below), of which $\lceil\alpha/2\rceil$ are directed towards the later copy and the rest are undirected~\cite[p.~26503]{deligkas2025}. The undirected edges allow a static walk to \emph{go back in time}. The proof sketch repairs a walk $W_1$ that goes back in time by exchanging suffixes with another walk $W_2$ that ``entered to the left of $v_{t_i}$ and exits to the right''~\cite[p.~26503]{deligkas2025}. The argument assumes $W_2\ne W_1$.
+
+In Fig.~\ref{fig:aaai}(a), the prescribed walk starts at $x$ and ends at $y$. Green solid edges have time $1$ and orange dashed edges time $2$. In panel~(b), numbers give the step order of a static covering walk. The orange dashed step~8 goes back in time.
+
+\begin{figure}[!htbp]
 \centering
-\begin{tikzpicture}
-  \begin{scope}
-    \RunningVertices
-    \draw[t1] (x) -- node[tlab] {1} (u);
-    \draw[t1] (u) -- node[tlab] {1} (y);
-    \draw[t2] (u) -- node[tlab] {2} (v);
-    \draw[t2] (v) -- node[tlab] {2} (w);
-    \draw[t2] (w) -- node[tlab] {2} (u);
-    \node[cnt,below=2pt of x] {$a_x=1$};
-    \node[cnt,below=2pt of y] {$a_y=1$};
-    \node[sub] at (1.45,-1.1) {(a)};
-  \end{scope}
-  \begin{scope}[xshift=4.3cm]
-    \RunningVertices
-    \draw[walkA] (x) -- (u);
-    \draw[walkA] (u) -- (y);
-    \draw[t2,cB] (u) -- (v) -- (w) -- (u);
-    \node[cnt,below=2pt of x] {$0$};
-    \node[cnt,draw=cB,text=cB,below=2pt of u] {$0$};
-    \node[cnt,below=2pt of y] {$2$};
-    \node[cnt,draw=cB,text=cB,above=2pt of v] {$0$};
-    \node[cnt,draw=cB,text=cB,above=2pt of w] {$0$};
-    \node[sub] at (1.45,-1.1) {(b)};
-  \end{scope}
-  \begin{scope}[xshift=8.6cm]
-    \RunningVertices
-    \draw[walkA] (x) -- (u);
-    \draw[walkA] (u) -- (v);
-    \draw[walkA] (v) -- (w);
-    \draw[walkA] (w) -- (u);
-    \draw[walkB] (y) -- (u);
-    \node[sub] at (1.45,-1.1) {(c)};
-  \end{scope}
-\end{tikzpicture}
-\caption{The running example. (a) Time labels and start counts. (b) An orientation satisfying~(i) with a dead triangle. (c) A solution with free end vertices.}
-\label{fig:running}
-\end{figure}
-
-The \emph{restart branch and bound} (\textbf{BB}) method branches on which vertex of a dead even component receives an additional pair of walks and recomputes a maximum flow in each branch. It is correct, but its search tree may have up to $2s^{e}$ nodes for $e$ even components with at most $s$ vertices each. Sections~\ref{sec:mconvex} and~\ref{sec:method} replace this search by augmenting paths. Section~\ref{sec:counterexample} examines how condition~(ii) is lost in the static reduction.
-
-%% =====================================================================
-\section{A counterexample to the static reduction}\label{sec:counterexample}
-
-This section shows that the static reduction in the proof sketch of Theorem~6.3 of~\cite{deligkas2025} does not capture condition~(ii) of Theorem~\ref{thm:char}.
-
-\paragraph{The reduction.} For a vertex $v$, let $\delta_{\le t}(v)$ and $\delta_{>t}(v)$ count its incident edges with time labels at most $t$ and greater than $t$, respectively. A superscript $G$ restricts these counts to edges of $G$. Deligkas et al.\ expand every vertex $v$ into a sequence of copies $v_t$, one for each time at which $v$ has an edge, and add a start terminal $s$ and an end terminal $e$. Two consecutive copies are joined by $\alpha=\min(\delta_{\le t}(v),\delta_{>t}(v))$ edges, of which $\lceil\alpha/2\rceil$ are directed towards the later copy and the rest are undirected: ``we create $\min(\delta_{\le t}(v),\delta_{\ge t+1}(v))$ edges between $v_t$ and $v_{t+1}$ \dots\ half of these edges rounded up are directed from $v_t$ to $v_{t+1}$, while the others are undirected''~\cite[p.~26503]{deligkas2025}, see also~\cite{deligkas2024arxiv}. The undirected edges allow a static walk to \emph{go back in time}. The proof sketch repairs a walk $W_1$ that goes back in time by exchanging suffixes with another walk $W_2$, since ``there is at least one directed edge $(v_{t_i},v_{t_i+1})$ taken by some walk $W_2$ that entered to the left of $v_{t_i}$ and exits to the right''~\cite[p.~26503]{deligkas2025}. The argument assumes $W_2\ne W_1$.
-
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[stepn/.style={inner sep=1pt,font=\scriptsize}]
+\begin{tikzpicture}[scale=0.8,transform shape,stepn/.style={inner sep=1pt,font=\scriptsize}]
   \begin{scope}
     \node[vtx] (x) at (0,0) {$x$};
     \node[vtx] (u) at (1.3,0) {$u$};
@@ -376,7 +325,7 @@ This section shows that the static reduction in the proof sketch of Theorem~6.3 
     \node[sub] at (2.65,-2.4) {(b)};
   \end{scope}
 \end{tikzpicture}
-\caption{The counterexample. (a) The temporal instance. (b) The static graph $S$ and a walk that covers it.}
+\caption{A temporal instance (a) and a covering walk of its static reduction (b).}
 \label{fig:aaai}
 \end{figure}
 
@@ -385,7 +334,7 @@ The instance of Fig.~\ref{fig:aaai}(a) is infeasible, but the static graph $S$ o
 \end{proposition}
 
 \begin{proof}
-The instance has one walk, which starts at $x$ and ends at $y$. It must cover both edges at time $1$ and end at $y$, so it traverses $x\to u\to y$. Afterwards no walk is located at $u$, $v$ or $w$, and the triangle violates~(ii) of Theorem~\ref{thm:char}. In $S$, built as in the proof sketch of Theorem~6.3 of~\cite{deligkas2025} with the terminal $s$ attached to $x$ at time $0$ and $e$ attached to $y$ at time $3$ (Fig.~\ref{fig:aaai}(b)), the gadget of $u$ has $\alpha=\min(2,2)=2$ edges between $u_1$ and $u_2$, one directed edge $(u_1,u_2)$ and one undirected edge. The gadgets of $x$ and $y$ have one directed edge each. The static walk
+The single walk starts at $x$ and ends at $y$, so it traverses $x\to u\to y$ at time $1$. Afterwards no walk is located at $u$, $v$ or $w$, and the triangle violates~(ii) of Theorem~\ref{thm:char}. In $S$, built as in the proof sketch of Theorem~6.3 of~\cite{deligkas2025} with the terminal $s$ attached to $x$ at time $0$ and $e$ attached to $y$ at time $3$ (Fig.~\ref{fig:aaai}(b)), the gadget of $u$ has $\alpha=\min(2,2)=2$ edges between $u_1$ and $u_2$, one directed edge $(u_1,u_2)$ and one undirected edge. The gadgets of $x$ and $y$ have one directed edge each. The static walk
 \[
   s\to x_0\to x_1\to u_1\to u_2\to v_2\to w_2\to u_2\to u_1\to y_1\to y_3\to e
 \]
@@ -397,20 +346,20 @@ In \FIX{}, the undirected edges of $S$ can be oriented so that every non-termina
 \end{lemma}
 
 \begin{proof}
-Fix an orientation of $G$. It also orients the edges $\{u_t,v_t\}$ of $S$. At a vertex $v$, the start terminal edge contributes $a_v$ incoming edges before the first time label and the end terminal edge contributes $z_v$ outgoing edges after the last time label. Let $n_t$ be the net flow to the right on the chain edges after the copy $v_t$, and let $n_{t^-}$ be the same quantity before $v_t$. Balance at $v_t$ gives $n_t=n_{t^-}+\inn_t(v)-\out_t(v)$ with $n=0$ before the copy $v_0$ to which the start terminal is attached, so by induction $n_t=c_{t^+}(v)$, and balance at the last copy gives the final walk counter $z_v$. Between two consecutive time labels there are $\alpha_t=\min(\mathrm{before}_t,\mathrm{after}_t)$ edges with $\mathrm{before}_t=a_v+\delta^G_{\le t}(v)$ and $\mathrm{after}_t=z_v+\delta^G_{>t}(v)$. Of these, $\lceil\alpha_t/2\rceil$ must point to the right and the others are free. The achievable net flows are exactly the integers $n$ with $n\equiv\alpha_t \pmod 2$ and $\alpha_t \bmod 2\le n\le\alpha_t$. For $n=c_{t^+}(v)$, and using the end condition (final walk counter $z_v$), the parity condition always holds, because $c_{t^+}(v)$ has the parity of both $\mathrm{before}_t$ and $\mathrm{after}_t$. The upper bound always holds, because $c_{t^+}(v)$ is at most the number of incoming edges up to $t$ and at most the number of outgoing edges after $t$. The lower bound is $c_{t^+}(v)\ge0$, which is condition~(i). Conversely, from an orientation that satisfies~(i), choose how many free edges point to the right so that $n_t=c_{t^+}(v)$, which is possible because this value lies in the admissible range.
+Fix an orientation of $G$. It also orients the edges $\{u_t,v_t\}$ of $S$. At a vertex $v$, the start terminal edge contributes $a_v$ incoming edges before the first time label and the end terminal edge contributes $z_v$ outgoing edges after the last time label. Let $n_t$ be the net flow to the right on the chain edges after the copy $v_t$. Balance at $v_t$ gives $n_t=n_{t^-}+\inn_t(v)-\out_t(v)$, where $n_{t^-}=a_v$ at the first copy because the $a_v$ start-terminal edges enter the chain there, so by induction $n_t=c_{t^+}(v)$, and balance at the last copy gives the final counter $z_v$. Between two consecutive time labels there are $\alpha_t=\min(\mathrm{before}_t,\mathrm{after}_t)$ edges with $\mathrm{before}_t=a_v+\delta^G_{\le t}(v)$ and $\mathrm{after}_t=z_v+\delta^G_{>t}(v)$, of which $\lceil\alpha_t/2\rceil$ point to the right and each of the other $\lfloor\alpha_t/2\rfloor$ changes the net flow by $\pm1$. The achievable net flows are exactly the integers $n$ with $n\equiv\alpha_t\pmod 2$ and $\alpha_t\bmod 2\le n\le\alpha_t$. For $n=c_{t^+}(v)$ the parity condition always holds, because $c_{t^+}(v)$ has the parity of both $\mathrm{before}_t$ and $\mathrm{after}_t$ (end condition). The upper bound always holds, because $c_{t^+}(v)$ is at most the number of incoming edges up to $t$ and of outgoing edges after $t$. The lower bound is condition~(i). Conversely, from an orientation that satisfies~(i), choose how many free edges point to the right so that $n_t=c_{t^+}(v)$, which is possible because this value lies in the admissible range.
 \end{proof}
 
-Lemma~\ref{lem:aaai} shows that, for \FIX{}, the graph $S$ represents condition~(i) and the end condition exactly, together with a static connectivity condition (every component of $S$ with edges contains a terminal). It does not represent condition~(ii), which requires one orientation that gives every even component a walk \emph{simultaneously}. A temporal solution always yields a cover of $S$, and the converse can fail only through condition~(ii), as in Proposition~\ref{prop:aaai}. With only the start vertex prescribed (\FREE{}), the instance of Fig.~\ref{fig:aaai}(a) is infeasible by the same argument.
+Thus, for \FIX{}, balanced orientability of $S$ matches condition~(i) and the end condition (Lemma~\ref{lem:aaai}). In addition $S$ requires static connectivity (every component with edges contains a terminal), which does not depend on the orientation and is weaker than~(ii). A temporal solution yields a cover of $S$, but the converse can fail (Proposition~\ref{prop:aaai}). With the end count dropped (\FREE{}, $a_x=1$, $k=1$), the instance of Fig.~\ref{fig:aaai}(a) is also infeasible, since the single walk must traverse $x\to u\to y$ at time $1$. The static graph $S$ of Proposition~\ref{prop:aaai} attaches the end terminal after the last time label, as in the end-terminal construction shown in the proof sketch and Figure~3 of~\cite{deligkas2025}. The variant with start terminals only is not addressed by this instance, and the solvability claim of Theorem~6.3 of~\cite{deligkas2025} follows by a different argument (Theorem~\ref{thm:reduction}).
 
-The counterexample attaches the end terminal at a label larger than all labels, as in Figure~3 of~\cite{deligkas2025}. If the sentence ``for each terminal in $G$ connected to vertex $v$, we add a terminal in $S$ with an edge to $v_0$''~\cite[p.~26503]{deligkas2025} is read literally for end terminals, the instance of Fig.~\ref{fig:aaai} is rejected, but the reduction then rejects feasible instances, such as a single edge $\{0,1\}$ at time~$2$ with $a=(0,1)$ and $z=(1,0)$, which is solved by the walk $1\to0$. Our analysis refers to the AAAI version and to version~v1 of~\cite{deligkas2024arxiv}, and Section~\ref{sec:exp-static} measures both readings on random and synthetic instances.
+\section{M-convex feasibility algorithm}\label{sec:mconvex}
 
-%% =====================================================================
-\section{M-convexity of even components}\label{sec:mconvex}
+The exchange property of M-convexity lets us reroute pairs of walks between vertices without losing a valid orientation. Submodular flow supplies the standard augmenting path scheme~\cite{cunningham1985,fujishige2005}. Figure~\ref{fig:overview} traces the algorithm on the running example of Section~\ref{sec:ports}.
 
-This section proves that the state set of an even component remains M-convex after the dead state is removed (Lemma~\ref{lem:gamma}(b)).
+\subsection{M-convexity}\label{sec:mcsets}
 
-\subsection{Pair counting}
+A set $B\subseteq\Z^N$ is \emph{M-convex}~\cite{murota1996,murota2003} if for all $x,y\in B$ and every $i$ with $x_i>y_i$ there is $j$ with $x_j<y_j$ such that $x-\e_i+\e_j\in B$ and $y+\e_i-\e_j\in B$. Here $\e_i$ is the $i$-th unit vector.
 
+\paragraph{Pair counting.}
 Write $c_t(v)=2q_t(v)+p_t(v)$ with $p_t(v)\in\{0,1\}$ fixed and $q_t(v)$ the number of \emph{pairs} of walks at $v$. For a component $K$ of $E_t$ and $v\in K$, let $p^{\inn}_v=p_t(v)$, $p^{\out}_v=p_{t^+}(v)$, $\alpha_v=q_t(v)$ (the \emph{incoming} pairs) and $\beta_v=q_{t^+}(v)$ (the \emph{outgoing} pairs). An orientation of $K$ determines the difference $\beta-\alpha$ through
 \begin{equation}\label{eq:balance}
   \inn_t(v)-\out_t(v)=2(\beta_v-\alpha_v)+p^{\out}_v-p^{\inn}_v\qquad (v\in K).
@@ -421,34 +370,33 @@ We say that $g\in\Z^K$ is \emph{realizable} if some orientation of $K$ satisfies
 Let $\Gamma_K\subseteq\Z^{K}\times\Z^{K}$ be the set of vectors $(-\alpha,\beta)$ with $\alpha,\beta\ge0$ such that $\beta-\alpha$ is realizable. If $K$ is even, let $\Gamma'_K=\Gamma_K\setminus\{0\}$.
 \end{definition}
 
-If $K$ is even, then all walk counters in $K$ are even before and after $t$, so $c_t=2\alpha$ on $K$. Summing~\eqref{eq:balance} over $K$ gives $\beta(K)=\alpha(K)$, where $x(X)=\sum_{i\in X}x_i$. Condition~(ii) at $K$ is therefore exactly $(-\alpha,\beta)\ne0$. In other words, \emph{a dead even component is the state $0$ of its gadget}, and $\Gamma'_K$ is the gadget with this state forbidden.
+If $K$ is even, then all walk counters in $K$ are even before and after $t$, so $c_t=2\alpha$ on $K$. Summing~\eqref{eq:balance} over $K$ gives $\beta(K)=\alpha(K)$, where $x(X)=\sum_{i\in X}x_i$. Condition~(ii) at $K$ is therefore exactly $(-\alpha,\beta)\ne0$.
 
-\subsection{Tools from discrete convexity}
+\begin{example}\label{ex:digon}
+Let $K$ be two parallel edges between $u$ and $w$, with all parities $0$. Then $\Gamma_K$ contains $(-\e_u,\e_w)$, $(-\e_w,\e_u)$ and $(-\alpha,\alpha)$ for all $\alpha\ge0$, while $\Gamma'_K$ removes only $\alpha=0$, and the first two points still exchange to the non-zero points $(-\e_u,\e_u)$ and $(-\e_w,\e_w)$.
+\end{example}
 
-A set $B\subseteq\Z^N$ is \emph{M-convex}~\cite{murota2003} if for all $x,y\in B$ and every $i$ with $x_i>y_i$ there is $j$ with $x_j<y_j$ such that $x-\e_i+\e_j\in B$ and $y+\e_i-\e_j\in B$. The following four lemmas from orientation theory~\cite{frank2011} and discrete convex analysis~\cite{murota2003,fujishige2005} are proved here for unbounded sets as well as bounded ones.
+\paragraph{Tools from discrete convexity.}
+The following lemmas are standard in orientation theory~\cite{hakimi1965,frank1980,frank2011} and discrete convex analysis~\cite{murota2003,fujishige2005}. Lemmas~\ref{lem:reversal} and~\ref{lem:boundary} are stated with a citation. Lemmas~\ref{lem:exchange} and~\ref{lem:localmax} are proved briefly because they are used in exactly the form below.
 
 \begin{lemma}\label{lem:reversal}
 Let $O$ be an orientation of $K$ that realizes $g$ and let $v\ne w$ be vertices of $K$. Then $g+\e_v-\e_w$ is realizable if and only if $O$ has a directed path from $v$ to $w$.
 \end{lemma}
 
-\begin{proof}
-Since $\inn_t+\out_t$ is the fixed degree, \eqref{eq:balance} shows that realizing $g+\e_v-\e_w$ means increasing the in-degree by one at $v$, decreasing it by one at $w$ and keeping it elsewhere. Reversing a directed path from $v$ to $w$ does exactly this. Conversely, let $O'$ realize $g+\e_v-\e_w$ and let $H$ be the set of arcs of $O$ that are reversed in $O'$. Reversing an arc $a\to b$ raises the in-degree of $a$, so $\out_H-\inn_H=\e_v-\e_w$. Let $Y$ be the set of vertices reachable from $v$ in $H$. No arc of $H$ leaves $Y$, so $\sum_{u\in Y}(\out_H(u)-\inn_H(u))\le0$. Since $v\in Y$ contributes $1$, also $w\in Y$, and $H\subseteq O$ contains a directed path from $v$ to $w$.
-\end{proof}
+This is the classical path-reversal property of orientations with prescribed in-degrees~\cite{hakimi1965,frank1980,frank2011}: reversing a directed path from $v$ to $w$ changes the in-degrees by $+\e_v-\e_w$, and conversely the reversed arcs of any two orientations with these in-degrees contain such a path.
 
 \begin{lemma}\label{lem:boundary}
 Let $N$ be a directed network with integer or infinite capacities, a set $P$ of terminal nodes and \emph{fixed} integer supplies at all non-terminal nodes. The set of net inflow vectors at $P$ of integral feasible flows in $N$ is M-convex when it is non-empty. A direct sum of M-convex sets is M-convex.
 \end{lemma}
 
-\begin{proof}
-Let $f,f'$ be integral feasible flows with net inflow vectors $x,y$ at $P$ and let $x_i>y_i$. Let $D$ contain $f(a)-f'(a)$ copies of every arc $a$ with $f(a)>f'(a)$ and $f'(a)-f(a)$ copies of the reverse of every arc $a$ with $f(a)<f'(a)$. The net inflow of $D$ is $0$ at non-terminal nodes and $x_u-y_u$ at every terminal $u$. Let $Y$ be the set of nodes from which $i$ is reachable in $D$. No arc of $D$ enters $Y$, so the net inflow of $D$ summed over $Y$ is non-positive. Since it is positive at $i$, some terminal $j\in Y$ has $x_j<y_j$. Let $Q$ be a simple directed path from $j$ to $i$ in $D$. Sending one unit along $Q$ changes $f'$ only within the bounds given by $f$ and $f'$, keeps all supplies at non-terminal nodes and yields the net inflow vector $y+\e_i-\e_j$. Sending one unit back along $Q$ changes $f$ in the same way and yields $x-\e_i+\e_j$. The statement on direct sums follows from the definition, since an exchange in one summand leaves the others unchanged.
-\end{proof}
+This is the standard fact that the terminal net-inflow vectors of integral flows form an M-convex set~\cite{murota2003,fujishige2005}. For infinite capacities, truncate all capacities at a bound larger than every value of the two flows that give $x,y$. The statement on direct sums follows from the definition, since an exchange in one summand leaves the others unchanged.
 
 \begin{lemma}\label{lem:exchange}
 Let $B$ be M-convex, $x\in B$, and let $x+\e_{i_l}-\e_{j_l}\in B$ for $l=1,\dots,r$, where the $i_l$ are pairwise distinct and the $j_l$ are pairwise distinct. If there are no $l<l'$ with $x+\e_{i_l}-\e_{j_{l'}}\in B$, then $x+\sum_l(\e_{i_l}-\e_{j_l})\in B$.
 \end{lemma}
 
 \begin{proof}
-Pairs with $i_l=j_l$ contribute nothing and can be dropped. The hypothesis with $x\in B$ gives $i_l\ne j_{l'}$ for $l<l'$. We use induction on $r$, the case $r\le1$ being trivial. Let $x'=x+\e_{i_r}-\e_{j_r}\in B$.
+This is the simultaneous-exchange argument behind shortest augmenting paths for submodular flow~\cite{cunningham1985,fujishige2005,murota2003}, in the form used here. Pairs with $i_l=j_l$ can be dropped, and the hypothesis gives $i_l\ne j_{l'}$ for $l<l'$. We use induction on $r$, the case $r\le1$ being trivial. Let $x'=x+\e_{i_r}-\e_{j_r}\in B$.
 
 First let $l<r$ and apply the exchange axiom to $x+\e_{i_l}-\e_{j_l}$ and $x'$ at the coordinate $i_l$, where the first point is larger. It yields $k\in\{j_l,i_r\}$, where the first point is smaller, with $x'+\e_{i_l}-\e_k\in B$. If $k=i_r\ne j_l$, then $x+\e_{i_l}-\e_{j_r}\in B$, which the hypothesis excludes. Hence $x'+\e_{i_l}-\e_{j_l}\in B$.
 
@@ -462,12 +410,68 @@ Let $B$ be M-convex, $x\in B$ and $R$ a set of coordinates. If there are no $i\i
 \end{lemma}
 
 \begin{proof}
-Suppose some $y\in B$ has $y(R)>x(R)$ and choose such $y$ with $\lVert y-x\rVert_1$ minimal. Some $i\in R$ has $y_i>x_i$. By the exchange axiom there is $j$ with $y_j<x_j$, $y-\e_i+\e_j\in B$ and $x+\e_i-\e_j\in B$. The hypothesis gives $j\in R$, so $y'=y-\e_i+\e_j$ has $y'(R)=y(R)$ and is closer to $x$, a contradiction.
+This is the local optimality criterion for maximizing a linear function over an M-convex set~\cite{murota2003}. Suppose some $y\in B$ has $y(R)>x(R)$ and choose such $y$ with $\lVert y-x\rVert_1$ minimal. Some $i\in R$ has $y_i>x_i$. By the exchange axiom there is $j$ with $y_j<x_j$, $y-\e_i+\e_j\in B$ and $x+\e_i-\e_j\in B$. The hypothesis gives $j\in R$, so $y'=y-\e_i+\e_j$ has $y'(R)=y(R)$ and is closer to $x$, a contradiction.
 \end{proof}
 
-\subsection{The main lemma}
+\paragraph{The main lemma.}
+Part~(a) and Lemma~\ref{lem:reversal} are classical~\cite{hakimi1965,frank1980,frank2011}: the in-degree vectors of orientations of a graph form an M-convex set, restated here in pair coordinates. Part~(b) states that deleting the single point $0$ preserves M-convexity when $K$ is connected and Eulerian. Deleting a point from an M-convex set does not preserve M-convexity in general: $\{(2,0),(1,1),(0,2)\}$ is M-convex, but $\{(2,0),(0,2)\}$ is not. To our knowledge, part~(b) is not stated in the standard orientation theory~\cite{frank1980,frank2011}. The submodular flow framework itself is standard~\cite{edmonds1977,franktardos1988,cunningham1985,fujishige2005}. The new ingredient is the handling of the dead state, whose proof also underlies the certificates below. Figures~\ref{fig:mconvex}(a),(b) illustrate the example above, and Figure~\ref{fig:mconvex}(c) illustrates the digon exchange.
 
-For $X\subseteq K$ let $\delta_K(X)$ be the set of edges of $K$ with exactly one end in $X$.
+\begin{figure}[!tb]
+\centering
+\begin{tikzpicture}[scale=0.9,transform shape,
+  pt/.style={circle,fill=black,inner sep=1.7pt},
+  hol/.style={circle,draw,dashed,black!60,inner sep=1.7pt},
+  ax/.style={->,black!50},
+  ex/.style={->,very thick,cA},
+  bad/.style={->,thick,densely dashed,cB},
+  st/.style={rectangle,draw,semithick,fill=white,inner sep=2.5pt,font=\scriptsize},
+  lb/.style={font=\scriptsize}]
+  \draw[ax] (-0.2,0) -- (2.6,0) node[right,lb] {$x_1$};
+  \draw[ax] (0,-0.2) -- (0,2.6) node[above,lb] {$x_2$};
+  \draw[black!35,densely dotted] (2,0) -- (0,2);
+  \node[pt] (P) at (2,0) {};
+  \node[pt] (Q) at (1,1) {};
+  \node[pt] (R) at (0,2) {};
+  \node[lb,below right=-1pt] at (P) {$(2,0)$};
+  \node[lb,above right=-1pt] at (Q) {$(1,1)$};
+  \node[lb,above right=-1pt] at (R) {$(0,2)$};
+  \draw[ex] (P) -- (1.12,0.88);
+  \draw[ex] (R) -- (0.88,1.12);
+  \node[font=\footnotesize] at (1.2,-0.9) {(a)};
+  \begin{scope}[xshift=3.9cm]
+    \draw[ax] (-0.2,0) -- (2.6,0) node[right,lb] {$x_1$};
+    \draw[ax] (0,-0.2) -- (0,2.6) node[above,lb] {$x_2$};
+    \draw[black!35,densely dotted] (2,0) -- (0,2);
+    \node[pt] (P2) at (2,0) {};
+    \node[hol,minimum size=3.6mm] (Q2) at (1,1) {};
+    \node[pt] (R2) at (0,2) {};
+    \node[lb,below right=-1pt] at (P2) {$(2,0)$};
+    \node[lb,above right=-1pt] at (R2) {$(0,2)$};
+    \draw[bad] (P2) -- (1.5,0.5);
+    \draw[bad] (R2) -- (0.5,1.5);
+    \node[cB,font=\scriptsize] at (Q2) {$\times$};
+    \node[font=\footnotesize] at (1.2,-0.9) {(b)};
+  \end{scope}
+  \begin{scope}[xshift=7.9cm]
+    \node[st] (A) at (0,2.2) {$(-\e_u,\e_w)$};
+    \node[st] (B) at (3.4,2.2) {$(-\e_w,\e_u)$};
+    \node[st] (C) at (0,0) {$(-\e_u,\e_u)$};
+    \node[st] (D) at (3.4,0) {$(-\e_w,\e_w)$};
+    \node[hol,minimum size=6mm,font=\scriptsize] (O) at (1.7,0.4) {$0$};
+    \draw[ex] (A) -- (C);
+    \draw[ex] (B) -- (D);
+    \draw[bad] (A.south east) -- (O.north west);
+    \draw[bad] (B.south west) -- (O.north east);
+    \node[cB,font=\small] at (1.12,1.28) {$\times$};
+    \node[cB,font=\small] at (2.28,1.28) {$\times$};
+    \node[font=\footnotesize] at (1.7,-0.9) {(c)};
+  \end{scope}
+\end{tikzpicture}
+\caption{Exchange in M-convex sets and removal of the dead state. (a) The set $\{(2,0),(1,1),(0,2)\}$ is M-convex. Its extreme points exchange towards $(1,1)$. (b) After $(1,1)$ is deleted, no exchange remains. (c) For the digon of Example~\ref{ex:digon}, the exchange that would end at the dead state $0$ (dashed) is replaced by an exchange from $(-\e_u,\e_w)$ and $(-\e_w,\e_u)$ to the non-zero states $(-\e_u,\e_u)$ and $(-\e_w,\e_w)$.}
+\label{fig:mconvex}
+\end{figure}
+
+For $X\subseteq K$ let $\delta_K(X)$ be the set of edges of $K$ with exactly one end in $X$. The only possible failure after deleting $0$ is that an exchange guaranteed in $\Gamma_K$ makes one of the two states zero.
 
 \begin{lemma}\label{lem:gamma}
 \begin{enumerate}
@@ -477,29 +481,24 @@ For $X\subseteq K$ let $\delta_K(X)$ be the set of edges of $K$ with exactly one
 \end{lemma}
 
 \begin{proof}
-(a) Fix a reference orientation $R$ of $K$ and let $d_R=\out-\inn$. Every other orientation arises from $R$ by reversing a set of arcs, and reversing the arc $x\to y$ moves one pair from $y$ to $x$. Hence $\beta-\alpha=\sigma+\partial\varphi$, where $\sigma(v)=(p^{\inn}_v-p^{\out}_v-d_R(v))/2\in\Z$, $\varphi$ is a $0/1$ vector on the arcs of the digraph $R^-$ obtained by reversing every arc of $R$, and $\partial\varphi$ is its net inflow at the vertices. Build the network with, for every $v$, a terminal $v_{\inn}$ with an uncapacitated arc $v_{\inn}\to v$ and a terminal $v_{\out}$ with an uncapacitated arc $v\to v_{\out}$, together with the arcs of $R^-$ with capacity $1$ and the fixed supply $\sigma(v)$ at every node $v$. The net inflow is $-\alpha_v$ at $v_{\inn}$ and $\beta_v$ at $v_{\out}$, so $\Gamma_K$ is the set of terminal vectors of this network. It is M-convex by Lemma~\ref{lem:boundary}.
+(a) The statement is classical~\cite{hakimi1965,frank1980,frank2011}. We only reduce it to Lemma~\ref{lem:boundary}. Fix a reference orientation $R$ of $K$ with $d_R=\out-\inn$. Reversing the arc $x\to y$ moves one pair from $y$ to $x$, so every orientation gives $\beta-\alpha=\sigma+\partial\varphi$, where $\sigma(v)=(p^{\inn}_v-p^{\out}_v-d_R(v))/2\in\Z$ and $\varphi\in\{0,1\}$ is the indicator of the reversed arcs of the digraph $R^-$ obtained by reversing every arc of $R$. Build a network on $K$ with the arcs of $R^-$ at capacity $1$, fixed supply $\sigma(v)$ at every $v$, and for each $v$ terminals $v_{\inn}$ and $v_{\out}$ with uncapacitated arcs $v_{\inn}\to v\to v_{\out}$. Its terminal net-inflow vectors are exactly the points $(-\alpha,\beta)$ of $\Gamma_K$, which is M-convex by Lemma~\ref{lem:boundary}.
 
-(b) All parities in an even component are $0$, so \eqref{eq:balance} reads $\inn_t-\out_t=2g$ with $g=\beta-\alpha$. We use two consequences. First, let $O$ realize $g$ and let $\emptyset\ne X\subsetneq K$. If every edge of $\delta_K(X)$ enters $X$ in $O$, then $g(X)=\abs{\delta_K(X)}/2>0$, and if every such edge leaves $X$, then $g(X)<0$, because $K$ is connected. Second, all degrees in $K$ are even, so $K$ has an Euler circuit~\cite{hierholzer1873}. The resulting orientation realizes $0$ and is strongly connected, so $\e_v-\e_w$ is realizable for all $v,w\in K$ by Lemma~\ref{lem:reversal}.
+(b) \emph{Idea.} By~(a) only an exchange that produces the point $0$ is a problem. We show that then another exchange index exists, using reachability in an orientation of $g$ and a strongly connected Euler orientation. All parities in an even component are $0$, so \eqref{eq:balance} reads $\inn_t-\out_t=2g$ with $g=\beta-\alpha$. We use two consequences. First, let $O$ realize $g$ and let $\emptyset\ne X\subsetneq K$. Since $2g(v)=\inn_t(v)-\out_t(v)$, summing over $X$ cancels internal edges and gives $2g(X)=|\{\text{cut edges entering }X\}|-|\{\text{cut edges leaving }X\}|$. Thus if every edge of $\delta_K(X)$ enters $X$, then $g(X)=|\delta_K(X)|/2>0$, and if every such edge leaves, then $g(X)=-|\delta_K(X)|/2<0$. Strictness follows from connectedness of $K$. Second, all degrees in $K$ are even, so $K$ has an Euler circuit~\cite{hierholzer1873}. The resulting orientation realizes $0$ and is strongly connected, so $\e_v-\e_w$ is realizable for all $v,w\in K$ by Lemma~\ref{lem:reversal}.
 
 Let $x,y\in\Gamma'_K$ and let $i$ be a coordinate with $x_i>y_i$. By~(a) there is $j$ with $x_j<y_j$ such that $x'=x-\e_i+\e_j\in\Gamma_K$ and $y'=y+\e_i-\e_j\in\Gamma_K$. If both are non-zero we are done. They cannot both be zero, since then $x=\e_i-\e_j=-y$, while incoming coordinates are non-positive and outgoing coordinates are non-negative, so $i$ would be both an outgoing coordinate ($x_i=1$) and an incoming coordinate ($y_i=-1$). Points of $\Gamma_K$ satisfy $\alpha(K)=\beta(K)$, so a point of $\Gamma'_K$ has $\alpha\ne0$ and $\beta\ne0$.
 
-\emph{Case $x'=0$.} Then $x=(-\e_u,\e_w)$, $i=w_{\out}$ and $j=u_{\inn}$. Write $y=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $y_i<1$, we have $\beta_w=0$. Let $M$ be the set of vertices reachable from $w$ in $O$. If $M\ne K$, every edge of $\delta_K(M)$ enters $M$, so $\beta(M)\ge g(M)>0$. If $M=K$, then $\beta(K)\ge1$. So there is $z\in M\setminus\{w\}$ with $\beta_z\ge1$, and $g+\e_w-\e_z$ is realizable by Lemma~\ref{lem:reversal}. Take $j=z_{\out}$ instead, which satisfies $x_j=0<y_j$. Then $x-\e_i+\e_j=(-\e_u,\e_z)\in\Gamma'_K$ by the second consequence, and $y+\e_i-\e_j\in\Gamma'_K$ because its difference is $g+\e_w-\e_z$ and $\alpha\ne0$.
+\emph{Case $x'=0$.} Then $x=(-\e_u,\e_w)$, $i=w_{\out}$ and $j=u_{\inn}$. Write $y=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $y_i<1$, we have $\beta_w=0$. Let $M$ be the set of vertices reachable from $w$ in $O$. If $M\ne K$, every edge of $\delta_K(M)$ enters $M$, so $\beta(M)\ge g(M)>0$. If $M=K$, then $\beta(K)\ge1$. So there is $z\in M\setminus\{w\}$ with $\beta_z\ge1$, because $\beta_w=0$ and the positive total $\beta(M)$ must occur at another vertex. And $g+\e_w-\e_z$ is realizable by Lemma~\ref{lem:reversal}. Take $j=z_{\out}$ instead, which satisfies $x_j=0<y_j$. Then $x-\e_i+\e_j=(-\e_u,\e_z)\in\Gamma'_K$ by the second consequence, and $y+\e_i-\e_j\in\Gamma'_K$ because its difference is $g+\e_w-\e_z$ and $\alpha\ne0$.
 
-\emph{Case $y'=0$.} Then $y=(-\e_u,\e_w)$, $i=u_{\inn}$ and $j=w_{\out}$. Write $x=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $x_i>-1$, we have $\alpha_u=0$. Let $\Lambda$ be the set of vertices from which $u$ is reachable in $O$. If $\Lambda\ne K$, every edge of $\delta_K(\Lambda)$ leaves $\Lambda$, so $\alpha(\Lambda)\ge-g(\Lambda)>0$. If $\Lambda=K$, then $\alpha(K)\ge1$. So there is $v\in\Lambda\setminus\{u\}$ with $\alpha_v\ge1$, and $g+\e_v-\e_u$ is realizable by Lemma~\ref{lem:reversal}. Take $j=v_{\inn}$ instead, which satisfies $x_j=-\alpha_v<0=y_j$. Then $x-\e_i+\e_j$ moves one incoming pair from $v$ to $u$, its difference is $g+\e_v-\e_u$, and it lies in $\Gamma'_K$. Finally $y+\e_i-\e_j=(-\e_v,\e_w)\in\Gamma'_K$ by the second consequence.
+\emph{Case $y'=0$.} Then $y=(-\e_u,\e_w)$, $i=u_{\inn}$ and $j=w_{\out}$. Write $x=(-\alpha,\beta)$, let $g=\beta-\alpha$ and let $O$ realize $g$. Since $x_i>-1$, we have $\alpha_u=0$. Let $\Lambda$ be the set of vertices from which $u$ is reachable in $O$. If $\Lambda\ne K$, every edge of $\delta_K(\Lambda)$ leaves $\Lambda$, so $\alpha(\Lambda)\ge-g(\Lambda)>0$. If $\Lambda=K$, then $\alpha(K)\ge1$. So there is $v\in\Lambda\setminus\{u\}$ with $\alpha_v\ge1$, because $\alpha_u=0$ and the positive total $\alpha(\Lambda)$ must occur at another vertex. And $g+\e_v-\e_u$ is realizable by Lemma~\ref{lem:reversal}. Take $j=v_{\inn}$ instead, which satisfies $x_j=-\alpha_v<0=y_j$. Then $x-\e_i+\e_j$ moves one incoming pair from $v$ to $u$, its difference is $g+\e_v-\e_u$, and it lies in $\Gamma'_K$ (it is non-zero, since its coordinate at $u_{\inn}$ is $-1$). Finally $y+\e_i-\e_j=(-\e_v,\e_w)\in\Gamma'_K$ by the second consequence.
 \end{proof}
 
 \begin{remark}\label{rem:connected}
-Connectivity is necessary in Lemma~\ref{lem:gamma}(b). For two disjoint triangles that are treated as one component, the corresponding set is not M-convex. The statement is also sensitive to its formulation. If $g=\beta-\alpha$ is fixed first and the point $0$ is then removed, the exchange axiom fails already for two vertices joined by two parallel edges. Lemma~\ref{lem:gamma}(b) is therefore stated for $\Gamma'_K$ with $g$ free.
+Connectivity is necessary in Lemma~\ref{lem:gamma}(b): for two disjoint triangles treated as one component, the corresponding set is not M-convex. If $g=\beta-\alpha$ is fixed first and the point $0$ is then removed, the exchange axiom fails already for two vertices joined by two parallel edges, so the lemma is stated for $\Gamma'_K$ with $g$ free.
 \end{remark}
 
-%% =====================================================================
-\section{Submodular flow formulation and algorithm}\label{sec:method}
+\subsection{The port network}\label{sec:ports}
 
-This section turns the M-convexity of Lemma~\ref{lem:gamma} into a polynomial-time algorithm for \FREE{} and \FIX{} that returns walks or an infeasibility certificate (Theorems~\ref{thm:reduction}, \ref{thm:correct} and~\ref{thm:time}).
-
-\subsection{The port network}
-
-Every vertex $v$ becomes a \emph{timeline} of ports. Let $K_1,\dots,K_{q_v}$ be the components that contain the occurrences of $v$. The ports of $v$ are $S_v$ (start), $\IN(K_j,v)$ and $\OUT(K_j,v)$ for $j=1,\dots,q_v$, and $Z_v$ (end). \emph{Waiting arcs} join them in time order, namely $S_v\to\IN(K_1,v)$, $\OUT(K_j,v)\to\IN(K_{j+1},v)$ and $\OUT(K_{q_v},v)\to Z_v$. A vertex without edges only has the arc $S_v\to Z_v$. A flow $\xi\ge0$ on a waiting arc is the number of pairs that wait at $v$ between two occurrences (Fig.~\ref{fig:ports}). For a port $P$ let $\partial\xi(P)$ be the flow out of $P$ minus the flow into $P$. At the ports of a component, $\partial\xi=(-\alpha,\beta)$.
+Every vertex $v$ becomes a \emph{timeline} of ports. Let $K_1,\dots,K_{q_v}$ be the components that contain the occurrences of $v$. The ports of $v$ are $S_v$ (start), $\IN(K_j,v)$ and $\OUT(K_j,v)$ for $j=1,\dots,q_v$, and $Z_v$ (end). \emph{Waiting arcs} join them in time order, namely $S_v\to\IN(K_1,v)$, $\OUT(K_j,v)\to\IN(K_{j+1},v)$ and $\OUT(K_{q_v},v)\to Z_v$. A vertex without edges has only the arc $S_v\to Z_v$. A flow $\xi\ge0$ on a waiting arc is the number of pairs that wait at $v$ between two occurrences (Fig.~\ref{fig:ports}). For a port $P$ let $\partial\xi(P)$ be the flow out of $P$ minus the flow into $P$, the opposite sign to the net inflow $\partial\varphi$ in the proof of Lemma~\ref{lem:gamma}(a). At the ports of a component, $\partial\xi=(-\alpha,\beta)$.
 
 Let $p_{\mathrm{end}}(v)$ be the parity of $a_v+G_v$. The constraint set $\cB$ is the direct sum of the following sets.
 \begin{itemize}
@@ -507,21 +506,58 @@ Let $p_{\mathrm{end}}(v)$ be the parity of $a_v+G_v$. The constraint set $\cB$ i
 \item At the ports of each component $K$, the set $\Gamma'_K$ if $K$ is even and $\Gamma_K$ otherwise.
 \item At the ports $Z_v$, for \FIX{}, the single point $-(z_v-p_{\mathrm{end}}(v))/2$ at every $v$, after checking $z_v\equiv a_v+G_v \pmod 2$ and $z_v\ge p_{\mathrm{end}}(v)$. For \FREE{}, the simplex $\{-\gamma:\gamma\in\N^V,\ \gamma(V)=(k-\sum_vp_{\mathrm{end}}(v))/2\}$, which fixes only the total number of final pairs.
 \end{itemize}
-By Lemmas~\ref{lem:boundary} and~\ref{lem:gamma}, $\cB$ is M-convex. It is non-empty after the checks of line~1 of Algorithm~\ref{alg:pf}. Since $\sum_v(a_v+G_v)=k+2m$, the number $k-\sum_vp_{\mathrm{end}}(v)$ is always even.
+The single points and the end simplex of \FREE{}, the integer points of the uniform base polytope $\{-\gamma:\gamma\ge0,\ \gamma(V)=c\}$, are M-convex~\cite{murota2003}. By Lemmas~\ref{lem:boundary} and~\ref{lem:gamma}, $\cB$, their direct sum, is M-convex. It is non-empty after the checks of line~1 of Algorithm~\ref{alg:pf}: arbitrary orientations give states in each $\Gamma_K$, and if an even component would have the zero state, adding one waiting pair at the same vertex on both sides gives a nonzero state in $\Gamma'_K$. The start and end sets are nonempty by the parity and total-count checks. Since $\sum_v(a_v+G_v)=k+2m$, the number $k-\sum_vp_{\mathrm{end}}(v)$ is always even.
 
-\begin{theorem}\label{thm:reduction}
-An instance of \FREE{} or \FIX{} is feasible if and only if there is a pair flow $\xi\ge0$ on the waiting arcs with $\partial\xi\in\cB$.
-\end{theorem}
+Running example. Take Fig.~\ref{fig:aaai}(a) with one walk starting at each of $x$ and $y$ and free ends. Figure~\ref{fig:overview} traces its three stages. Figure~\ref{fig:ports} shows the port network for this \FREE{} instance and an augmenting path (thick blue arrows $1$--$5$) that repairs its dead triangle; $+1$ and $-1$ mark nonzero deviations, and $\eta$ implements an exchange between end ports.
 
-\begin{proof}
-($\Rightarrow$) Take the orientation of the walks and let $\xi=q$ on every waiting arc. At $S_v$ we have $\partial\xi=\floor{a_v/2}$. At each component, $\partial\xi=(-\alpha,\beta)$ with $\beta\ge0$ by~(i), the difference $\beta-\alpha$ is realized by the orientation itself, and $(-\alpha,\beta)\ne0$ on even components by~(ii). At $Z_v$, the value $-\partial\xi$ is the number of final pairs at $v$. It equals $(z_v-p_{\mathrm{end}}(v))/2$ in \FIX{}, and in \FREE{} these values sum to $(k-\sum_vp_{\mathrm{end}}(v))/2$ because the number of walks is preserved.
-
-($\Leftarrow$) For each $K$ choose an orientation that realizes $\beta-\alpha$. By~\eqref{eq:balance}, the number of walks at $v$ between two occurrences under the combined orientation equals $2\xi+p$ on the corresponding waiting arc. Condition~(i) holds because $\beta\ge0$. Condition~(ii) holds on components that are not even by Lemma~\ref{lem:noneven} and on even components because $(-\alpha,\beta)\ne0$. In \FIX{} the final number of walks at $v$ is $z_v$. Theorem~\ref{thm:char} completes the proof.
-\end{proof}
-
-\begin{figure}[t]
+\begin{figure}[!tb]
 \centering
-\begin{tikzpicture}[x=1.12cm,y=0.9cm,
+\begin{tikzpicture}[scale=0.85,transform shape,
+  el/.style={font=\scriptsize,inner sep=1.5pt},
+  old/.style={->,semithick,densely dotted,black!55},
+  hl/.style={->,very thick,cA}]
+  \foreach \o/\p in {0/a,4.5/b,9.0/c} {
+    \node[vtx] (x\p) at (\o,0)     {$x$};
+    \node[vtx] (u\p) at (\o+1.5,0) {$u$};
+    \node[vtx] (y\p) at (\o+3,0)   {$y$};
+    \node[vtx] (v\p) at (\o+0.75,1.4) {$v$};
+    \node[vtx] (w\p) at (\o+2.25,1.4) {$w$};
+  }
+  \draw[t1,->] (xa) -- node[el,above] {1} (ua);
+  \draw[t1,->] (ua) -- node[el,above] {1} (ya);
+  \draw[t2] (ua) -- (va);
+  \draw[t2] (va) -- node[el,above] {2} (wa);
+  \draw[t2] (wa) -- (ua);
+  \node[cnt,below=3pt of xa] {0};
+  \node[cnt,below=3pt of ua] {0};
+  \node[cnt,below=3pt of ya] {2};
+  \node[note,text=cB] at (1.5,2.25) {no walk in the triangle};
+  \draw[t1,->] (xb) -- node[el,above] {1} (ub);
+  \draw[old] (ub) to[bend right=35] (yb);
+  \draw[hl] (yb) to[bend right=35] (ub);
+  \draw[t2] (ub) -- (vb);
+  \draw[t2] (vb) -- node[el,above] {2} (wb);
+  \draw[t2] (wb) -- (ub);
+  \node[note,text=cA] at (6.0,-1.15) {reverse $u\to y$};
+  \draw[t1,->] (xc) -- node[el,above] {1} (uc);
+  \draw[t1,->] (yc) -- node[el,above] {1} (uc);
+  \draw[walkA] (uc) -- (vc);
+  \draw[walkA] (vc) -- node[el,above] {2} (wc);
+  \draw[walkA] (wc) -- (uc);
+  \node[cnt,below=3pt of xc] {0};
+  \node[cnt,below=3pt of uc] {2};
+  \node[cnt,below=3pt of yc] {0};
+  \node[font=\footnotesize] at (1.5,-1.75) {(a)};
+  \node[font=\footnotesize] at (6.0,-1.75) {(b)};
+  \node[font=\footnotesize] at (10.5,-1.75) {(c)};
+\end{tikzpicture}
+\caption{Overview of the algorithm on the running example. The boxes show the number of walks at each vertex after time 1: $x:0$, $u:0$, $y:2$ in (a) and $x:0$, $u:2$, $y:0$ in (c). (a) After the maximum flow, the time-1 edges leave no walk at $u$, so the time-2 triangle is dead. (b) An augmenting path reverses the orientation of $u\to y$. (c) After augmentation, $u$ holds two walks: $x\to u\to v\to w\to u$ and $y\to u$.}
+\label{fig:overview}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[scale=0.8,transform shape,x=1.12cm,y=0.9cm,
   wait/.style={->,black!55,semithick},
   aug/.style={->,cA,line width=1.6pt},
   stp/.style={circle,fill=cA,text=white,font=\scriptsize\bfseries,inner sep=0.8pt,minimum size=3.4mm},
@@ -564,19 +600,71 @@ An instance of \FREE{} or \FIX{} is feasible if and only if there is a pair flow
   \node[stp] at ($(eta)+(0.45,0)$) {4};
   \draw[aug] ([yshift=-3pt]Z-u.west) -- node[stp,below=2pt] {5} ([yshift=-3pt]O2-u.east);
 \end{tikzpicture}
-\caption{Port network for \FREE{} and an augmenting path repairing the dead triangle.}
+\caption{Port network and an augmenting path for the running \FREE{} example.}
 \label{fig:ports}
 \end{figure}
 
+\begin{theorem}\label{thm:reduction}
+An instance of \FREE{} or \FIX{} is feasible if and only if there is a pair flow $\xi\ge0$ on the waiting arcs with $\partial\xi\in\cB$.
+\end{theorem}
+
+\begin{proof}
+($\Rightarrow$) Take the orientation of the walks and let $\xi=q$ on every waiting arc. At $S_v$, $\partial\xi=\floor{a_v/2}$. At each component, $\partial\xi=(-\alpha,\beta)$ with $\beta\ge0$ by~(i), the difference $\beta-\alpha$ is realized by the orientation itself, and $(-\alpha,\beta)\ne0$ on even components by~(ii). At $Z_v$, the value $-\partial\xi$ is the number of final pairs at $v$. It equals $(z_v-p_{\mathrm{end}}(v))/2$ in \FIX{}, and in \FREE{} these values sum to $(k-\sum_vp_{\mathrm{end}}(v))/2$ because the number of walks is preserved.
+
+($\Leftarrow$) For each $K$ choose an orientation that realizes $\beta-\alpha$. By~\eqref{eq:balance}, the number of walks at $v$ between two occurrences under the combined orientation equals $2\xi+p$ on the corresponding waiting arc. Condition~(i) holds because $\beta\ge0$. Condition~(ii) holds on components that are not even by Lemma~\ref{lem:noneven} and on even components because $(-\alpha,\beta)\ne0$. In \FIX{} the final number of walks at $v$ is $z_v$. Theorem~\ref{thm:char} completes the proof.
+\end{proof}
+
+Equivalently, Theorem~\ref{thm:reduction} asks whether the M-convex set $\{\partial\xi:\xi\ge0\}$ of boundaries of non-negative waiting flows (M-convex by Lemma~\ref{lem:boundary}, up to sign) meets the M-convex set $\cB$. This is a feasibility instance of M-convex intersection~\cite{murota2003,edmonds1977,franktardos1988}.
+
 \subsection{The augmenting path algorithm}\label{sec:auxgraph}
 
-The algorithm maintains a flow $\xi\ge0$ and a point $x\in\cB$. Their \emph{deviation} is $d=\partial\xi-x$. A solution is obtained when $d=0$. The \emph{auxiliary graph} has the ports as nodes and three kinds of arcs, each of which moves one unit of deviation from its tail to its head.
+The algorithm initializes $\xi$ from the chain-flow orientation: on each waiting arc it puts the number of pairs (half the walk counter, an integer by the fixed parity). The IN and OUT coordinates of each component in $x$ are $-\alpha$ and $\beta$ from that orientation, $x(S_v)=\lfloor a_v/2\rfloor$, and the end coordinate is minus the final pair count. For each initially dead even component, line 3 replaces its zero state by one incoming and outgoing pair at a chosen vertex. The algorithm maintains a flow $\xi\ge0$ and a point $x\in\cB$. Their \emph{deviation} is $d=\partial\xi-x$. A solution is obtained when $d=0$. The \emph{auxiliary graph} has the ports as nodes and three kinds of arcs, each of which moves one unit of deviation from its tail to its head.
 \begin{enumerate}
 \item[(1)] The reverse of every waiting arc. Using it increases $\xi$ on that arc by one.
 \item[(2)] Every waiting arc with $\xi>0$. Using it decreases $\xi$ by one.
 \item[(3)] An exchange arc $i\to j$ whenever $x+\e_i-\e_j\in\cB$. Using it replaces $x$ by $x+\e_i-\e_j$.
 \end{enumerate}
-Let $i$ be a port of $v$ and $j$ a port of $w$ in the same component $K$. The exchange arc $i\to j$ exists if and only if $\alpha_v\ge1$ when $i$ is an incoming port, $\beta_w\ge1$ when $j$ is an outgoing port, $v=w$ or the current orientation of $K$ has a directed path from $v$ to $w$ (Lemma~\ref{lem:reversal}), and, if $K$ is even, the new point is non-zero. In the simplex of \FREE{}, $x+\e_i-\e_j\in\cB$ whenever $\gamma_i\ge1$. Instead of these $\Theta(n^2)$ arcs, the auxiliary graph contains a node $\eta$ with arcs $Z_i\to\eta$ for every $i$ with $\gamma_i\ge1$ and $\eta\to Z_j$ for every $j$, and a path through $\eta$ performs one simplex exchange. All tests are purely combinatorial.
+Let $i$ be a port of $v$ and $j$ a port of $w$ in the same component $K$. The exchange arc $i\to j$ exists if and only if $\alpha_v\ge1$ when $i$ is an incoming port, $\beta_w\ge1$ when $j$ is an outgoing port, $v=w$ or the current orientation of $K$ has a directed path from $v$ to $w$ (Lemma~\ref{lem:reversal}), and, if $K$ is even, the new point is non-zero. No availability condition is needed when $i$ is an outgoing port or $j$ is an incoming port, since those changes increase the corresponding pair count. In the simplex of \FREE{}, $x+\e_i-\e_j\in\cB$ whenever $\gamma_i\ge1$. Instead of these $\Theta(n^2)$ arcs the auxiliary graph has a node $\eta$ with arcs $Z_i\to\eta$ for every $i$ with $\gamma_i\ge1$ and $\eta\to Z_j$ for every $j$, and a path through $\eta$ performs one simplex exchange. Any shortest path and any vertex selected in line 3 may be used. Figure~\ref{fig:aux} illustrates the three kinds of arcs and the certificate used in Theorem~\ref{thm:correct}.
+
+\begin{figure}[!tb]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,
+  box/.style={black!45,rounded corners=2pt},
+  wait/.style={->,black!55,semithick},
+  ka/.style={->,cA,thick},
+  kb/.style={->,cB,thick,densely dashed},
+  kc/.style={->,cTa,thick}]
+  \draw[box] (-0.4,-0.45) rectangle (1.9,1.55);
+  \node[anchor=south] at (0.75,1.55) {component $K$};
+  \draw[box] (3.4,-0.45) rectangle (4.4,1.55);
+  \node[anchor=south] at (3.9,1.55) {$K'$};
+  \node[port,label=left:$i$] (i) at (0.1,1.0) {};
+  \node[port,label=right:$j$] (j) at (1.4,1.0) {};
+  \node[port,label=left:$P$] (P) at (1.4,0) {};
+  \node[port,label=right:$Q$] (Q) at (3.9,0) {};
+  \draw[wait] (P) -- node[pos=0.72,above=-1pt,black] {$\xi$} (Q);
+  \draw[ka] (Q) to[bend right=40] node[above=-1pt] {(1)\ $\xi{+}1$} (P);
+  \draw[kb] (P) to[bend right=40] node[below=-1pt] {(2)\ $\xi{-}1$, if $\xi>0$} (Q);
+  \draw[kc] (i) -- node[above=-1pt] {(3)} (j);
+  \node[font=\small] at (-0.75,1.75) {(a)};
+  \begin{scope}[xshift=6.1cm]
+    \draw[cA,fill=cA!7,rounded corners=6pt] (-0.3,-0.45) rectangle (1.9,1.55);
+    \node[cA] at (-0.05,1.3) {$R$};
+    \node[port,label=below:{$d>0$}] (p) at (0.35,0.55) {};
+    \node[port] (r) at (1.45,1.0) {};
+    \node[port] (s) at (1.45,0.0) {};
+    \node[port,label=right:{$d<0$}] (n) at (3.6,1.0) {};
+    \node[port] (o) at (3.6,0.0) {};
+    \draw[kc] (p) -- (r);
+    \draw[kc] (n) to[bend right=12] (r);
+    \draw[wait] (s) -- node[below=-1pt,black] {$\xi=0$} (o);
+    \draw[->,black!40,thick] (r) to[bend left=50] node[black,font=\small] {$\times$} (n);
+    \node[font=\small] at (-0.65,1.75) {(b)};
+  \end{scope}
+\end{tikzpicture}
+\caption{The auxiliary graph. (a) The three kinds of arcs at a waiting arc $P\to Q$ with flow $\xi$ and at two ports $i,j$ of one component, where kind~(3) requires $x+\e_i-\e_j\in\cB$; each arc moves one unit of deviation from its tail to its head. (b) The certificate of Theorem~\ref{thm:correct}: the set $R$ of ports reachable from $\{d>0\}$ contains no port with $d<0$, and no arc leaves $R$. Then $x(R)=-d(R)<0$, whereas Lemma~\ref{lem:localmax} would give $x(R)\ge x'(R)\ge0$ for any solution $(\xi',x')$.}
+\label{fig:aux}
+\end{figure}
 
 \begin{algorithm}[t]
 \caption{Augmenting path algorithm for \FIX{} and \FREE{}}\label{alg:pf}
@@ -589,17 +677,13 @@ Let $i$ be a port of $v$ and $j$ a port of $w$ in the same component $K$. The ex
   \If{no such path exists}
     \State \Return \NO{} together with the set $R$ of ports reachable from $\{d>0\}$.
   \EndIf
-  \State Apply every arc of the path to $\xi$ and $x$, and re-orient, starting from the current orientation, the components whose point changed.
+  \State Apply all arcs of the path to $\xi$ and $x$ at once and re-orient the components whose point changed (see below).
 \EndWhile
 \State \Return \YES{} and build the walks as in the proof of Theorem~\ref{thm:char}.
 \end{algorithmic}
 \end{algorithm}
 
-In Fig.~\ref{fig:ports}, the thick arrows form an augmenting path that repairs the dead triangle by reversing $u\to y$ at time~$1$ and moving one end point from $y$ to $u$. The result is the solution of Fig.~\ref{fig:running}(c).
-
-\begin{example}\label{ex:fix}
-Consider \FIX{} on the running example with both walks required to end at $y$ ($z_y=2$). There is no node $\eta$. The breadth-first search from $\IN(K,u)$, where $K$ is the triangle at time $2$, reaches only $12$ ports, and none of them has $d<0$. The algorithm answers \NO{}, and these $12$ ports form the infeasibility certificate.
-\end{example}
+In the theorem-bound re-orientation, one repeatedly reverses a directed path from a vertex whose target in-degree exceeds its current in-degree to one whose current in-degree exceeds its target, which reduces the $L_1$ distance to the target by two; $O(|K|)$ paths of $O(m_K)$ time each suffice for a component $K$.
 
 \subsection{Correctness and infeasibility certificates}
 
@@ -608,7 +692,7 @@ After every augmentation, $\xi\ge0$ and $x\in\cB$.
 \end{lemma}
 
 \begin{proof}
-All arcs of the path are evaluated at the state before the augmentation and applied together, so intermediate points need not lie in $\cB$. A shortest path is simple, so every waiting arc is used at most once and arcs of kind~(2) are used only when $\xi>0$. Hence $\xi\ge0$. A simple path visits $\eta$ at most once, so the simplex of \FREE{} undergoes at most one exchange, which is valid by the definition of the arcs. Consider any other summand $\Gamma$ of $\cB$ and its exchanges $(i_1,j_1),\dots,(i_r,j_r)$ in the order of the path. The nodes of a shortest path have pairwise distinct and increasing breadth-first distances, so the $i_l$ are pairwise distinct and the $j_l$ are pairwise distinct. If there were $l<l'$ with an arc $i_l\to j_{l'}$, then $\mathrm{dist}(j_{l'})\le\mathrm{dist}(i_l)+1<\mathrm{dist}(i_{l'})+1=\mathrm{dist}(j_{l'})$, a contradiction. So the hypothesis of Lemma~\ref{lem:exchange} holds. The argument uses only the order of distances, so it is not affected when the path enters and leaves the same component several times. The constraint $\ne0$ on even components causes no difficulty either, because the lemma is applied to $\Gamma'_K$ itself, which is M-convex by Lemma~\ref{lem:gamma}. By Lemma~\ref{lem:exchange}, the new point stays in the set.
+All arcs of the path are evaluated before the augmentation and applied together. A shortest path is simple, so every waiting arc is used at most once and arcs of kind~(2) are used only when $\xi>0$. Hence $\xi\ge0$. A simple path visits $\eta$ at most once, so the simplex of \FREE{} undergoes at most one exchange, which is valid by the definition of the arcs. Consider any other summand $\Gamma$ of $\cB$ and its exchanges $(i_1,j_1),\dots,(i_r,j_r)$ in the order of the path. The nodes of a shortest path have pairwise distinct and increasing breadth-first distances from the set $\{d>0\}$, so the $i_l$ are pairwise distinct and the $j_l$ are pairwise distinct. If there were $l<l'$ with an arc $i_l\to j_{l'}$, then $\mathrm{dist}(j_{l'})\le\mathrm{dist}(i_l)+1<\mathrm{dist}(i_{l'})+1=\mathrm{dist}(j_{l'})$, a contradiction. So the hypothesis of Lemma~\ref{lem:exchange} holds. The argument uses only the order of distances, so it is unaffected when the path enters and leaves a component several times, and the lemma is applied to $\Gamma'_K$ itself, which is M-convex by Lemma~\ref{lem:gamma}. By Lemma~\ref{lem:exchange}, the new point stays in the set.
 \end{proof}
 
 \begin{theorem}\label{thm:correct}
@@ -616,10 +700,10 @@ Algorithm~\ref{alg:pf} answers correctly. When it answers \YES{}, the returned w
 \end{theorem}
 
 \begin{proof}
-A \NO{} in line~2 is correct because~(i) is necessary. The sum of $d$ over all ports is always $0$, so if the loop ends then $d=0$, and the walks are built through Theorem~\ref{thm:reduction}. Suppose the algorithm stops with the set $R$. It contains every port with $d>0$ and no port with $d<0$, so $d(R)>0$. No arc of the auxiliary graph leaves $R$. By kind~(1), no waiting arc enters $R$, and by kind~(2), every waiting arc that leaves $R$ has $\xi=0$. Hence $\partial\xi(R)=0$ and $x(R)=-d(R)<0$. Assume a solution $(\xi',x')$ exists with $\xi'\ge0$ and $x'=\partial\xi'\in\cB$. Since no waiting arc enters $R$, $x'(R)$ is the total of $\xi'$ on the waiting arcs that leave $R$, so $x'(R)\ge0$. No exchange arc leaves $R$. For the simplex this holds because a port $Z_i\in R$ with $\gamma_i\ge1$ puts $\eta$ and every $Z_j$ into $R$. Lemma~\ref{lem:localmax}, applied to each summand of the direct sum, gives $x(R)\ge x'(R)\ge0$, a contradiction.
+A \NO{} in line~2 is correct because~(i) is necessary. The sum of $d$ over all ports is $0$ after line~3 (the only non-zero entries are the $+1$ and $-1$ of the repaired dead components) and stays $0$, since every arc of the auxiliary graph moves one unit between two ports, so if the loop ends then $d=0$, $\partial\xi=x\in\cB$ with $\xi\ge0$ by Lemma~\ref{lem:invariant}, and the walks are built through Theorem~\ref{thm:reduction}. Suppose the algorithm stops with the set $R$. It contains every port with $d>0$ and no port with $d<0$, so $d(R)>0$. No arc of the auxiliary graph leaves $R$. By kind~(1), no waiting arc enters $R$, and by kind~(2), every waiting arc that leaves $R$ has $\xi=0$. Hence $\partial\xi(R)=0$ and $x(R)=-d(R)<0$. Since $x\in\cB$ and $\xi\ge0$ throughout (Lemma~\ref{lem:invariant}), assume a solution $(\xi',x')$ exists with $\xi'\ge0$ and $x'=\partial\xi'\in\cB$. Since no waiting arc enters $R$, $x'(R)$ is the total of $\xi'$ on the waiting arcs that leave $R$, so $x'(R)\ge0$. No exchange arc leaves $R$. For the simplex this holds because a port $Z_i\in R$ with $\gamma_i\ge1$ puts $\eta$ and every $Z_j$ into $R$. Lemma~\ref{lem:localmax}, applied to each summand of the direct sum, gives $x(R)\ge x'(R)\ge0$, a contradiction.
 \end{proof}
 
-For every \YES{} answer, the implementation constructs the walks and checks them against the problem definition. A \NO{} answer from line~2 comes with an infeasibility certificate given by a cut of the chain network, verifiable from the instance data alone. A \NO{} answer from the loop does not depend on Lemma~\ref{lem:exchange}, since $x\in\cB$ is checked at run time, but it still depends on Lemmas~\ref{lem:gamma} and~\ref{lem:localmax} and on the complete enumeration of exchange arcs. Such an infeasibility certificate is \emph{theory dependent}.
+For every \YES{} answer, the implementation constructs the walks and checks them against the problem definition. A \NO{} answer from line~2 has a chain-network cut certificate verifiable from the instance data alone. For a loop \NO{}, a checker verifies $\xi,x$, computes $d=\partial\xi-x$, checks $d(R)>0$ and confirms that no valid waiting or exchange arc leaves $R$. This does not depend on Lemma~\ref{lem:exchange}, since $x\in\cB$ is checked at run time, but it depends on Lemmas~\ref{lem:gamma} and~\ref{lem:localmax}, so its verification is theory dependent.
 
 \subsection{Complexity}
 
@@ -632,45 +716,14 @@ arithmetic operations, since $D\le m/2$ and $s\le n$.
 \end{theorem}
 
 \begin{proof}
-\emph{Number of augmentations.} After line~3 the sum of positive deviations is $D$. Every augmentation decreases $d$ by one at its first port, increases $d$ by one at its last port, and leaves the inner ports unchanged, so this sum drops by exactly one. Every even component has at least two edges, so $D\le m/2$.
-
-\emph{Lines 1 to 3.} Reading the input and initializing the $n$ vertices takes $O(n)$. Sorting the edges, building the snapshots and components, and detecting even components takes $O(m\log(m+1))$. The chain network has $O(m)$ nodes and arcs and flow value at most $m$, so the augmenting path method takes $O(m^2)$.
-
-\emph{One augmentation.} The number of ports is $2n+2Q\le2n+4m$, where $Q\le2m$ is the total number of occurrences. Arcs of kinds~(1) and~(2) cost $O(n+m)$. For a component $K$ with $m_K$ edges, the vertices reachable from each $v\in K$ are found by depth-first search in $O(\abs{K}m_K)$, and each port has at most $2\abs{K}$ exchange arcs. Over all components this is $O(\sum_K\abs{K}m_K)\subseteq O(sm)$. The node $\eta$ adds $O(n)$. A simple path uses at most $2\abs{K}$ ports of $K$, so the new in-degree vector of $K$ differs from the old one by $O(\abs{K})$ units, and re-orienting $K$ from its old orientation needs $O(\abs{K})$ augmenting paths of cost $O(m_K)$ each. In total one augmentation costs $O(n+sm)$.
+Each augmentation decreases the sum of positive deviations by exactly one, and that sum is $D$ after line~3. Distinct dead even components are edge-disjoint and each has at least two edges, so $D\le m/2$. Lines 1 to 3 take $O(n+m^2)$ arithmetic operations, dominated by the initial maximum flow: the chain network has $O(m)$ nodes and arcs and the flow value is at most $m$, so at most $m$ augmenting paths of $O(m)$ time each suffice. One augmentation costs $O(n+sm)$. The number of ports is $O(n+m)$, so the breadth-first search on the auxiliary graph takes $O(n+m)$ time apart from the exchange tests. For a component $K$ with $m_K$ edges, depth-first search from every vertex of $K$ takes $O(\abs{K}\,m_K)$ time, and the $O(\abs{K}^2)$ candidate exchange pairs cost the same, since $\abs{K}\le m_K+1$. Re-orienting a changed component $K$ needs $O(\abs{K})$ path reversals of $O(m_K)$ time each, because the exchanges inside $K$ use distinct ports and $K$ has $2\abs{K}$ ports: reversing a path from a surplus to a deficit lowers the $L_1$ distance to the target boundary by two (Lemma~\ref{lem:reversal}). Summing over components, $\sum_K\abs{K}\,m_K\le sm$.
 \end{proof}
 
-This bound applies to the decision problem and is independent of the magnitudes of $a$ and $z$. Listing all $k$ walks explicitly costs an additional $\Omega(k)$, which is why we output compressed solutions. When $D=0$ the algorithm is a single maximum flow. The value of $D$ depends on the maximum flow found in line~2, since the orientation of any solution is itself a maximum flow with $D=0$. For our implementation of line~2, a family of disjoint copies of a gadget with five vertices and seven edges, each copy keeping exactly one dead even component, gave $D=m/7$ for nine values of $m$ between $7$ and $2{,}996$ ($D=428$ at $m=2{,}996$). For this implementation the bound $D\le m/2$ is therefore attained up to a factor of $3.5$. This is not a lower bound on the total running time.
+The bound does not depend on the magnitudes of $a$ and $z$: every number handled is an integer of absolute value $O(k+m)$, so it is also polynomial in the bit size of the input. When $D=0$ the algorithm is a single maximum flow. The value of $D$ depends on the initial maximum flow, since the orientation of any solution is itself a maximum flow with $D=0$.
 
-\subsection{Implementation}\label{sec:impl}
-
-Our implementation computes the initial maximum flow by processing the edges in increasing time order, assigning tails greedily and searching for an augmenting path in the residual network as soon as an edge cannot be assigned. Only earlier edges are oriented at that moment, so the search stays local on real data. This is a maximum flow algorithm, so the correctness results do not change, but its orientation, and hence $D$, may differ from that of Dinic's algorithm. Unlike the analysis of Theorem~\ref{thm:time}, the implementation re-orients each component changed by an augmentation from scratch with a maximum flow. With parallel edges this costs $O(n+m\log(m+1)+m^2+D(n+sm+\sum_Km_K^2))\subseteq O(n+nm+m^3)$ arithmetic operations, where the sum runs over the components changed by one augmentation and $m_K$ is the number of edges of $K$. All reported running times use this variant.
-
-\subsection{Walks that must end in a given set}
-
-Let $\deg(v)$ be the number of edges at $v$ over all times and $\pi_v=(a_v+\deg(v))\bmod 2$.
-
-\begin{proposition}\label{prop:parity}
-The number of walks that end at $v$ has the parity of $a_v+\deg(v)$. Hence an instance of \ENDSET{} is infeasible if $\pi_v=1$ for some $v\notin T$, if $a_v>0$ for some $v\notin T$ without edges, or if $\sum_{v\in T}\pi_v>k$.
-\end{proposition}
-
-\begin{proof}
-Every traversal of an edge at $v$ changes the number of walks located at $v$ by exactly one, and there are $\deg(v)$ such traversals. A vertex without edges keeps its $a_v$ walks, which end there. The remaining claim follows because the total number of walks that end is $k$, and $k-\sum_{v\in T}\pi_v$ is then automatically even.
-\end{proof}
-
-Write the final number of walks as $z_v=\pi_v+2\gamma_v$ with $\gamma_v\in\N$, where $\gamma_v=0$ for $v\notin T$. Let $\Gamma_0=(k-\sum_{v\in T}\pi_v)/2$ and $P_T=\{-\gamma:\gamma\in\N^V,\ \gamma(V)=\Gamma_0,\ \gamma_v=0 \text{ for all } v\notin T\}$.
-
-\begin{theorem}\label{thm:endset}
-After the test of Proposition~\ref{prop:parity}, \ENDSET{} is solved by Algorithm~\ref{alg:pf} with the set $P_T$ at the ports $Z$ in place of the simplex of \FREE{}, and with the following change in line~2. For every $v\notin T$ the last chain arc of $v$ receives the capacity and the lower bound $(a_v+\deg(v))/2$, so that no walk ends at $v$. The time bound of Theorem~\ref{thm:time} still holds.
-\end{theorem}
-
-\begin{proof}
-The set $P_T$ is M-convex. Let $x=-\gamma$ and $y=-\gamma'$ be in $P_T$ with $x_i>y_i$. Then $\gamma_i<\gamma'_i$, so $i\in T$. Since $\gamma(V)=\gamma'(V)$, there is $j$ with $\gamma_j>\gamma'_j\ge0$, so $j\in T$. The points $x-\e_i+\e_j=-(\gamma+\e_i-\e_j)$ and $y+\e_i-\e_j=-(\gamma'-\e_i+\e_j)$ are in $P_T$ because $\gamma_j\ge1$ and $\gamma'_i\ge1$. A feasible flow with these lower bounds is found, or shown not to exist, by one additional maximum flow in $O(m^2)$. If it does not exist, the answer is \NO{}. Otherwise it yields an initial point $x\in\cB$ with $P_T$ at the ports $Z$. The proof of Theorem~\ref{thm:reduction} uses only the total number of final walks and the parities $p_{\mathrm{end}}(v)=\pi_v$, so it holds verbatim with $P_T$. Direct sums of M-convex sets are M-convex, so Lemma~\ref{lem:invariant} and Theorem~\ref{thm:correct} apply unchanged. The node $\eta$ is joined only to the ports $Z_v$ with $v\in T$, so one search still costs $O(n)$ on this part.
-\end{proof}
-
-%% =====================================================================
 \section{Strict walks are NP-complete}\label{sec:strict}
 
-Exact edge cover by strict walks is NP-complete with prescribed start counts and either prescribed or free end vertices. A \emph{strict} walk has strictly increasing time labels and uses at most one edge of every snapshot. Let \SFIX{} and \SFREE{} denote the corresponding variants of \FIX{} and \FREE{}. The prescribed-end case was left open by Deligkas et al.~\cite[p.~26504]{deligkas2025}, beyond the special cases reviewed in Section~\ref{sec:related}.
+A \emph{strict} walk has strictly increasing time labels and uses at most one edge of each snapshot. Let \SFIX{} and \SFREE{} denote the strict variants of \FIX{} and \FREE{}. The case with prescribed ends was left open by Deligkas et al.~\cite[p.~26504]{deligkas2025}, beyond the special cases of Section~\ref{sec:related}.
 
 \subsection{Realizable orientations}
 
@@ -684,13 +737,11 @@ An orientation is realizable by strict walks that start according to $a$ if and 
 \emph{Necessity.} A strict walk uses at most one edge at time $t$. The $\out_t(v)$ arcs that leave $v$ at time $t$ are therefore traversed by pairwise distinct walks, and each of these walks is located at $v$ just before $t$. \emph{Sufficiency.} Process the times in increasing order. At time $t$, assign to the arcs that leave $v$ pairwise distinct walks located at $v$, which exist because $\out_t(v)\le c_t(v)$. Each of these walks traverses its arc and all other walks wait. The number of walks at every vertex after $t$ equals $c_{t^+}$, so the induction continues.
 \end{proof}
 
-Compared with Theorem~\ref{thm:char}, condition~(i) is replaced by the stronger condition $\out_t(v)\le c_t(v)$, and condition~(ii) disappears, since every edge is traversed by a walk that was at its tail before. Thus an orientation satisfying the strict condition has no dead even component. In terms of the numbers $b_{v,j}$ and $B_{v,j}$ of Section~\ref{sec:char}, the new condition reads $2B_{v,j-1}+b_{v,j}\le a_v+G_{v,j-1}$. The empty prefix sums are zero. The different weights on $b_{v,j}$ and $B_{v,j-1}$ prevent expressing this inequality as a capacity constraint of the chain network.
+Compared with Theorem~\ref{thm:char}, condition~(i) is replaced by the stronger condition $\out_t(v)\le c_t(v)$, and condition~(ii) disappears, since every edge is traversed by a walk that was at its tail before. Thus an orientation satisfying the strict condition has no dead even component. In the notation of Section~\ref{sec:char} the new condition reads $2B_{v,j-1}+b_{v,j}\le a_v+G_{v,j-1}$. The different weights on current and earlier departures prevent expressing it as a capacity constraint of the chain network.
 
 \subsection{The reduction}
 
-We reduce from 3-SAT, the Boolean satisfiability problem with three literals on distinct variables per clause. The first step of the reduction makes every literal occur at most twice; the resulting restriction of satisfiability is closely related to one studied by Tovey~\cite{tovey1984}. In a formula with three literals on distinct variables per clause, replace the $r\ge2$ occurrences of a variable $x$ by new variables $x_1,\dots,x_r$ and add the clauses $(\lnot x_1\lor x_2),\dots,(\lnot x_{r-1}\lor x_r),(\lnot x_r\lor x_1)$, which force $x_1,\dots,x_r$ to be equal. Each literal of a new variable then occurs at most twice: $x_j$ and $\lnot x_j$ each occur once in the added clauses and at most once in the original clauses.
-
-Let $\varphi$ be such a formula with variables $x_1,\dots,x_n$ and clauses $C_1,\dots,C_m$. Let $s_j\in\{2,3\}$ be the number of literals of $C_j$ and let $d(\ell)\le2$ be the number of clauses that contain the literal $\ell$. Since $\sum_js_j=\sum_\ell d(\ell)\le4n_\varphi$ and $s_j\ge2$, we have $m_\varphi\le2n_\varphi$. The temporal graph $G_\varphi$ has one vertex for each of the $2n_\varphi$ literals, one vertex for each clause, a \emph{hub} $h$, and vertices of degree one called \emph{leaves}. Its edges are the following (Fig.~\ref{fig:strict}).
+We reduce from satisfiability with clauses of two or three literals in which every variable occurs at most three times, which is NP-complete by Tovey~\cite{tovey1984}. We may assume that the literals of a clause belong to distinct variables (discard tautological clauses, merge repeated literals, propagate unit clauses), and that every literal occurs at most twice: a literal that occurs three times is pure, because its variable occurs at most three times and so the opposite literal does not occur, hence we set it to true and delete its clauses. This creates no new occurrences and no clause of size $1$. Let $\varphi$ be such a formula with variables $x_1,\dots,x_{n_\varphi}$ and clauses $C_1,\dots,C_{m_\varphi}$. Let $s_j\in\{2,3\}$ be the number of literals of $C_j$ and let $d(\ell)\le2$ be the number of clauses that contain the literal $\ell$. Since $\sum_js_j=\sum_\ell d(\ell)\le4n_\varphi$ and $s_j\ge2$, we have $m_\varphi\le2n_\varphi$. The temporal graph $G_\varphi$ has one vertex for each of the $2n_\varphi$ literals, one vertex for each clause, a \emph{hub} $h$, and vertices of degree one called \emph{leaves}. Its edges are the following (Fig.~\ref{fig:strict}).
 \begin{itemize}
 \item \emph{Time $1$.} One \emph{start leaf} is joined to every literal vertex, $s_j-1$ start leaves are joined to $C_j$, and $4n_\varphi$ start leaves are joined to $h$.
 \item \emph{Time $2$.} The edge $\{x_i,\lnot x_i\}$ for every variable $x_i$.
@@ -698,11 +749,13 @@ Let $\varphi$ be such a formula with variables $x_1,\dots,x_n$ and clauses $C_1,
 \item \emph{Times $4$ and $5$.} One edge $\{\ell,h\}$ at time $4$ and one at time $5$, for every literal vertex $\ell$.
 \item \emph{Time $6$.} $d(\ell)$ \emph{end leaves} are joined to every literal vertex $\ell$, one end leaf is joined to every $C_j$, and $6n_\varphi-2m_\varphi$ end leaves are joined to $h$.
 \end{itemize}
-We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ otherwise. There are $6n_\varphi+\sum_js_j-m_\varphi$ start leaves and as many end leaves. The graph $G_\varphi$ has no parallel edges within a snapshot, and its size is linear in the size of $\varphi$. Figure~\ref{fig:strict} shows its edges at a variable and a clause. The edges from $C_j$ to its other literals and the end leaves of $\lnot x_i$ are omitted there. Edge labels are time labels, and a number next to a leaf gives its multiplicity.
+We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ otherwise. There are $6n_\varphi+\sum_js_j-m_\varphi$ start leaves and as many end leaves. The graph $G_\varphi$ has no parallel edges within a snapshot, and its size is linear in the size of $\varphi$.
 
-\begin{figure}[t]
+In Fig.~\ref{fig:strict}, edge labels are times and numbers beside leaves are multiplicities. White leaves are start leaves and shaded leaves are end leaves. Other clause incidences and the end leaves of $\lnot x_i$ are omitted.
+
+\begin{figure}[!htbp]
 \centering
-\begin{tikzpicture}[
+\begin{tikzpicture}[scale=0.8,transform shape,
   lit/.style={circle,draw,semithick,fill=white,minimum size=6.4mm,inner sep=0pt,font=\footnotesize},
   leaf/.style={circle,draw,semithick,fill=white,minimum size=1.8mm,inner sep=0pt},
   eleaf/.style={circle,draw,semithick,fill=black!55,minimum size=1.8mm,inner sep=0pt},
@@ -741,7 +794,7 @@ We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ o
   \node[eleaf] at (6.9,1.1) {};
   \node[note,anchor=west] at (7.05,1.1) {end leaf ($z=1$)};
 \end{tikzpicture}
-\caption{The graph $G_\varphi$ around a variable $x_i$ and a clause $C_j$ containing $x_i$.}
+\caption{The strict-walk reduction around a variable and an incident clause.}
 \label{fig:strict}
 \end{figure}
 
@@ -750,73 +803,62 @@ We set $a_v=1$ at every start leaf, $z_v=1$ at every end leaf, and $a_v=z_v=0$ o
 \end{theorem}
 
 \begin{proof}
-Both problems are in NP. An orientation is a certificate that is checked in polynomial time by Lemma~\ref{lem:strict}; when empty walks are not allowed, the certificate also lists the walks, of which there are at most $m_\varphi$, because every non-empty walk uses an edge. We show that $\varphi$ is satisfiable if and only if $G_\varphi$ with the vectors $a$ and $z$ above is a feasible instance of \SFIX{}.
+Both problems are in NP: an orientation is a certificate checked in polynomial time by Lemma~\ref{lem:strict}, and when empty walks are not allowed the certificate also lists the at most $m$ non-empty walks. We show that $\varphi$ is satisfiable if and only if $G_\varphi$ with the vectors $a$ and $z$ above is a feasible instance of \SFIX{}.
 
-\emph{A solution yields a satisfying assignment.} Take the orientation of a solution. Before time $1$ only the start leaves hold walks, so the condition $\out_1(v)\le c_1(v)$ of Lemma~\ref{lem:strict} forces every edge at time $1$ to be directed away from its leaf. Before time $2$ every literal vertex therefore holds one walk, $C_j$ holds $s_j-1$ walks and $h$ holds $4n_\varphi$ walks. The edge $\{x_i,\lnot x_i\}$ at time $2$ moves one walk, so before time $3$ one of the two vertices $x_i$ and $\lnot x_i$ holds two walks and the other holds none. Call a literal \emph{true} if its vertex holds two walks. Exactly one of $x_i$ and $\lnot x_i$ is true, so this is a truth assignment. At time $3$ the vertex $C_j$ has $s_j$ edges but holds only $s_j-1$ walks. By Lemma~\ref{lem:strict} at least one of these edges is directed from a literal vertex $\ell$ to $C_j$, and $\ell$ holds a walk before time $3$. Hence $\ell$ is true and $C_j$ is satisfied.
+\emph{A solution yields a satisfying assignment.} Take the orientation of a solution. Before time $1$ only the start leaves hold walks, so the condition $\out_1(v)\le c_1(v)$ of Lemma~\ref{lem:strict} forces every edge at time $1$ to be directed away from its leaf, since its other end holds no walk. Before time $2$ every literal vertex therefore holds one walk, $C_j$ holds $s_j-1$ walks and $h$ holds $4n_\varphi$ walks. The edge $\{x_i,\lnot x_i\}$ at time $2$ moves one walk, so before time $3$ one of the two vertices $x_i$ and $\lnot x_i$ holds two walks and the other holds none. Call a literal \emph{true} if its vertex holds two walks. Exactly one of $x_i$ and $\lnot x_i$ is true, so this is a truth assignment. At time $3$ the vertex $C_j$ has $s_j$ edges but holds only $s_j-1$ walks. By Lemma~\ref{lem:strict} at least one of these edges is directed from a literal vertex $\ell$ to $C_j$, and $\ell$ holds a walk before time $3$. Hence $\ell$ is true and $C_j$ is satisfied.
 
-\emph{A satisfying assignment yields a solution.} We give an orientation and verify Lemma~\ref{lem:strict}. Direct the edges at time $1$ away from the leaves and the edge $\{x_i,\lnot x_i\}$ from the false literal to the true literal. For every clause $C_j$ choose one true literal $\ell_j$ of $C_j$, direct $\{C_j,\ell_j\}$ from $\ell_j$ to $C_j$, and direct the other $s_j-1$ edges of $C_j$ away from $C_j$. The vertex $C_j$ uses its $s_j-1$ walks. Let $\theta_\ell$ be the number of clauses that choose a true literal $\ell$, so $\theta_\ell\le d(\ell)\le2$, and a true literal holds two walks, while a false literal has no outgoing edge. After time $3$ the vertex $C_j$ holds one walk, a false literal $\ell$ holds $d(\ell)$ walks, a true literal $\ell$ holds $d(\ell)+2-2\theta_\ell$ walks, and $h$ holds $4n_\varphi$ walks. The edges at times $4$ and $5$ bring every literal vertex $\ell$ to exactly $d(\ell)$ walks.
+\emph{A satisfying assignment yields a solution.} We give an orientation and verify Lemma~\ref{lem:strict}. Direct the edges at time $1$ away from the leaves and the edge $\{x_i,\lnot x_i\}$ from the false literal to the true literal. For every clause $C_j$ choose one true literal $\ell_j$ of $C_j$, direct $\{C_j,\ell_j\}$ from $\ell_j$ to $C_j$, and direct the other $s_j-1$ edges of $C_j$ away from $C_j$. Let $\theta_\ell\le d(\ell)\le2$ be the number of clauses that choose a true literal $\ell$. A true literal holds two walks, which suffice for its at most two outgoing edges at time $3$, and a false literal has none. After time $3$ the vertex $C_j$ holds one walk, a false literal $\ell$ holds $d(\ell)$ walks, a true literal $\ell$ holds $d(\ell)+2-2\theta_\ell$ walks, and $h$ holds $4n_\varphi$ walks. The edges at times $4$ and $5$ bring every literal vertex $\ell$ to exactly $d(\ell)$ walks.
 \begin{itemize}
 \item If $\ell$ is true and $\theta_\ell=0$, direct both edges from $\ell$ to $h$. The vertex $\ell$ holds $d(\ell)+2\ge2$ walks before time $4$.
 \item If $\ell$ is false, or true with $\theta_\ell=1$, direct the edge at time $4$ from $h$ to $\ell$ and the edge at time $5$ from $\ell$ to $h$. The vertex $\ell$ holds at least one walk before time $5$.
 \item If $\ell$ is true and $\theta_\ell=2$, direct both edges from $h$ to $\ell$.
 \end{itemize}
-At each of the times $4$ and $5$ at most $2n_\varphi$ edges leave $h$, and $h$ holds $4n_\varphi$ walks before time $4$ and at least $2n_\varphi$ walks before time $5$. The number of walks at $h$ changes in total by $\sum_{\ell\text{ true}}(2-2\theta_\ell)=2n_\varphi-2m_\varphi$, because there are $n_\varphi$ true literals and $\sum_\ell\theta_\ell=m_\varphi$. Hence $h$ holds $6n_\varphi-2m_\varphi\ge0$ walks before time $6$, and here $m_\varphi\le2n_\varphi$ is used. Before time $6$ every vertex that is not a leaf thus holds exactly as many walks as it has end leaves, and the edges at time $6$ are directed towards the end leaves. The final numbers of walks are $z$.
+At each of the times $4$ and $5$ at most $2n_\varphi$ edges leave $h$, and $h$ holds $4n_\varphi$ walks before time $4$ and at least $2n_\varphi$ walks before time $5$. The number of walks at $h$ changes in total by $\sum_{\ell\text{ true}}(2-2\theta_\ell)=2n_\varphi-2m_\varphi$, because there are $n_\varphi$ true literals and $\sum_\ell\theta_\ell=m_\varphi$. Hence $h$ holds $6n_\varphi-2m_\varphi\ge0$ walks before time $6$ (using $m_\varphi\le2n_\varphi$). Before time $6$ every vertex that is not a leaf thus holds exactly as many walks as it has end leaves, and the edges at time $6$ are directed towards the end leaves. The final numbers of walks are $z$.
 
-\emph{Free end vertices.} Keep only the literal and clause vertices and the edges of times $2$ and $3$, and set $a_v=1$ at every literal vertex and $a_{C_j}=s_j-1$. Before time $2$ each literal vertex holds one walk because $a_v=1$, and each clause vertex holds $s_j-1$ walks. The arguments for the times $2$ and $3$ then apply unchanged, so this instance of \SFREE{} is feasible if and only if $\varphi$ is satisfiable. In a solution, a true literal that no clause chooses keeps an empty walk. If empty walks are not allowed, keep in addition the start leaves and the edges of time~$1$, with $a_v=1$ at every start leaf and $a_v=0$ elsewhere. Every walk then starts with an edge, and the same arguments apply with three time labels.
+\emph{Free end vertices.} Keep only the literal and clause vertices and the edges of times $2$ and $3$, and set $a_v=1$ at every literal vertex and $a_{C_j}=s_j-1$. Each vertex then holds the same number of walks before time $2$ as before, so the arguments for times $2$ and $3$ apply unchanged and this instance of \SFREE{} is feasible if and only if $\varphi$ is satisfiable. In a solution, a true literal that no clause chooses keeps an empty walk. If empty walks are not allowed, keep in addition the start leaves and the edges of time~$1$, with $a_v=1$ at every start leaf and $a_v=0$ elsewhere. Every walk then starts with an edge, and the same arguments apply with three time labels.
 \end{proof}
 
-\subsection{Discussion}
+The graph $G_\varphi$ is not proper and its snapshots have different numbers of edges, so neither Corollary~6.4 nor Theorem~6.5 of~\cite{deligkas2025} applies. The latter is exponential in $k$, which grows with $n_\varphi$ here. Theorem~5.4 of~\cite{deligkas2025} concerns the problem without prescribed start vertices and does not imply Theorem~\ref{thm:strict}. Whether \SFIX{} remains NP-complete when every vertex has at most two edges in every snapshot is left open.
 
-The graph $G_\varphi$ is not proper and its snapshots have different numbers of edges, so Corollary~6.4 of~\cite{deligkas2025} does not apply, and Theorem~6.5 does not apply either: its running time is exponential in $|V_S|$, which grows with $n_\varphi$ here, and its hypothesis $|E_t|\in\{0,k\}$ is violated. Theorem~5.4 of~\cite{deligkas2025} concerns the problem without prescribed start vertices and does not imply Theorem~\ref{thm:strict}. Every terminal in the construction is a leaf of multiplicity one, so it also satisfies the multiset-terminal model of~\cite{deligkas2025}. A computer check of the reduction is reported in Section~\ref{sec:exp-correct}. The construction uses a hub with many edges in one snapshot, so it does not settle the case in which every vertex has at most two edges in every snapshot, which lies between Corollary~6.4 of~\cite{deligkas2025} and Theorem~\ref{thm:strict}. We leave it open.
-
-%% =====================================================================
 \section{Computational experiments}\label{sec:eval}
 
-The experiments are consistent with the correctness of the implementation of the pair flow (\textbf{PF}) algorithm (Algorithm~\ref{alg:pf}) and demonstrate errors in the static reduction. Independent checks agree with Theorem~\ref{thm:correct} (Sections~\ref{sec:exp-correct} and~\ref{sec:exp-even}). PF completes the transit, contact and synthetic benchmarks, while BB reaches its limits on larger instances (Sections~\ref{sec:exp-real} and~\ref{sec:exp-scale}). The static reduction accepts infeasible instances (Section~\ref{sec:exp-static}).
+We compare pair flow (\textbf{PF}, Algorithm~\ref{alg:pf}) with exhaustive oracles, an integer program (\textbf{ILP}), restart branch and bound (\textbf{BB}; it adds two walks at a dead even component and reruns maximum flow) and the reconstructed static rule of Section~\ref{sec:counterexample}.
 
-\subsection{Implementation and instances}\label{sec:exp-setup}
+\subsection{Validation}\label{sec:exp-correct}
 
-The benchmark design tests the need for condition~(ii) of Theorem~\ref{thm:char} and the performance of the implementation in Section~\ref{sec:impl}. Independent implementations of PF in Python and C++17 are compared with BB. The Python implementations of PF and BB use the same maximum flow backend.
+PF \YES{} walks were checked against the definition. Python used scratch re-orientation (default, bound $O(D(n+m^2))$) or reversed directed paths (Theorem~\ref{thm:time}); the scaling runs and paired comparisons use both. BB limits were $10$~s or $2{,}000$ maximum flows per even-rich run ($5$~s at nominal $m=1{,}000$), $200$ maximum flows on census windows, $150$~s on Turku and $60$~s in the ILP comparison. The exhaustive oracle searches snapshot-edge traversals token by token, using neither orientations nor Theorem~\ref{thm:char}, so it tests the characterization against the operational definition. The ILP encodes Theorem~\ref{thm:char} directly, with binary orientation variables and non-negative counters. On the even-rich and shortage families every \NO{} came from augmentation, so its certificate rests on Lemma~\ref{lem:gamma}(b) and Lemma~\ref{lem:localmax} and is not verifiable from instance data.
 
-\paragraph{Even-rich synthetic instances.} Walks move in pairs. At every time, each pair is active with probability $0.7$, and an active pair crosses a double edge to another vertex (probability $0.25$), lets one of its walks traverse a cycle of length $3$ to $6$ through its vertex (probability $0.3$), or moves to another vertex along two internally disjoint paths of length $1$ to $3$ (probability $0.45$). Every snapshot is then a union of closed trails, so every degree and every walk counter is even, and \emph{every} snapshot component is even. Every component is also balanced, so the counting condition alone accepts every \FREE{} instance. In the \emph{sparse} family the graph has about $m/3$ vertices, so the components in one snapshot rarely touch. In the \emph{dense} family it has about $2\sqrt m$ vertices, so they often merge into larger even components. Both families have about $\sqrt m/2$ pairs. Vertex labels and edge order are shuffled, so the initial maximum flow does not see the planted orientation. Each generated graph gives four instances, namely \FIX{} and \FREE{} with the planted vectors of start and end counts, which are feasible by construction, and \FIX{} and \FREE{} with one pair removed, whose answer is not known in advance. We generated $764$ graphs with $12\le m\le 20{,}000$, which give $3{,}056$ instances (Table~\ref{tab:even}). These runs were executed one at a time on an Intel Core i9-9980HK under Linux with Python~3.13.12 and the default backend of the library, without SciPy.
-
-\paragraph{Transit and contact data.} We also built instances from the one-day timetables of transit networks from version~1.2 of the data set of~\cite{kujala2018} (Zenodo record 1186215) and from three layers of the Copenhagen Networks Study (CNS)~\cite{sapiezynski2019}. For the census of Section~\ref{sec:exp-real}, each data set was cut into time windows of several lengths (for transit, windows of one hour and, for Kuopio, Turku and Grenoble, the whole day). For transit data every vehicle trip is a walk whose segments have their departure minute as time label, and edge directions are ignored. The census and the C++ experiments of Section~\ref{sec:exp-scale} use different loaders (Kuopio has $987$ edges in the census and $32{,}122$ edges in the C++ experiments), so the two transit sets are not directly comparable. Contact data do not record who is responsible for an event, so start counts were constructed by a greedy rule that processes the contacts in time order, moves a walk across each contact from an endpoint that holds one, and creates a new walk at the first endpoint when neither does. Each window gives up to four instances, namely \FIX{} and \FREE{} instances that are feasible by construction and two \FREE{} instances with one walk or $10\%$ of the walks removed (omitted when the window has too few walks). This yields $18{,}250$ instances from $4{,}639$ windows. The census and transit runs were made on an Intel Core i5-10210U (4 cores) under the second-generation Windows Subsystem for Linux (WSL2) with SciPy for the maximum flow. The Python experiments used Python~3.14.4 and SciPy~1.16.3, and the C++ experiments used g++~15.2.0 and CMake~4.2.3. Two to four of these runs were executed concurrently, so their running times may vary by a factor of about two.
-
-\subsection{Correctness}\label{sec:exp-correct}
-
-The checks support Theorem~\ref{thm:correct} by validating every \YES{} answer of PF against the walk definition and comparing answers with independent solvers. Table~\ref{tab:checks} lists the cross-checks, including a computer check of the reduction of Section~\ref{sec:strict} with three programs that share no code. In the small-instance oracle check, the augmentation loop returned \NO{} in $5{,}494$ runs, providing coverage of this termination case. The computer check of Lemma~\ref{lem:gamma} also confirms Remark~\ref{rem:connected}. The exchange axiom fails for two disjoint triangles, and it fails in $153$ of $5{,}279$ labelled sets when $g$ is fixed before removing $0$, once for each of the $153$ even graphs.
-
-\begin{table}[t]
-\caption{Correctness checks.}
-\label{tab:checks}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}p{0.24\textwidth}p{0.38\textwidth}p{0.3\textwidth}}
+\begin{table}[!t]
+\caption{Validation checks.}
+\label{tab:validation}
+\footnotesize
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}p{0.25\textwidth}p{0.22\textwidth}p{0.40\textwidth}}
 \toprule
-Check & Scale & Result \\
+Check & Instances/runs & Outcome \\
 \midrule
-Exhaustive oracle & $102{,}476$ small instances, each solved as \FIX{} and \FREE{} ($204{,}952$ runs) & all agree, $1{,}379$ runs complete an augmentation \\
-PF against BB & $105{,}182$ runs ($52{,}591$ instances as \FIX{} and \FREE{}), $1{,}840{,}950$ edges in total & all agree \\
-Even-rich instances & $1{,}176$ runs with $m\le14$ against the oracle, $2{,}960$ runs with $m\le1{,}005$ against BB & all completed runs agree; BB stopped at its limit in $42$ runs \\
-Lemma~\ref{lem:gamma} & all labelled connected multigraphs with $n\le5$, $m\le6$, box $0\le\alpha_v,\beta_v\le\deg(v)$ & no violation in $119{,}040$ sets $\Gamma_K$ and $153$ sets $\Gamma'_K$ \\
-Maximum flow backends & $32{,}256$ instances, four solvers & agree on whether the flow reaches $m$ \\
-C++ against oracle & $378{,}040$ small instances & all agree \\
-Python against C++ & $8{,}000$ instances & all agree \\
-Strict reduction & $1{,}967$ formulas ($578$ unsatisfiable, all $26$ formulas on two variables), \SFIX{} and \SFREE{} instances with up to $156$ edges & feasibility always equals satisfiability \\
+Exhaustive oracle & $102{,}476$ instances; $204{,}952$ runs & All agreed with the operational definition \\
+PF--BB agreement & $105{,}182$ runs & Answers agreed \\
+Matched comparisons & $10{,}813$ pairs; $4{,}000$ random comparisons & Answers agreed \\
+Even-rich suite & $1{,}176$ oracle runs; $2{,}918$ completed BB runs ($42$ stopped) & Answers agreed \\
+Python--C++ & $8{,}000$ instances & Answers agreed \\
+Strict reduction & $1{,}967$ formulas & Feasibility matched satisfiability \\
+Lemma~\ref{lem:gamma} enumeration & $119{,}040$ labelled sets for~(a), $153$ for~(b) & No violation found for connected multigraphs with $n\le5$, $m\le6$ \\
+Certificate re-check & $13{,}028$ certificates & $78.85\%$--$99.27\%$ of \NO{} certificates verifiable from instance data in the three checked sets \\
 \bottomrule
 \end{tabular*}
 \end{table}
 
-A separate program that does not import the PF library re-checked $13{,}028$ infeasibility certificates from three instance sets. Between $78.85\%$ and $99.27\%$ of them per set are \emph{independent}, that is, verifiable from the instance data alone, for example as a cut of the chain network, and no \YES{} instance received an infeasibility certificate.
+\paragraph{Limits of the validation.} The oracle and ILP were written by the authors with AI assistance (see Declarations). The ILP and PF share Theorem~\ref{thm:char}, so their agreement tests internal consistency, not independent validation. The Lemma~\ref{lem:gamma} enumeration covers $4{,}065$ labelled graphs for part~(a) but only the $153$ even ones, one set each, for part~(b); it is only a small-box sanity check.
 
-\subsection{Instances with many even components}\label{sec:exp-even}
+\subsection{Benchmarks and scaling}\label{sec:scope}
 
-The even-rich benchmark isolates the augmentation step of Algorithm~\ref{alg:pf}: every snapshot component is even, and the initial maximum flow accepts every instance (Table~\ref{tab:even}). The initial maximum flow leaves at least one dead even component in $1{,}349$ of the $3{,}056$ instances, and the share of dead even components among the even components grows with the size of the instance, from about $8\%$ at $m=12$ to about $63\%$ in the sparse family at $m=20{,}000$. The largest number of dead even components is $D=3{,}310$. On every \YES{} answer the number of augmentations equals $D$, and all $1{,}528$ planted instances are answered \YES{} with walks that pass the check. All $449$ \NO{} answers arise when the augmentation loop finds no augmenting path. Removing one pair makes $449$ of the $1{,}528$ cut instances infeasible.
+The even-rich benchmark isolates augmentation. A graph with nominal edge count $m$ has $\max(1,\mathrm{round}(\sqrt m/2))$ \emph{pairs} of walks, each pair starting together at a random vertex, and $\max(8,\lfloor m/3\rfloor)$ (sparse) or $\max(8,\lfloor 2\sqrt m\rfloor)$ (dense) vertices. At each time $t=1,2,\dots$, until the graph has at least $m$ edges, each pair is skipped with probability $0.3$ or adds at its current vertex $u$ a double edge to a random vertex $v$ (probability $0.25$), a cycle of length $3$--$6$ through $u$ ($0.30$), or two internally disjoint $u$--$v$ paths of one to three edges each ($0.45$); the pair then moves to $v$, except after a cycle. Degrees, walk counters and components are therefore even in every snapshot, so counting alone accepts every \FREE{} instance. Labels and edge order are shuffled, and the end count is $2$ at each pair's final vertex. Each graph (seed $20261113$) yields planted \FIX{} and \FREE{} instances and versions with one start pair removed (and, for \FIX{}, the corresponding end pair): $3{,}056$ instances on $764$ graphs with $12\le m\le20{,}000$ (Table~\ref{tab:even}), run with Python~3.13.12 on an Intel Core i9-9980HK under Linux. Initial flow left dead even components in $1{,}349$ instances ($D$ up to $3{,}310$), and every \NO{} answer came from augmentation rather than counting. On the $1{,}480$ \FIX{} instances in the first eight rows of Table~\ref{tab:even}, PF accepted $1{,}229$ and rejected $251$; our reconstruction of the static rule wrongly accepted $250$ and rejected none that PF accepted.
 
-\emph{Graphs}: generated graphs, each giving four instances. \emph{Even}: mean number of even components. \emph{Dead}: mean and largest number $D$ of dead even components after the initial maximum flow. \emph{Cut}: \YES{}/\NO{} answers of the two instances with one pair removed. \emph{PF}: median and largest time in seconds. \emph{BB}: runs stopped at the limit of $2{,}000$ maximum flows or $10$ seconds ($5$ seconds for $m=1{,}000$) out of all runs. \emph{Static}: \FIX{} instances accepted by the rule of Section~\ref{sec:exp-static} out of the infeasible \FIX{} instances. A dash means not run.
-
-\begin{table}[t]
-\caption{Even-rich synthetic benchmark. Each cell reports $a/b$. \textbf{Even}: mean number of even components per graph. \textbf{Dead}: mean/maximum number of dead even components left by the initial maximum flow. \textbf{Cut}: YES/NO answers of PF on the instances with one pair removed. \textbf{PF}: median/maximum running time in seconds. \textbf{BB}: runs stopped at the time limit / all BB runs. \textbf{Static}: instances on which the static rule answers YES although PF answers NO, out of the instances with a PF NO answer on which the rule was run. A dash means the method was not run.}
+\begin{table}[!t]
+\caption{Even-rich benchmark (Python, default backend without SciPy, from scratch). $m$: nominal edge count. Even: mean number of even snapshot components over all times. Dead: mean/maximum number of dead even components after the initial flow. Cut: pair-removed instances answered \YES{}/\NO{} by PF. PF: median/maximum seconds. BB: stopped/all runs. Static: false \YES{} answers of the reconstructed static rule among PF-\NO{} \FIX{} instances. Dashes: not run.}
 \label{tab:even}
-\footnotesize
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
 \begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrr}
 \toprule
 Family & $m$ & Graphs & Even & Dead & Cut & PF & BB & Static \\
@@ -837,124 +879,34 @@ dense & $20{,}000$ & $2$ & $1098.5$ & $309.5$/$315$ & $2$/$2$ & $51.3$/$56.8$ & 
 \end{tabular*}
 \end{table}
 
-\subsection{Transit and contact data}\label{sec:exp-real}
+\paragraph{Scaling of the two re-orientations.}
+In the shortage family, a hub with $2(e-1)$ walks must serve $e$ gadgets that need $2e$, so every \FREE{} instance is \NO{}; here $m=7e$, component size is constant and $D$ grows proportionally to $m$ ($62$ to $499$ augmentations for $e=250$ to $2{,}000$). With the SciPy-assisted backend on a shared machine and two repetitions per size, scratch times grew from $0.84$--$1.08$~s at $m=1{,}750$ to $98.0$--$99.9$~s at $m=14{,}000$, and incremental times from $0.74$--$0.85$~s to $64.6$--$66.1$~s. Log-log slopes between consecutive sizes within a repetition were $1.81$--$2.84$, and $2.08$--$2.30$ from $e=250$ to $e=2{,}000$, consistent with the near-$m^2$ growth predicted by $O(D(n+sm))$; two repetitions do not verify Theorem~\ref{thm:time}. The incremental variant was faster in all eight paired repetitions ($1.04$ to $1.5$ times), and the mean ratio on paired even-rich instances was $1.03$--$1.17$.
 
-The transit and contact census tests how often the obstruction in Theorem~\ref{thm:char}(ii) requires augmentation (Table~\ref{tab:census}). Even components are frequent on transit timetables, where $224$ of the $316$ census instances have one, and on the Bluetooth layer of the Copenhagen Networks Study ($4{,}788$ of $13{,}552$). The call and message layers have none. The census uses greedy assignment followed by Dinic's algorithm for the initial maximum flow, while the C++ experiments use the time-ordered solver of Section~\ref{sec:impl}. Among the $304$ transit instances built from one-hour windows, $2$ have a dead even component, and among the $12$ instances built from whole-day timetables, $6$ have one. On the larger timetables of the C++ experiments of Section~\ref{sec:exp-scale}, $48$ of $50$ instances keep dead even components after the initial maximum flow, with up to $D=467$. On the contact data with greedily constructed vectors of start counts only $11$ of $17{,}934$ instances have one. On every \YES{} instance the number of augmentations of PF equals $D$, and all \NO{} answers on real data come from the maximum flow.
+\paragraph{Integer programming baseline.} The ILP, solved by HiGHS~\cite{huangfu2018} (SciPy~1.16.3), agreed with PF and the oracle on $3{,}000$ random instances (at most $10$ edges, $484$ with an even component) and with PF on $82$ benchmark cases ($10$ shortage and $72$ even-rich), where BB stopped at its $60$~s limit in eight. With the SciPy-assisted backend on a shared machine (unlike Table~\ref{tab:even}), median ILP/PF/BB times on even-rich graphs with $m=1{,}000$ were $0.110/0.252/0.610$~s (sparse) and $0.373/0.154/0.220$~s (dense); the ILP was not run above $m=1{,}400$.
 
-\emph{Even}: instances with an even component. \emph{Dead}: instances in which the maximum flow leaves a dead even component. \emph{Aug.}: largest number of augmentations. \emph{Time}: largest running time of PF in seconds.
+\subsection{Real data}
 
-\begin{table}[t]
-\caption{Census of $18{,}250$ instances from transit and contact data.}
-\label{tab:census}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrr}
-\toprule
-Source & Inst. & Max.\ $m$ & Even & Dead & Aug. & \YES{}/\NO{} & Time \\
-\midrule
-Kuopio & $52$ & $987$ & $8$ & $0$ & $0$ & $31$/$21$ & $0.0$ \\
-Turku & $88$ & $125{,}779$ & $80$ & $5$ & $316$ & $49$/$39$ & $83.2$ \\
-Grenoble & $92$ & $52{,}710$ & $60$ & $3$ & $44$ & $50$/$42$ & $4.3$ \\
-Adelaide & $84$ & $7{,}681$ & $76$ & $0$ & $0$ & $45$/$39$ & $0.3$ \\
-CNS Bluetooth & $13{,}552$ & $25{,}222$ & $4{,}788$ & $11$ & $1$ & $7{,}968$/$5{,}584$ & $1.1$ \\
-CNS calls & $1{,}994$ & $3{,}599$ & $0$ & $0$ & $0$ & $1{,}098$/$896$ & $0.1$ \\
-CNS messages & $2{,}388$ & $24{,}260$ & $0$ & $0$ & $0$ & $1{,}261$/$1{,}127$ & $1.1$ \\
-\midrule
-Total & $18{,}250$ & & $5{,}012$ & $19$ & & $10{,}502$/$7{,}748$ & \\
-\bottomrule
-\end{tabular*}
-\end{table}
+Contact data~\cite{sapiezynski2019,stehle2011,fournet2014,mastrandrea2015,vanhems2013} were treated as undirected, with duplicate and self-contacts removed (Copenhagen Bluetooth: $5$-minute bins, RSSI $\ge-75$). Start vectors are planted: the \emph{greedy} scheme scans snapshots in time order, and an endpoint walk takes each edge or is created if none is there; the \emph{tight} variants drop the end vector and remove one walk or ten percent of the starts to exercise \NO{} answers. In transit timetables~\cite{kujala2018}, each vehicle trip is a walk from first to last stop, with one edge per segment at departure time. We used $304$ one-hour windows (four cities, four schemes), $12$ whole-day instances (three cities) and $50$ larger \FIX{} and \FREE{} instances on $25$ cities, using the busiest three-hour block for the $12$ cities above $250{,}000$ daily trip segments.
 
-\subsection{Running times}\label{sec:exp-scale}
+Dead even components occurred in $48$ of the $50$ larger and $6$ of the $12$ whole-day transit instances, and rarely elsewhere. Every \NO{} answer on real data came from counting maximum flow, so these runs test scalability, not the M-convex machinery. On the whole-day Turku timetable ($125{,}779$ edges, Python), PF solved \FIX{} in $70.3$ and \FREE{} in $33.7$ seconds, while BB did not finish within $150$ seconds. C++17 solved all $50$ larger instances; the largest, Paris \FIX{} with $387{,}467$ edges and $D=287$, took $68.7$ seconds in a single run. These runs used an Intel Core i5-10210U (four cores, Linux under WSL2) with two to four concurrent jobs, so times are indicative.
 
-The running times show the practical performance of the implementation in Section~\ref{sec:impl} and the growth of BB on the shortage family.
+\FloatBarrier
 
-\paragraph{Even-rich instances.} On the even-rich benchmark the median time of PF stays below $0.2$ seconds up to $m=1{,}000$ and is $4.8$ seconds at $m=5{,}000$, where up to $D=733$ dead even components are repaired. The largest instances, with $m=20{,}000$, take at most $170$ seconds. BB, capped at $2{,}000$ maximum flows and a few seconds per instance, is stopped in $30$ of the $80$ sparse runs at $m=1{,}000$, where $D$ is about $90$ on average.
-
-\paragraph{A shortage family for BB.} A hub $h$ holds $e-1$ pairs of walks. Block $i$ consists of two double edges from $h$ at time $2i-1$ followed by a triangle at time $2i$, for $i=1,\dots,e$. Each triangle needs one pair, so the instance is infeasible, but no single block reveals the shortage. Table~\ref{tab:family} shows that BB doubles its number of maximum flows with every block ($87{,}167$ maximum flows at $e=16$) and does not finish $e=17$ within the remaining time budget of $96$ seconds. PF needs about $e/4$ augmentations and solves $e=2{,}000$ ($14{,}000$ edges) in $106$ seconds. The family is designed to expose difficult cases for BB.
-
-Every instance is infeasible. The run had a total budget of $270$ seconds, and BB was stopped at $e=17$ when it was exhausted. Times below $0.01$ seconds are dominated by noise.
-
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}
-\begin{loglogaxis}[width=0.9\textwidth,height=6.8cm,
-  xlabel={$e$ (number of blocks)},ylabel={running time (s)},
-  xmin=1.5,xmax=3000,ymin=0.0001,ymax=300,
-  grid=major,grid style={black!10},
-  legend style={at={(0.5,-0.26)},anchor=north,legend columns=3,draw=none,column sep=10pt},legend cell align=left,
-  mark size=2pt,
-  every axis plot/.append style={thick}]
-\addplot[color=cA,mark=*,only marks] coordinates {
-(2,0.0002) (3,0.0004) (4,0.0004) (5,0.0005) (6,0.0006) (7,0.0007) (8,0.0007) (9,0.0016) (10,0.0028) (11,0.0043) (12,0.0019) (13,0.0023) (14,0.0057) (15,0.0029) (16,0.0099) (17,0.0029) (18,0.0036) (19,0.0036)
-(20,0.0042) (50,0.024) (100,0.0945) (200,0.4014) (500,2.7615) (1000,11.9697) (2000,105.7992)};
-\addlegendentry{PF}
-\addplot[color=cB,mark=square*,only marks] coordinates {
-(2,0.0017) (3,0.012) (4,0.0164) (5,0.0289) (6,0.0854) (7,0.1469) (8,0.4175) (9,0.8466) (10,1.7191) (11,3.7738) (12,8.4594) (13,18.1987) (14,21.0141) (15,35.3492) (16,83.4539)};
-\addlegendentry{BB}
-\addplot[color=cB,mark=square,only marks,mark options={fill=white}] coordinates {(17,96.4369)};
-\addlegendentry{BB, stopped (lower bound)}
-\addplot[color=cA,dashed,no markers,domain=2:2000,samples=2] {0.0000002*x^2} node[pos=0.85,above,font=\scriptsize,color=cA] {$\propto e^2$};
-\end{loglogaxis}
-\end{tikzpicture}
-\caption{Running time of PF and BB on the shortage family, on a log--log scale. Each point is one instance with $e$ blocks; the open square marks the run of BB stopped at its time limit, so its value is a lower bound. The dashed line is a reference slope of two, not a fit. Times below $0.01$ seconds are dominated by noise, and each value comes from a single run.}
-\label{fig:scale}
-\end{figure}
-
-Figure~\ref{fig:scale} plots the same measurements on a log--log scale.
-
-\begin{table}[t]
-\caption{Running time in seconds on the shortage family.}
-\label{tab:family}
-\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lrrrrrrrr}
-\toprule
-$e$ & $2$ & $4$ & $8$ & $12$ & $16$ & $17$ & $100$ & $2{,}000$ \\
-\midrule
-BB & $0.0017$ & $0.0164$ & $0.418$ & $8.46$ & $83.5$ & limit & & \\
-PF & $0.0002$ & $0.0004$ & $0.0007$ & $0.0019$ & $0.0099$ & $0.0029$ & $0.095$ & $105.8$ \\
-\bottomrule
-\end{tabular*}
-\end{table}
-
-\paragraph{Transit timetables.} On the whole-day timetable of Turku ($125{,}779$ edges) PF solves \FIX{} in $70.3$ seconds and \FREE{} in $33.7$ seconds, whereas BB does not finish within $150$ seconds.
-
-\paragraph{C++ on 25 transit networks.} The C++17 implementation (g++ 15.2, Release build, WSL2) uses the time-ordered maximum flow of Section~\ref{sec:impl} and passes the C++ rows of Table~\ref{tab:checks}. We ran it on all $25$ cities of the data set, with \FIX{} and \FREE{} for each city. For $13$ cities we used the whole-day timetable. For the other $12$ networks (Adelaide, Berlin, Brisbane, Dublin, Helsinki, Lisbon, Melbourne, Paris, Prague, Rome, Sydney and Winnipeg) we kept only the trips that start in the busiest three-hour block of the day. All $50$ instances are answered \YES{}, and the walks are built and checked by the C++ code. In $48$ of them the initial maximum flow leaves dead even components, and the largest $D$ is $467$. PF took between $0.7$ and $79$ seconds per instance (median $13.9$ seconds), including $68.7$ seconds for the largest instance, Paris \FIX{} with $387{,}467$ edges and $D=287$. The C++ version of BB, limited to $2{,}000$ maximum flows and $2$ seconds, reaches its limit on $48$ instances, so only $2$ can be compared with it.
-
-Across the benchmarks, PF completed all runs, reaching $387{,}467$ edges on transit data and $D=3{,}310$ dead even components on synthetic data.
-
-\subsection{Accuracy of the static reduction}\label{sec:exp-static}
-
-The tests confirm that the static reduction can accept temporally infeasible instances, as Proposition~\ref{prop:aaai} establishes, and check its orientation constraints against Lemma~\ref{lem:aaai}.
-
-\paragraph{Random instances.} On $20{,}000$ small random \FIX{} instances (seed $20261030$, $n\le5$, $m\le7$, three time labels) every temporal solution gives a feasible $S$. A balanced orientation of $S$ exists if and only if some orientation satisfies~(i) and the prescribed end counts, as Lemma~\ref{lem:aaai} predicts. There are $52$ instances in which $S$ is feasible but the temporal instance is not, and in $9$ instances condition~(i) holds but $S$ is infeasible because of the static connectivity condition. Under the literal reading, the same instances give $5$ wrong \YES{} answers and $3{,}778$ wrong \NO{} answers, so the conclusion depends on how the construction is read.
-
-\paragraph{Even-rich instances.} On the \FIX{} instances of the even-rich benchmark with $m\le1{,}005$ we ran the rule ``if $S$ has a balanced orientation and every component touches a terminal, answer \YES{}'', under the reading of Figure~3 of~\cite{deligkas2025}. It accepts $250$ of the $251$ infeasible instances. These include $121$ of the $122$ instances that the exhaustive oracle proves infeasible and $233$ of the $234$ instances that BB proves infeasible. It never rejects a feasible instance. An earlier benchmark using disjoint triangles and copies of the counterexample exhibited the same type of error. The two solvers disagreed on $160$ of $437$ instances, and in all $160$ cases the rule accepted an instance that PF rejects. Exhaustive search confirms PF in the $40$ of these cases that are small enough.
-
-The rule based on Figure~3 of~\cite{deligkas2025} therefore fails on the tested even-rich instances, which are constructed so that condition~(ii) carries the difficulty.
-
-\subsection{Scope and limitations}\label{sec:scope}
-
-The transit model omits edge directions, travel times between trips, shifts and depots, so it does not establish operational feasibility of vehicle duties. Unmodified transit instances are feasible by construction. The even-rich generator and the greedy start counts for contact data restrict the instance distributions, and the shortage family does not establish the frequency of difficult cases for BB. The number $D$ of dead even components was measured for one initial maximum flow per data set. BB is the only baseline, with no comparison against integer programming or Boolean satisfiability formulations. Running times were measured on two machines, partly with concurrent runs, which limits direct timing comparisons.
-
-%% =====================================================================
 \section{Conclusion}\label{sec:conclusion}
 
-Exact edge cover by non-strict temporal walks with prescribed start counts admits an M-convex submodular flow formulation and a polynomial-time augmenting path algorithm with infeasibility certificates. The formulation rests on the M-convexity of an even component after removal of its dead state, a condition that the static reduction does not represent. Exact edge cover by strict walks is NP-complete, even with prescribed end vertices. The limitations of our experiments are summarized in Section~\ref{sec:scope}. Future work includes bounds for the NP-hard problem of minimizing the number of walks when the start vertices are free, the complexity of strict walks when every vertex has at most two edges in every snapshot, and the dependence of the number of dead even components on the initial maximum flow.
+We proved that exact edge cover by non-strict temporal walks is polynomially solvable for prescribed start counts, through M-convexity after removing an even component's dead state, and that the strict variants are NP-complete even with prescribed end vertices. The bound $O(D(n+sm))$ of Theorem~\ref{thm:time} is an upper bound on growth. On the shortage family the measured growth is slightly above $m^2$, and certificates from the augmentation loop rest on Lemma~\ref{lem:gamma}(b) and Lemma~\ref{lem:localmax}. We made no comparison with Boolean satisfiability or a generic submodular flow solver. Future work includes minimizing the number of walks with free starts, strict walks with at most two edges per vertex in each snapshot, and the dependence of $D$ on the initial flow.
 
 \backmatter
 
-\bmhead{Acknowledgements}
-We thank the authors of~\cite{deligkas2025} for helpful correspondence about the counterexample. The authors used an AI assistant (Claude, Anthropic) for translation and language editing of this manuscript. The authors checked the resulting text and take full responsibility for the content.
-
 \section*{Declarations}
-
 \begin{itemize}
-\item \textbf{Funding} The authors did not receive support from any organization for the submitted work.
-\item \textbf{Competing interests} The authors declare that they have no competing interests.
-\item \textbf{Ethics approval and consent to participate} Not applicable.
-\item \textbf{Consent for publication} Not applicable.
-\item \textbf{Data availability} The Copenhagen Networks Study data~\cite{sapiezynski2019} and the transit data~\cite{kujala2018} are available from their providers under their terms. The code, the instance generators and the summaries of the raw results are available at https://github.com/th1enq/exact-edge-cover-temporal-walks. The raw data are not redistributed, and the instances can be regenerated from the scripts in that repository.
-\item \textbf{Materials availability} Not applicable.
-\item \textbf{Code availability} The Python library, the C++17 implementation and the experiment scripts are available at https://github.com/th1enq/exact-edge-cover-temporal-walks.
-\item \textbf{Author contribution} D.T.Q.: Conceptualization, Methodology, Formal analysis, Software, Investigation, Validation, Writing – original draft. M.C.T.: Supervision, Writing – review \& editing; M.C.T. is the corresponding author. All authors read and approved the final manuscript.
+\item \textbf{Funding} None.
+\item \textbf{Competing interests} None.
+\item \textbf{Ethics approval and consent for publication} Not applicable. The Copenhagen Networks Study data are pseudonymised by the providers and used as released, under the providers' terms. No attempt was made to identify participants, and derived instance files are not redistributed.
+\item \textbf{Use of AI assistants} The authors used AI assistants (Claude, Anthropic, and Codex, OpenAI) for language editing and translation, for drafting and checking parts of the text and proofs, for writing and testing code and experiment scripts, and for simulated peer review. The authors checked the results and take full responsibility for the content.
+\item \textbf{Data availability} The Copenhagen Networks Study Bluetooth, call and SMS data~\cite{sapiezynski2019}, the SocioPatterns primary-school, high-school and hospital contact data~\cite{stehle2011,fournet2014,mastrandrea2015,vanhems2013} and the transit timetables~\cite{kujala2018} are available from their providers. Instances can be regenerated with the repository scripts.
+\item \textbf{Code availability} \url{https://github.com/th1enq/exact-edge-cover-temporal-walks} contains the implementations, experiment scripts, generators and raw-result summaries. An archived version matching the reported results will be provided at acceptance.
+\item \textbf{Author contributions} D.T.Q.: conceptualization, methodology, formal analysis, software, investigation, validation, original draft. M.C.T.: supervision, review and editing. Corresponding author.
 \end{itemize}
 
 \bibliography{references}

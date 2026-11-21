@@ -1,0 +1,5 @@
+{"output": "results/scaling-20261118/shortage-small-rep1.jsonl", "rows": 6, "seconds": 34.184824686000866}
+{"output": "results/scaling-20261118/shortage-2000-rep1.jsonl", "rows": 2, "seconds": 166.088994791}
+{"output": "results/scaling-20261118/shortage-small-rep2.jsonl", "rows": 6, "seconds": 53.39772228599941}
+{"output": "results/scaling-20261118/shortage-2000-rep2.jsonl", "rows": 2, "seconds": 162.58254740899974}
+finished

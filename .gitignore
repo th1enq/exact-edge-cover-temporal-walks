@@ -3,6 +3,7 @@
 *.bbl
 *.blg
 *.log
+!results/**/*.log
 *.out
 *.fls
 *.fdb_latexmk

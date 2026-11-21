@@ -5,16 +5,16 @@ Companion repository for the manuscript on exact edge cover by strict and non-st
 ## Contents
 
 - `main.tex`, `main.pdf`: manuscript (English). `main-vi.tex`, `main-vi.pdf`: Vietnamese parallel version, for reading only.
-- `nscover/`: Python library. Exact solver for non-strict walks (pair flow, branch and bound baseline, certificates).
-- `experiments/`: experiment scripts. `experiments/strict/` contains the strict-walk solvers and the NP-hardness reduction check (`hardness_reduction.py`).
+- `nscover/`: Python library. Exact solver for non-strict walks (pair flow with scratch or path-reversing re-orientation, branch and bound baseline, certificates).
+- `experiments/`: experiment scripts, including `even_rich_bench.py` (even-rich benchmark), `reorient_bench.py` (scaling and re-orientation comparison) and `ilp_baseline.py` (integer programming baseline). `experiments/strict/` contains the strict-walk solvers and the NP-hardness reduction check (`hardness_reduction.py`).
 - `tests/`: unit tests and agreement tests.
 - `cpp/`: C++17 implementation (`apps/`, `src/`, `include/`), examples, and differential tests. Build with CMake (`cpp/CMakeLists.txt`).
 - `data/`: instructions for obtaining the raw datasets. The raw data are not included.
-- `results/`: small summary files and READMEs for each experiment run. Large raw outputs are not included.
+- `results/`: summary files and READMEs for each experiment run; `results/README.md` maps runs to the manuscript. Large raw outputs are not included.
 
 ## Requirements
 
-- Python 3.14 (the version used for the experiments).
+- Python 3.13 (3.13.12 was used for the experiments).
 - SciPy for the maximum-flow backend and the integer-programming check; NumPy.
 - CMake and a C++17 compiler for `cpp/`.
 
@@ -24,6 +24,7 @@ From the repository root:
 
     PYTHONPATH=. python3 tests/test_unit.py
     PYTHONPATH=. python3 tests/test_endset.py
+    PYTHONPATH=. python3 tests/test_reorient.py
 
 ## Reproduce the reduction check (Section 5)
 

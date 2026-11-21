@@ -1,0 +1,4 @@
+== m=12 --count 200 --oracle-m 14
+== m=50 --count 100
+== m=200 --count 50
+== m=1000 --count 20 --branch-seconds 5

@@ -61,7 +61,12 @@ HUB = -3  # search node for the NS-FREE simplex
 
 
 class PairFlow:
-    def __init__(self, inst: Instance, tl: Timeline, tails: list[int]):
+    def __init__(self, inst: Instance, tl: Timeline, tails: list[int],
+                 reorient: str = "scratch"):
+        if reorient not in ("scratch", "incremental"):
+            raise ValueError(f"unknown reorientation mode {reorient!r}")
+        self.reorient = reorient
+        self.path_reversals = 0
         self.inst, self.tl = inst, tl
         self.end_vertices = range(inst.n) if inst.end_set is None else inst.end_set
         self.end_allowed = None if inst.end_set is None else frozenset(inst.end_set)
@@ -255,11 +260,58 @@ class PairFlow:
             indegree[v] = twice // 2
         if comp.even and all(self.x[self.port(c, v, s)] == 0 for v in comp.vertices for s in (0, 1)):
             raise AssertionError("augmentation reached 0 on an even component")
+        if self.reorient == "incremental":
+            self._reorient_incremental(c, indegree)
+            return
         pairs = [self.inst.edges[e][:2] for e in comp.edges]
         heads = orient_with_indegree(comp.vertices, pairs, indegree)
         if heads is None:
             raise AssertionError("augmentation left the realisable set (exchange lemma)")
         self.heads[c] = heads
+
+    def _reorient_incremental(self, c: int, indegree: dict[int, int]) -> None:
+        """Reach the target from the current orientation by directed BFS paths.
+
+        Each reversal removes one unit of deficit and surplus, so there are
+        exactly half the initial L1 distance many reversals, each taking O(m_K).
+        Edge indices distinguish parallel edges throughout the search.
+        """
+        comp, heads = self.tl.components[c], self.heads[c]
+        current = dict.fromkeys(comp.vertices, 0)
+        incident = {v: [] for v in comp.vertices}
+        pairs = [self.inst.edges[e][:2] for e in comp.edges]
+        for i, ((a, b), head) in enumerate(zip(pairs, heads)):
+            current[head] += 1
+            incident[a].append(i)
+            incident[b].append(i)
+        if sum(indegree.values()) != len(heads) or any(t < 0 for t in indegree.values()):
+            raise AssertionError("augmentation left the realisable set (exchange lemma)")
+        for u in comp.vertices:
+            while current[u] < indegree[u]:
+                parent = {u: None}
+                queue = deque([u])
+                target = None
+                while queue and target is None:
+                    v = queue.popleft()
+                    for i in incident[v]:
+                        w = heads[i]
+                        if w == v or w in parent:
+                            continue
+                        parent[w] = (v, i)
+                        if current[w] > indegree[w]:
+                            target = w
+                            break
+                        queue.append(w)
+                if target is None:
+                    raise AssertionError("augmentation left the realisable set (exchange lemma)")
+                current[u] += 1
+                current[target] -= 1
+                w = target
+                while w != u:
+                    v, i = parent[w]
+                    heads[i] = v
+                    w = v
+                self.path_reversals += 1
 
     def tails(self) -> list[int]:
         out = [0] * self.inst.m
@@ -271,18 +323,26 @@ class PairFlow:
 
 
 def solve_pairflow(inst: Instance, tl: Timeline | None = None,
-                   backend: str = DEFAULT_BACKEND) -> Result:
+                   backend: str = DEFAULT_BACKEND, reorient: str = "scratch") -> Result:
+    """Solve with from-scratch (default) or incremental component reorientation."""
+    if reorient not in ("scratch", "incremental"):
+        raise ValueError(f"unknown reorientation mode {reorient!r}")
+    extra = {"path_reversals": 0} if reorient == "incremental" else {}
     tl = tl or Timeline(inst)
     caps = prefix_caps(inst, tl)
     if caps is None:
-        return Result("NO", stats={"reason": "counting"})
+        return Result("NO", stats={"reason": "counting", **extra})
     root = ChainNetwork(inst, tl, caps, backend)
     if not root.complete:
-        return Result("NO", flows=1, stats={"reason": "chain network"})
-    pf = PairFlow(inst, tl, root.tails())
+        return Result("NO", flows=1, stats={"reason": "chain network", **extra})
+    pf = PairFlow(inst, tl, root.tails(), reorient=reorient)
     while pf.positive:
         if not pf.augment():
             return Result("NO", flows=1, stats={"dead": pf.dead, "augmentations": pf.augmentations,
-                                                "reason": "no augmenting path"})
+                                                "reason": "no augmenting path",
+                                                **({"path_reversals": pf.path_reversals}
+                                                   if reorient == "incremental" else {})})
     return Result("YES", pf.tails(), flows=1,
-                  stats={"dead": pf.dead, "augmentations": pf.augmentations})
+                  stats={"dead": pf.dead, "augmentations": pf.augmentations,
+                         **({"path_reversals": pf.path_reversals}
+                            if reorient == "incremental" else {})})

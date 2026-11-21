@@ -1,0 +1,12 @@
+{"case": "empty-fixed", "instance": {"num_vertices": 2, "start": [1, 0], "edges": [], "end": [1, 0]}, "ilp": "YES", "pf": "YES", "oracle": "YES", "tails": []}
+{"case": "empty-moved", "instance": {"num_vertices": 2, "start": [1, 0], "edges": [], "end": [0, 1]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "empty-no-walks", "instance": {"num_vertices": 2, "start": [0, 0], "edges": []}, "ilp": "YES", "pf": "YES", "oracle": "YES", "tails": []}
+{"case": "empty-total-mismatch", "instance": {"num_vertices": 2, "start": [1, 0], "edges": [], "end": [0, 0]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "no-token-edge", "instance": {"num_vertices": 2, "start": [0, 0], "edges": [{"u": 0, "v": 1, "time": 0}]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "fixed-total-mismatch", "instance": {"num_vertices": 2, "start": [1, 0], "edges": [{"u": 0, "v": 1, "time": 0}], "end": [0, 0]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "isolated-end", "instance": {"num_vertices": 3, "start": [1, 0, 2], "edges": [{"u": 0, "v": 1, "time": 1}], "end": [0, 1, 0]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "same-time-path", "instance": {"num_vertices": 3, "start": [1, 0, 0], "edges": [{"u": 0, "v": 1, "time": 5}, {"u": 1, "v": 2, "time": 5}], "end": [0, 0, 1]}, "ilp": "YES", "pf": "YES", "oracle": "YES", "tails": [0, 1]}
+{"case": "time-reversed-path", "instance": {"num_vertices": 3, "start": [1, 0, 0], "edges": [{"u": 0, "v": 1, "time": 2}, {"u": 1, "v": 2, "time": 1}], "end": [0, 0, 1]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "parallel-return", "instance": {"num_vertices": 2, "start": [1, 0], "edges": [{"u": 0, "v": 1, "time": 7}, {"u": 0, "v": 1, "time": 7}], "end": [1, 0]}, "ilp": "YES", "pf": "YES", "oracle": "YES", "tails": [0, 1]}
+{"case": "closed-cycle-no-walk", "instance": {"num_vertices": 3, "start": [0, 0, 0], "edges": [{"u": 0, "v": 1, "time": 1}, {"u": 1, "v": 2, "time": 1}, {"u": 2, "v": 0, "time": 1}]}, "ilp": "NO", "pf": "NO", "oracle": "NO", "tails": null}
+{"case": "unsorted-negative-times", "instance": {"num_vertices": 3, "start": [1, 0, 0], "edges": [{"u": 1, "v": 2, "time": -1}, {"u": 0, "v": 1, "time": -2}], "end": [0, 0, 1]}, "ilp": "YES", "pf": "YES", "oracle": "YES", "tails": [1, 0]}
