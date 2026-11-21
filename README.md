@@ -4,7 +4,8 @@ Companion repository for the manuscript on exact edge cover by strict and non-st
 
 ## Contents
 
-- `main.tex`, `main.pdf`: manuscript (English); sections are in `sections/`, figures in `figures/` (`FigN.pdf` with TikZ source `FigN.tex`). `main-vi.tex`, `main-vi.pdf`: Vietnamese parallel version, for reading only.
+- `submission/`: manuscript as submitted (English): `main.tex`, `main.pdf`, `references.bib`, the Springer Nature template, `sections/`, and `figures/` (`FigN.pdf` with TikZ source `FigN.tex`).
+- `vi/`: Vietnamese parallel version (`main-vi.tex`, `main-vi.pdf`), for reading only.
 - `nscover/`: Python library. Exact solver for non-strict walks (pair flow with scratch or path-reversing re-orientation, branch and bound baseline, certificates).
 - `experiments/`: experiment scripts, including `even_rich_bench.py` (even-rich benchmark), `reorient_bench.py` (scaling and re-orientation comparison) and `ilp_baseline.py` (integer programming baseline). `experiments/strict/` contains the strict-walk solvers and the NP-hardness reduction check (`hardness_reduction.py`).
 - `tests/`: unit tests and agreement tests.
@@ -38,6 +39,7 @@ See `data/README.md`. The transit data are fetched with `experiments/fetch_trans
 
 ## Build the manuscript
 
+    cd submission
     pdflatex main
     bibtex main
     pdflatex main
@@ -45,7 +47,11 @@ See `data/README.md`. The transit data are fetched with `experiments/fetch_trans
 
 The figures are included as PDF files. To rebuild one from its TikZ source:
 
-    cd figures && TEXINPUTS=..: pdflatex FigN.tex
+    cd submission/figures && TEXINPUTS=..: pdflatex FigN.tex
+
+The Vietnamese version uses the template and bibliography in `submission/`:
+
+    cd vi && TEXINPUTS=../submission: BIBINPUTS=../submission: BSTINPUTS=../submission: latexmk -pdf main-vi.tex
 
 ## Status
 
