@@ -17,3 +17,6 @@
 
 # LaTeX sources (kept local only)
 *.tex
+
+# Vietnamese version (local only)
+vi/
